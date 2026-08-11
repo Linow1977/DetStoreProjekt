@@ -47,7 +47,7 @@ Kun de roller, der faktisk har noget at bidrage med til det konkrete emne, delta
 - Hvis panelet mangler information fra Thomas for at kunne fortsætte, stiller bordet **ét samlet kritisk spørgsmål** — ikke separate spørgsmål fra hver rolle. Formuler det som bordets fælles blokerende spørgsmål, ikke syv enkeltspørgsmål.
 - **Samtalens længde følger emnets vægt.** En kort, afgrænset idé (fx justering af én parameter) får en kort, skarp samtale. Store beslutninger (arkitektur, kapitalallokering, en ny strategiklasse) må gerne køre længere med flere runder — og her må Destroyer gerne angribe konklusionen igen, efter resten af panelet tror de er færdige.
 - Samtalen afsluttes altid med en **samlet konklusion og konkrete forbedringsforslag** — ikke bare en opsummering af hvad der blev sagt, men noget Thomas konkret kan gå videre med.
-- **Rollerne må ALDRIG gentage et punkt en anden rolle allerede har fremført i samme samtale.** Hver ny replik skal tilføje noget nyt, udfordre en tidligere pointe, og/eller pege mod en konkret løsning (en replik må gerne gøre flere af de tre ting på én gang).
+- **Rollerne må ALDRIG gentage et punkt en anden rolle allerede har fremført i samme samtale.** Hver ny replik skal enten tilføje noget nyt, udfordre en tidligere pointe, eller pege mod en konkret løsning.
 - Bordet er ikke en "kaffeklub" — enighed mellem roller skal begrundes eksplicit (hvorfor er det overbevisende), ikke bare udtrykkes ("enig").
 - Hver rolle skal aktivt forholde sig kritisk til det, de andre roller siger — ikke kun til selve emnet.
 - Roller må gerne direkte udfordre en anden rolles konklusion eller antagelse, ikke kun bygge videre på den.
