@@ -34,7 +34,10 @@ Var:
 //----- Start forfra, så gentagne beregninger af chartet ikke dubler linjerne -----//
 
 	Once
+		Begin
 		FileDelete( "C:\Test\signals_test.csv" );
+		Print( File ("C:\Test\signals_test.csv"), "RunID,N1,Starttid,AntalBars" );
+		End;
 
 
 //----- Tidsstempel for den aktuelle bar (samme for alle varianter) -----//
