@@ -40,6 +40,11 @@ Input:
 	int    VarmOpBars( 1800 );
 
 Arrays:
+	// Udglatningsfaktorerne afhænger kun af inputs, ikke af kursen. De regnes
+	// derfor én gang i Once-blokken i stedet for 625 gange på hver eneste bar.
+	double UdglatningHurtig[25]( 0 ),
+	double UdglatningLangsom[25,25]( 0 ),
+
 	// Hurtig EMA afhænger kun af N1 (længde = N1 * 2)
 	double HurtigEMA[25]( 0 ),
 
@@ -57,20 +62,39 @@ Arrays:
 Var:
 	int    N1( 0 ),
 	int    N2( 0 ),
+	int    Slot( 0 ),
 	double Ganger( 0 ),
-	double Slot( 0 ),
 	double Pris( 0 ),
-	double Udglatning( 0 ),
 	double Signallinje( 0 ),
 	string BarTekst( "" );
 
 
-//----- Start forfra, så gentagne beregninger af chartet ikke dubler linjerne -----//
+//----- Engangsopsætning -----//
 
 	Once
 		Begin
+
+		// Start filen forfra, så gentagne beregninger af chartet ikke dubler linjerne
 		FileDelete( "C:\Test\RawSignalTest_1.csv" );
 		Print( File ("C:\Test\RawSignalTest_1.csv"), "RunID,N1,N2,Starttid,AntalBars" );
+
+		// Udglatningsfaktoren for et eksponentielt gennemsnit er 2/(længde+1).
+		// Længderne er de samme hele vejen igennem, så de regnes én gang her.
+		For N1 = 1 to 25
+			Begin
+			UdglatningHurtig[N1] = 2 / ( N1 * 2 + 1 );
+
+			For N2 = 1 to 25
+				Begin
+				// Ganger-leddet holdes oppe på minimum, så det langsomme
+				// gennemsnit altid er længere end det hurtige. Ellers vender
+				// MACD'en på hovedet.
+				Ganger = MaxList( Ganger_Minimum, N2 / N2_Divisor );
+
+				UdglatningLangsom[N1,N2] = 2 / ( N1 * 2 * Ganger + 1 );
+				End;
+			End;
+
 		End;
 
 
@@ -92,27 +116,20 @@ Var:
 		Begin
 
 		// Den hurtige EMA afhænger kun af N1, så den regnes én gang pr. N1
-		Udglatning = 2 / ( N1 * 2 + 1 );
-
 		If CurrentBar = 1 Then
 			HurtigEMA[N1] = Pris
 		Else
-			HurtigEMA[N1] = HurtigEMA[N1] + Udglatning * ( Pris - HurtigEMA[N1] );
+			HurtigEMA[N1] = HurtigEMA[N1]
+			              + UdglatningHurtig[N1] * ( Pris - HurtigEMA[N1] );
 
 		For N2 = 1 to 25
 			Begin
-
-			// Ganger-leddet holdes oppe på minimum, så det langsomme gennemsnit
-			// altid er længere end det hurtige. Ellers vender MACD'en på hovedet.
-			Ganger = MaxList( Ganger_Minimum, N2 / N2_Divisor );
-
-			Udglatning = 2 / ( N1 * 2 * Ganger + 1 );
 
 			If CurrentBar = 1 Then
 				LangsomEMA[N1,N2] = Pris
 			Else
 				LangsomEMA[N1,N2] = LangsomEMA[N1,N2]
-				                  + Udglatning * ( Pris - LangsomEMA[N1,N2] );
+				                  + UdglatningLangsom[N1,N2] * ( Pris - LangsomEMA[N1,N2] );
 
 			MACDVaerdi[N1,N2] = HurtigEMA[N1] - LangsomEMA[N1,N2];
 
