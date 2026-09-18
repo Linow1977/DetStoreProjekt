@@ -2,8 +2,8 @@
 //***** RawSignalTest_1
 // Råt signal: registrerer KUN hvornår filteret tænder, og hvor længe det er tændt.
 //
-// Filter (Thomas' formel, uændret):
-//   Average( MACD(C, N1*2, N1*2*maxlist(2,floor(N2/2))), 9 ) < MACD(C, ...)
+// Filter:
+//   Average( MACD(C, N1*2, N1*2*maxlist(2, N2/1.8)), 9 ) < MACD(C, ...)
 //   altså: MACD ligger over sin 9-bars signallinje.
 //
 // Alle 625 kombinationer skrives ud: N1 fra 1 til 25, N2 fra 1 til 25.
@@ -17,12 +17,6 @@
 // Derfor regnes de eksponentielle gennemsnit her i hånden, med egen
 // hukommelse pr. kombination.
 //
-// HVORFOR 275 UDREGNINGER OG IKKE 625:
-// Den langsomme MACD-længde er N1*2*maxlist(2,floor(N2/2)). Ganger-leddet
-// giver kun 11 forskellige værdier (2 til 12) for de 25 N2-værdier, så der
-// findes kun 25 * 11 = 275 forskellige udregninger. De regnes én gang hver,
-// og resultatet genbruges til at fylde alle 625 linjer ud.
-//
 // VIGTIGT: Kør som almindelig backtest - IKKE via Optimize.
 // VIGTIGT: CSV-filen skal være lukket i Excel, mens der køres.
 }
@@ -30,21 +24,25 @@
 Input:
 	int    DataFilter_A( 2 ),
 	string RunID( "RawSignalTest_1" ),
+
+	// Ganger-leddet er N2 divideret med dette tal. Bemærk at EasyLanguage
+	// altid skriver kommatal med punktum - 1.8, ikke 1,8.
+	double N2_Divisor( 1.8 ),
+
 	// De eksponentielle gennemsnit skal have tid til at falde på plads, før
-	// signalerne kan bruges. Længste langsomme længde er 25*2*12 = 600 bars.
+	// signalerne kan bruges. Længste langsomme længde er ca. 25*2*13.9 = 695 bars.
 	int    VarmOpBars( 1800 );
 
 Arrays:
 	// Hurtig EMA afhænger kun af N1 (længde = N1 * 2)
 	double HurtigEMA[25]( 0 ),
 
-	// Langsom EMA, MACD og signallinje afhænger af N1 og af ganger-leddet (2-12)
-	double LangsomEMA[25,12]( 0 ),
-	double MACDVaerdi[25,12]( 0 ),
-	double MACDSum[25,12]( 0 ),
-	double MACDHistorik[25,12,9]( 0 ),
+	// Alt det øvrige afhænger af både N1 og N2
+	double LangsomEMA[25,25]( 0 ),
+	double MACDVaerdi[25,25]( 0 ),
+	double MACDSum[25,25]( 0 ),
+	double MACDHistorik[25,25,9]( 0 ),
 
-	// Signal-tilstand pr. kombination af N1 og N2
 	int    Filter1[25,25]( 0 ),
 	int    Filter1_Forrige[25,25]( 0 ),
 	int    SignalBars[25,25]( 0 ),
@@ -74,7 +72,7 @@ Var:
 
 	Pris = Close of data(DataFilter_A);
 
-	// Pladsen i den rullende 9-bars historik, der skal overskrives på denne bar
+	// Pladsen i den rullende 9-bars historik, der overskrives på denne bar
 	Slot = Mod( CurrentBar, 9 ) + 1;
 
 	BarTekst = FormatDate( "yyyy-MM-dd", ELDateToDateTime( Date of data(DataFilter_A) ) )
@@ -82,60 +80,53 @@ Var:
 	         + FormatTime( "HH:mm", ELTimeToDateTime( Time of data(DataFilter_A) ) );
 
 
-//----- Trin 1: de 25 hurtige EMA'er -----//
+//----- Alle 625 kombinationer -----//
 
 	For N1 = 1 to 25
 		Begin
+
+		// Den hurtige EMA afhænger kun af N1, så den regnes én gang pr. N1
 		Udglatning = 2 / ( N1 * 2 + 1 );
 
 		If CurrentBar = 1 Then
 			HurtigEMA[N1] = Pris
 		Else
 			HurtigEMA[N1] = HurtigEMA[N1] + Udglatning * ( Pris - HurtigEMA[N1] );
-		End;
 
-
-//----- Trin 2: de 275 langsomme EMA'er, MACD-værdier og rullende 9-bars summer -----//
-
-	For N1 = 1 to 25
-		Begin
-		For Ganger = 2 to 12
+		For N2 = 1 to 25
 			Begin
+
+			// Ganger-leddet holdes på mindst 2, så det langsomme gennemsnit
+			// altid er længere end det hurtige. Ellers vender MACD'en på hovedet.
+			Ganger = MaxList( 2, N2 / N2_Divisor );
+
 			Udglatning = 2 / ( N1 * 2 * Ganger + 1 );
 
 			If CurrentBar = 1 Then
-				LangsomEMA[N1,Ganger] = Pris
+				LangsomEMA[N1,N2] = Pris
 			Else
-				LangsomEMA[N1,Ganger] = LangsomEMA[N1,Ganger]
-				                      + Udglatning * ( Pris - LangsomEMA[N1,Ganger] );
+				LangsomEMA[N1,N2] = LangsomEMA[N1,N2]
+				                  + Udglatning * ( Pris - LangsomEMA[N1,N2] );
 
-			MACDVaerdi[N1,Ganger] = HurtigEMA[N1] - LangsomEMA[N1,Ganger];
+			MACDVaerdi[N1,N2] = HurtigEMA[N1] - LangsomEMA[N1,N2];
 
-			// Rullende sum: træk den værdi fra, der falder ud af vinduet, læg den nye til
-			MACDSum[N1,Ganger] = MACDSum[N1,Ganger]
-			                   - MACDHistorik[N1,Ganger,Slot]
-			                   + MACDVaerdi[N1,Ganger];
+			// Rullende 9-bars sum: træk den værdi fra, der falder ud af
+			// vinduet, og læg den nye til
+			MACDSum[N1,N2] = MACDSum[N1,N2]
+			               - MACDHistorik[N1,N2,Slot]
+			               + MACDVaerdi[N1,N2];
 
-			MACDHistorik[N1,Ganger,Slot] = MACDVaerdi[N1,Ganger];
-			End;
-		End;
+			MACDHistorik[N1,N2,Slot] = MACDVaerdi[N1,N2];
 
 
-//----- Trin 3: alle 625 kombinationer registreres -----//
+			//----- Signal-registrering (først når opvarmningen er ovre) -----//
 
-	If CurrentBar > VarmOpBars Then
-		Begin
-
-		For N1 = 1 to 25
-			Begin
-			For N2 = 1 to 25
+			If CurrentBar > VarmOpBars Then
 				Begin
 
-				Ganger = MaxList( 2, Floor( N2 / 2 ) );
-				Signallinje = MACDSum[N1,Ganger] / 9;
+				Signallinje = MACDSum[N1,N2] / 9;
 
-				// Selve filteret: signallinjen ligger under MACD
-				If Signallinje < MACDVaerdi[N1,Ganger] Then
+				If Signallinje < MACDVaerdi[N1,N2] Then
 					Filter1[N1,N2] = 1
 				Else
 					Filter1[N1,N2] = 0;
@@ -166,6 +157,6 @@ Var:
 				Filter1_Forrige[N1,N2] = Filter1[N1,N2];
 
 				End;
-			End;
 
+			End;
 		End;
