@@ -29,6 +29,12 @@ Input:
 	// altid skriver kommatal med punktum - 1.8, ikke 1,8.
 	double N2_Divisor( 1.8 ),
 
+	// Nedre grænse for ganger-leddet. SKAL være større end 1: ved præcis 1
+	// bliver de to gennemsnit lige lange, og MACD'en er så altid nul.
+	// Under 1 bliver det "langsomme" gennemsnit kortest, og filteret måler
+	// det modsatte af hensigten.
+	double Ganger_Minimum( 2 ),
+
 	// De eksponentielle gennemsnit skal have tid til at falde på plads, før
 	// signalerne kan bruges. Længste langsomme længde er ca. 25*2*13.9 = 695 bars.
 	int    VarmOpBars( 1800 );
@@ -96,9 +102,9 @@ Var:
 		For N2 = 1 to 25
 			Begin
 
-			// Ganger-leddet holdes på mindst 2, så det langsomme gennemsnit
+			// Ganger-leddet holdes oppe på minimum, så det langsomme gennemsnit
 			// altid er længere end det hurtige. Ellers vender MACD'en på hovedet.
-			Ganger = MaxList( 2, N2 / N2_Divisor );
+			Ganger = MaxList( Ganger_Minimum, N2 / N2_Divisor );
 
 			Udglatning = 2 / ( N1 * 2 * Ganger + 1 );
 
