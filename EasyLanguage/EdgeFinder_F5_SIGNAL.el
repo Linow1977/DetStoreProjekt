@@ -15,8 +15,7 @@ Var:
 	bool   Filter1( False ),
 	bool   Filter1_Forrige( False ),
 	int    SignalBars( 0 ),
-	string StartTekst( "" ),
-	string FilNavn( "" );        // Unikt filnavn pr. kombination (RunID), så flere samtidige kørsler ikke skriver til samme fil
+	string StartTekst( "" );
 
 
 //----- Selve filteret -----//
@@ -42,9 +41,9 @@ Var:
 	// SLUKKER — linjen skrives her
 	If Filter1 = False and Filter1_Forrige = True Then
 		Begin
-		FilNavn = "C:\Test\signals_test_" + RunID + ".csv";   // Bygger unikt filnavn pr. RunID
-
-		Print( File (FilNavn),
+		// EasyLanguage kræver et fast filnavn i File() - en variabel kan ikke bruges her.
+		// Kørsler adskilles i stedet via RunID, der skrives som første kolonne i hver linje.
+		Print( File ("C:\Test\signals_test.csv"),
 		       RunID, ",",
 		       Filter1_N1:0:0, ",",
 		       Filter1_N2:0:0, ",",
