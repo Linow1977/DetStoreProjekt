@@ -107,6 +107,47 @@ valgte størrelse som kommentar ved array-deklarationen.
    ind i 0/1/2-parameter-mønstret ovenfor (fx flere end to parametre) —
    de skal behandles særskilt, ikke gættes på.
 
+## Automationsprogram: læg filen ind i TradeStation og verificér
+
+Ingen af Claude Code-sessionerne kan styre TradeStations grafiske flade —
+hverken denne session (cloud, ingen adgang til din maskine) eller den
+lokale. Skal de 381 filer verificeres uden at Thomas selv skal åbne og
+klikke Verify 381 gange, skal der bygges et selvstændigt program til det,
+som kører på Thomas' maskine ved siden af TradeStation.
+
+Det ønskede forløb, fil for fil:
+1. Programmet lægger én `.el`-fil ind i TradeStation (som Analysis
+   Technique/Strategy).
+2. Det trykker Verify (eller tilsvarende).
+3. Det læser resultatet — kompileret uden fejl, eller fejlbesked.
+4. Ved succes: gå til næste fil. Ved fejl: notér filnavn og fejltekst, gå
+   videre — stop ikke hele kørslen på grund af én fejlende fil, medmindre
+   andet besluttes (se åbent spørgsmål nedenfor).
+5. Til sidst: en samlet rapport — hvor mange verificerede, hvor mange
+   fejlede, og med hvilken fejl.
+
+### Åbne spørgsmål — SKAL afklares, før dette bygges
+
+Disse er ikke besvaret endnu. Gæt ikke på svarene — spørg Thomas, eller
+undersøg og rapportér tilbage før noget bygges:
+
+1. **Findes der en kommandolinje- eller API-adgang til TradeStation**
+   (fx til at åbne/kompilere en EasyLanguage-fil uden den grafiske flade)?
+   Det ville gøre automationen markant mere robust end at simulere
+   museklik og tastatur, som knækker ved uventede dialogbokse eller hvis et
+   vindue flytter sig. Undersøg TradeStations dokumentation og installerede
+   værktøjer for dette, før der bygges på ren UI-automatisering.
+
+2. **Adfærd ved fejl:** skal programmet stoppe helt ved første fejlende
+   fil, eller notere fejlen og fortsætte til næste? (Anbefalingen ovenfor er
+   "fortsæt og saml op", men det er ikke besluttet endnu.)
+
+3. **Hvordan når filerne frem til Thomas' maskine?** Ligger den lokale
+   Claude Code-session i det samme git-projekt (`DetStoreProjekt`), hentet
+   ned med `git pull`, eller et andet sted på serveren uden forbindelse til
+   GitHub? Det afgør, om automationsprogrammet selv skal hente filerne fra
+   GitHub, eller om de allerede ligger lokalt.
+
 ## Ikke en del af denne opgave
 
 - Ingen ændringer af `filtere`-formlerne.
