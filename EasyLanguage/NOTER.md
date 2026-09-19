@@ -152,7 +152,29 @@ en ny RawSignal-fil.
 
 ## Åbne punkter
 
-- **Hastighedstest af `FileAppend`** afventer resultat fra Thomas.
+- **Beslutning 2026-09-19: `FileAppend` droppes.** Den var for langsom på
+  RawSignalTest_1's 625 kombinationer (åbner/lukker filen for hver skrevet
+  linje). Vi går tilbage til `Print(File("..."))` med fast filnavn.
+
+  **Det genåbner navngivnings-problemet**, som `FileAppend` oprindeligt
+  løste: hvordan holdes de fire workspaces (5,10,60 / 10,20,60 / 5,30,120 /
+  5,10,120) adskilt, når filnavnet igen skal være en fast tekststreng i
+  koden og ikke kan bygges ud fra `BarInterval`/`ComputerDateTime` længere?
+
+  Tre løsninger er lagt frem for Thomas, endnu **ikke valgt**:
+  1. Fast RunID/filnavn i Input, skrevet manuelt af Thomas før hver kørsel.
+  2. Én `.el`-fil pr. workspace-kombination (fire varianter af hvert filter).
+  3. Tidsrammerne skrives som kolonner i selve CSV-filen i stedet for i
+     filnavnet, indtastet manuelt i Input ved kørsel.
+
+  **Følgevirkning, ikke rettet endnu:** `RawSignalTest_1.el` og
+  `RawSignalTest_2.el` bruger stadig `FileAppend` med dynamisk filnavn — de
+  skal bygges om, når valget mellem de tre løsninger er truffet.
+  `ARBEJDSBESKRIVELSE_RawSignal.md` bygger også på den forladte metode og
+  skal opdateres samtidig.
+
+- **Hastighedstest af `FileAppend`**: ikke længere relevant, da metoden droppes.
 - **Arbejdsbeskrivelse til den lokale Claude Code-session**, der skal
   generere alle 381 .EL-filer ud fra TradingDB, er under udarbejdelse
-  (`ARBEJDSBESKRIVELSE_RawSignal.md`).
+  (`ARBEJDSBESKRIVELSE_RawSignal.md`) — afventer valg af navngivningsmetode
+  ovenfor, før den kan færdiggøres.
