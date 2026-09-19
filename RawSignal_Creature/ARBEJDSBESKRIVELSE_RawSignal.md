@@ -90,7 +90,7 @@ valgte størrelse som kommentar ved array-deklarationen.
 ## Filnavne og placering
 
 - De færdige `.el`-filer navngives `RawSignal###.el` (samme nummerering som
-  `filter_case_id`) og lægges i `EasyLanguage/RawSignal/` i dette
+  `filter_case_id`) og lægges i `RawSignal_Creature/RawSignal/` i dette
   git-projekt, så de kan følges i versionsstyring.
 - CSV-output ved kørsel går til `C:\RawSignal_2026_TS\`, som allerede findes.
 
