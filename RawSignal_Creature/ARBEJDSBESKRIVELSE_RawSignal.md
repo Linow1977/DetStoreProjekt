@@ -134,17 +134,15 @@ mappe. Kort opsummeret er det nu besluttet:
   selvstændig, separat blok, der tilføjes senere — de to platforme deler
   ikke automations-logik.
 
-### Åbne spørgsmål — SKAL stadig afklares, før dette bygges
+### Adgangsvej og filhentning — begge afklaret 2026-09-22
 
-1. **Findes der en kommandolinje- eller API-adgang til TradeStation?**
-   Undersøg `C:\Program Files (x86)\TradeStation 10.0\Program` og
-   TradeStations dokumentation for dette, før der bygges på ren
-   UI-automatisering (simuleret museklik/tastatur, med aflæsning af
-   Output-panelet og status-ordet "VERIFIED").
-
-2. **Hvordan når filerne frem til den maskine, der kører automationen?**
-   Ligger den i det samme git-projekt (`DetStoreProjekt`), hentet ned med
-   `git pull`, eller et andet sted uden forbindelse til GitHub?
+- **Ingen CLI/API til TradeStation Development Environment.** TDE er en
+  lokal editor uden internetforbindelse. TradeStations Web API findes,
+  men er kun til handel (kurser, konto, ordrer) og har ingen bro til TDE.
+  Automationen bygges derfor som ren UI-automatisering — se
+  `OPGAVEBESKRIVELSE_Automation.md` for detaljer.
+- **Filhentning:** automationsprogrammet henter selv `.el`-filerne (fra
+  git) og lægger dem ind i TDE.
 
 ## Ikke en del af denne opgave
 

@@ -215,6 +215,24 @@ succes, ellers fejltekst med Technique/Line/Type) og i statuslinjen
 ("VERIFIED" ved godkendt fil). Dette er det, automationsprogrammet skal
 aflæse — se `OPGAVEBESKRIVELSE_Automation.md`.
 
+## TradeStation Development Environment har ingen API — afklaret 2026-09-22
+
+TDE (hvor EasyLanguage skrives og verificeres) er en ren lokal editor uden
+internetforbindelse og uden officiel API. TradeStations **Web API**
+findes, men er et helt separat system til handel (kurser, konto, ordrer,
+streaming) og har ingen forbindelse til TDE. Den eneste kommunikationsvej
+den anden vej ("Command Line Commands") går fra EasyLanguage *til*
+TradeStation, ikke omvendt.
+
+**Konsekvens:** automationsprogrammet, der skal lægge `.el`-filer ind og
+trykke Verify, kan **ikke** bygges på et API — det skal være ren
+UI-automatisering (simuleret tastatur/museklik), med resultatet aflæst fra
+Output-panelet/status-linjen, som beskrevet ovenfor. Se
+`OPGAVEBESKRIVELSE_Automation.md` for den fulde beskrivelse.
+
+Automationsprogrammet henter desuden selv `.el`-filerne fra git — det skal
+ikke leveres manuelt.
+
 ## Åbne punkter
 
 - **Arbejdsbeskrivelse til den lokale Claude Code-session**, der skal
@@ -222,7 +240,3 @@ aflæse — se `OPGAVEBESKRIVELSE_Automation.md`.
   (`ARBEJDSBESKRIVELSE_RawSignal.md`), skal opdateres til den nye,
   simplere navngivningsmodel (ingen dynamisk workspace-navngivning i
   koden selv).
-- Automationsprogrammets krav er nu beskrevet i
-  `OPGAVEBESKRIVELSE_Automation.md`, men to punkter er stadig ikke
-  undersøgt: CLI/API-adgang til TradeStation, og hvordan filerne når frem
-  til den maskine, der kører automationen.

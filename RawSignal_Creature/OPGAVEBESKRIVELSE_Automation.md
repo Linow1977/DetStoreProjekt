@@ -106,17 +106,28 @@ fejlteksten).
    ved hvert kontrolpunkt): en opsummering med antal OK/fejlet og liste
    over fejlende filer.
 
-## Stadig uafklaret — undersøg og rapportér tilbage, gæt ikke
+## Adgangsvej til TDE — afklaret 2026-09-22: ingen API, kun UI-automatisering
 
-1. **CLI/API-adgang til TradeStation.** Undersøg
-   `C:\Program Files (x86)\TradeStation 10.0\Program` for værktøjer, der
-   kan give en mere robust adgang til Verify-funktionen end at simulere
-   museklik/tastatur og aflæse skærmen. Findes intet sådant, byg videre
-   med UI-automatisering, men gør den robust (vent på bekræftede
-   tilstande, genkend fejl-dialogbokse eksplicit).
-2. **Hvordan filerne når frem til automationsprogrammet.** Er det samme
-   git-projekt (`DetStoreProjekt`), hentet med `git pull` på Thomas'
-   maskine, eller ligger de et andet sted?
+**TradeStation Development Environment (TDE)** — hvor EasyLanguage skrives
+og verificeres — er en lokal editor uden nogen forbindelse til internettet
+og uden nogen officiel API. TradeStations **Web API** er et helt separat
+system (kurser, konto, ordrer, streaming) og har ingen bro til TDE. Den
+eneste kommunikationsvej den anden vej (EasyLanguage → TradeStation via
+"Command Line Commands") går fra EasyLanguage-koden *til* selve
+handelsprogrammet — ikke fra et eksternt program *ind i* TDE.
+
+**Konklusion:** automationen skal bygges som **ren UI-automatisering** —
+simuleret tastatur/museklik efter den bekræftede arbejdsgang (`Ctrl+Alt+S`
+→ navngiv → indsæt tekst → `F3` → `Alt+C`), med resultatet aflæst fra
+Output-panelet og status-ordet "VERIFIED" (se ovenfor). Byg den så robust
+som muligt: vent på bekræftede vindues-/dialogtilstande i stedet for
+faste pauser, og genkend fejl-dialogbokse eksplicit, så et uventet vindue
+ikke får automationen til at hænge eller trykke det forkerte sted.
+
+## Filhentning — afklaret 2026-09-22
+
+Programmet henter selv `.el`-filerne (fra git) og lægger dem ind i
+TDE — det er ikke noget Thomas eller en anden proces skal levere manuelt.
 
 ## Ikke en del af denne opgave
 
