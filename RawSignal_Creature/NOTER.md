@@ -150,31 +150,79 @@ en ny RawSignal-fil.
 - `FileAppend` er ikke endnu tidsmålt på en fil med mange hundredtusind
   linjer. Testen kører i `RawSignalTest_1.el` — resultatet er ikke kendt endnu.
 
-## Åbne punkter
+## Navngivning — afklaret 2026-09-22
 
-- **Beslutning 2026-09-19: `FileAppend` droppes.** Den var for langsom på
-  RawSignalTest_1's 625 kombinationer (åbner/lukker filen for hver skrevet
-  linje). Vi går tilbage til `Print(File("..."))` med fast filnavn.
+**Beslutning 2026-09-19: `FileAppend` droppes.** Den var for langsom på
+RawSignalTest_1's 625 kombinationer (åbner/lukker filen for hver skrevet
+linje). Det genåbnede navngivnings-problemet, som `FileAppend` oprindeligt
+løste: hvordan holdes de fire workspaces (5,10,60 / 10,20,60 / 5,30,120 /
+5,10,120) adskilt, når filnavnet er en fast tekststreng i koden.
 
-  **Det genåbner navngivnings-problemet**, som `FileAppend` oprindeligt
-  løste: hvordan holdes de fire workspaces (5,10,60 / 10,20,60 / 5,30,120 /
-  5,10,120) adskilt, når filnavnet igen skal være en fast tekststreng i
-  koden og ikke kan bygges ud fra `BarInterval`/`ComputerDateTime` længere?
+**Løsning, valgt af Thomas:** ingen af de tre oprindelige forslag bruges.
+Der laves kun **én universal `.el`-fil pr. filter** (ikke fire varianter,
+og ikke et manuelt indtastet filnavn). Selve navngivningen og flytningen
+af den færdige CSV-fil til den rigtige mappe håndteres **eksternt, af det
+separate EdgeFinder-programmet** — ikke inde i RawSignal-filens egen kode.
 
-  Tre løsninger er lagt frem for Thomas, endnu **ikke valgt**:
-  1. Fast RunID/filnavn i Input, skrevet manuelt af Thomas før hver kørsel.
-  2. Én `.el`-fil pr. workspace-kombination (fire varianter af hvert filter).
-  3. Tidsrammerne skrives som kolonner i selve CSV-filen i stedet for i
-     filnavnet, indtastet manuelt i Input ved kørsel.
+**Ikke endeligt afklaret:** hvilken skrivemetode `.el`-filen selv bruger
+internt (`Print(File("..."))` med fast, bogstaveligt filnavn, eller
+`FileAppend` med et simplere, ikke-workspace-specifikt navn) — det er ikke
+længere kritisk, da EdgeFinder-programmet uanset hvad står for det endelige
+navn og placering. Afklares når skabelonen i `RawSignalTest_1.el` /
+`RawSignalTest_2.el` bygges om.
 
-  **Følgevirkning, ikke rettet endnu:** `RawSignalTest_1.el` og
-  `RawSignalTest_2.el` bruger stadig `FileAppend` med dynamisk filnavn — de
-  skal bygges om, når valget mellem de tre løsninger er truffet.
-  `ARBEJDSBESKRIVELSE_RawSignal.md` bygger også på den forladte metode og
-  skal opdateres samtidig.
+**Følgevirkning, ikke rettet endnu:** `RawSignalTest_1.el` og
+`RawSignalTest_2.el` bruger stadig `FileAppend` med dynamisk,
+workspace-baseret filnavn (den forladte metode) — de skal bygges om til
+den nye, simplere model, når automationsprogrammet skal bruge dem.
 
 - **Hastighedstest af `FileAppend`**: ikke længere relevant, da metoden droppes.
+- **Filnavne under udvikling af RawSignal-Creature:** mens selve
+  RawSignal-Creature-programmet (fil-generering + automation) udvikles,
+  hedder testfilerne `RawSignal_(Nummer)_Test.el` — ikke det endelige
+  `RawSignal###.el`.
+
+## TradingDB — ny tabel til automations-sporing
+
+Ud over `Filter_Case` (kilden til selve filtrene, se ovenfor) er der
+besluttet en ny tabel, **`RawSignal_Case`**, som automationsprogrammet
+læser og skriver til (se `OPGAVEBESKRIVELSE_Automation.md`):
+
+| Felt | Indhold |
+|---|---|
+| `RawSignal-Name` | Filens navn, fx `RawSignal069` |
+| `Dev. date` | Byggedato for `.el`-filen |
+| `File Path` | Hvor filen ligger |
+| `Verification` | Resultat af Verify i TradeStation |
+| `Note` | Fx fejltekst ved en mislykket verificering |
+
+Automationsprogrammet bruger denne tabel til at se, hvilke filer der
+allerede er kørt, og hvilke der er nye og mangler at blive verificeret.
+
+## TradeStation Development Environment — bekræftet arbejdsgang
+
+Manuelt testet, én fil ad gangen, i `TSDev.exe`:
+
+1. Åbn `TSDev.exe`, hvis det ikke allerede er åbent.
+2. Ny strategi: `Ctrl+Alt+S`.
+3. Navngiv strategien `RawSignal...` → Enter.
+4. Indsæt signalteksten.
+5. Verify: `F3`.
+6. Luk: `Alt+C`.
+
+Verify-resultatet vises i Output-panelet (`0 error(s), 0 warning(s)` ved
+succes, ellers fejltekst med Technique/Line/Type) og i statuslinjen
+("VERIFIED" ved godkendt fil). Dette er det, automationsprogrammet skal
+aflæse — se `OPGAVEBESKRIVELSE_Automation.md`.
+
+## Åbne punkter
+
 - **Arbejdsbeskrivelse til den lokale Claude Code-session**, der skal
-  generere alle 381 .EL-filer ud fra TradingDB, er under udarbejdelse
-  (`ARBEJDSBESKRIVELSE_RawSignal.md`) — afventer valg af navngivningsmetode
-  ovenfor, før den kan færdiggøres.
+  generere alle 381 .EL-filer ud fra TradingDB
+  (`ARBEJDSBESKRIVELSE_RawSignal.md`), skal opdateres til den nye,
+  simplere navngivningsmodel (ingen dynamisk workspace-navngivning i
+  koden selv).
+- Automationsprogrammets krav er nu beskrevet i
+  `OPGAVEBESKRIVELSE_Automation.md`, men to punkter er stadig ikke
+  undersøgt: CLI/API-adgang til TradeStation, og hvordan filerne når frem
+  til den maskine, der kører automationen.

@@ -44,14 +44,19 @@ Afvigelser herfra har tidligere kostet flere timers fejlsøgning:
    formlen bruger.
 
 2. **`Once`-blok:**
-   - Byg `KoerselsID` = `RawSignalNavn + "__" + BarInterval-tal for data1,
-     data2, data3, adskilt med "_" + "__" + kørselsmåned (yyyy_MM)`.
-   - Byg `FilNavn` = `Mappe + KoerselsID + ".csv"`.
+   - **Navngivning ændret 2026-09-22:** ingen dynamisk opbygning af
+     filnavnet ud fra `BarInterval`/`ComputerDateTime` længere. Der laves
+     kun **én universal fil** pr. filter. Navngivning og flytning af den
+     færdige CSV-fil til den rigtige mappe håndteres eksternt af det
+     separate **EdgeFinder-programmet** — ikke i denne kode.
+   - Sæt `FilNavn` til det faste, forventede outputnavn (afklares endeligt
+     når skabelonen bygges om — se `NOTER.md`, afsnittet "Navngivning —
+     afklaret 2026-09-22").
    - `FileDelete(FilNavn)`.
-   - `FileAppend(FilNavn, "RunID,N1,N2,Starttid,AntalBars" + NewLine)` — kun
-     de kolonner der er relevante for filteret (spring `N2` over, hvis
-     formlen ikke bruger den; spring både `N1` og `N2` over, hvis ingen af
-     dem bruges).
+   - Skriv overskriftsrækken, `"RunID,N1,N2,Starttid,AntalBars" + NewLine`
+     — kun de kolonner der er relevante for filteret (spring `N2` over,
+     hvis formlen ikke bruger den; spring både `N1` og `N2` over, hvis
+     ingen af dem bruges).
 
 3. **Løkke(r) over parametrene** med `While`, styret af Fra/Til/Step-inputs
    (ikke faste `For`-løkker) — se `RawSignalTest_1.el`.
@@ -115,38 +120,31 @@ lokale. Skal de 381 filer verificeres uden at Thomas selv skal åbne og
 klikke Verify 381 gange, skal der bygges et selvstændigt program til det,
 som kører på Thomas' maskine ved siden af TradeStation.
 
-Det ønskede forløb, fil for fil:
-1. Programmet lægger én `.el`-fil ind i TradeStation (som Analysis
-   Technique/Strategy).
-2. Det trykker Verify (eller tilsvarende).
-3. Det læser resultatet — kompileret uden fejl, eller fejlbesked.
-4. Ved succes: gå til næste fil. Ved fejl: notér filnavn og fejltekst, gå
-   videre — stop ikke hele kørslen på grund af én fejlende fil, medmindre
-   andet besluttes (se åbent spørgsmål nedenfor).
-5. Til sidst: en samlet rapport — hvor mange verificerede, hvor mange
-   fejlede, og med hvilken fejl.
+**Fuld opgavebeskrivelse: se `OPGAVEBESKRIVELSE_Automation.md`** i denne
+mappe. Kort opsummeret er det nu besluttet:
 
-### Åbne spørgsmål — SKAL afklares, før dette bygges
+- Programmet er en del af RawSignal-Creature og styres fra en fane i
+  TradingApp.bat (Kør / maskine-valg / Fra filter nummer / kontrolfunktion
+  til/fra / antal mellem kontrol / Pause / Live Log).
+- **Adfærd ved fejl (afklaret):** stopper aldrig hele kørslen — noterer
+  fejlen og fortsætter til næste fil.
+- Resultatet skrives til en ny tabel i TradingDB, `RawSignal_Case` (navn,
+  byggedato, filsti, verificeringsresultat, note), ikke kun til en logfil.
+- Bygges kun til **TradeStation** i første omgang. Multicharts er en
+  selvstændig, separat blok, der tilføjes senere — de to platforme deler
+  ikke automations-logik.
 
-Disse er ikke besvaret endnu. Gæt ikke på svarene — spørg Thomas, eller
-undersøg og rapportér tilbage før noget bygges:
+### Åbne spørgsmål — SKAL stadig afklares, før dette bygges
 
-1. **Findes der en kommandolinje- eller API-adgang til TradeStation**
-   (fx til at åbne/kompilere en EasyLanguage-fil uden den grafiske flade)?
-   Det ville gøre automationen markant mere robust end at simulere
-   museklik og tastatur, som knækker ved uventede dialogbokse eller hvis et
-   vindue flytter sig. Undersøg TradeStations dokumentation og installerede
-   værktøjer for dette, før der bygges på ren UI-automatisering.
+1. **Findes der en kommandolinje- eller API-adgang til TradeStation?**
+   Undersøg `C:\Program Files (x86)\TradeStation 10.0\Program` og
+   TradeStations dokumentation for dette, før der bygges på ren
+   UI-automatisering (simuleret museklik/tastatur, med aflæsning af
+   Output-panelet og status-ordet "VERIFIED").
 
-2. **Adfærd ved fejl:** skal programmet stoppe helt ved første fejlende
-   fil, eller notere fejlen og fortsætte til næste? (Anbefalingen ovenfor er
-   "fortsæt og saml op", men det er ikke besluttet endnu.)
-
-3. **Hvordan når filerne frem til Thomas' maskine?** Ligger den lokale
-   Claude Code-session i det samme git-projekt (`DetStoreProjekt`), hentet
-   ned med `git pull`, eller et andet sted på serveren uden forbindelse til
-   GitHub? Det afgør, om automationsprogrammet selv skal hente filerne fra
-   GitHub, eller om de allerede ligger lokalt.
+2. **Hvordan når filerne frem til den maskine, der kører automationen?**
+   Ligger den i det samme git-projekt (`DetStoreProjekt`), hentet ned med
+   `git pull`, eller et andet sted uden forbindelse til GitHub?
 
 ## Ikke en del af denne opgave
 
