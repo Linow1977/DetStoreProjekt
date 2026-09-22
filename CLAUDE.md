@@ -1,7 +1,8 @@
 # CLAUDE.md — Sådan skal Claude Code arbejde i alle projekter
 
 ## Om Thomas
-Thomas er ikke programmer. Al forklaring skal være i almindeligt sprog, uden at antage kendskab til kode eller tekniske begreber.
+Thomas er ikke programmer. Al forklaring skal være i almindeligt sprog, uden at antage kendskab til kode eller tekniske begreber. 
+Thomas er ikke programmør så spørgsmål og svar skal forklares så et barn kan forstå det.
 
 ## Arbejdsregler (gælder altid)
 - Tænk før der skrives kode — planlæg først, byg bagefter
@@ -10,7 +11,7 @@ Thomas er ikke programmer. Al forklaring skal være i almindeligt sprog, uden at
 - Kommuniker på dansk
 
 ## Kodestandard
-- Skriv koden så en professionel programmør kan læse og overtage den uden forklaring
+- Skriv koden så en professionel programmør kan læse og overtage den uden forklaring.
 - Fast, ensartet struktur på tværs af alle filer (samme opbygning, samme navngivningsmønster for filer/funktioner/variabler)
 - Klare kommentarer der forklarer *hvorfor*, ikke kun *hvad*
 - Følg almindelige branche-konventioner for det sprog der bruges
@@ -28,3 +29,9 @@ Thomas er ikke programmer. Al forklaring skal være i almindeligt sprog, uden at
 
 ## Hvis noget går ud over opgavens rammer
 - Stop og spørg først — udvid ikke omfanget på egen hånd
+
+## Mål
+- skabe fundamentet for en privat daytrading hedge-fund bygget op omkring et fuldautomatisk strategiudviklingssystem baseret på teknisk analyse og prisdata
+## Ambitionsniveau 
+- skal ligge på niveau med nogle af verdens bedste hedge-fonde inden for samme type
+
