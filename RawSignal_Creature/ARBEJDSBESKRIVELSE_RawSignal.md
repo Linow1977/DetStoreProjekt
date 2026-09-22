@@ -72,8 +72,10 @@ Afvigelser herfra har tidligere kostet flere timers fejlsøgning:
    array pr. kombination af parametre, `Filter1[...]`, `Filter1_Forrige[...]`,
    `SignalBars[...]`, `StartTekst[...]`.
 
-6. **Skriv linjen med `FileAppend`** ved slukning, samme format som i
-   eksemplerne, kun med de kolonner der er relevante for netop dette filter.
+6. **Skriv linjen ved slukning** (skrivemetode — `Print(File(...))` eller
+   `FileAppend` — afklares når skabelonen bygges om, se `NOTER.md`),
+   samme format som i eksemplerne, kun med de kolonner der er relevante
+   for netop dette filter.
 
 7. **Filens hoved (kommentarblok)** skal indeholde:
    - Filterets `filter_case_id` og den oprindelige formel fra `filtere`.
@@ -96,8 +98,14 @@ valgte størrelse som kommentar ved array-deklarationen.
 
 - De færdige `.el`-filer navngives `RawSignal###.el` (samme nummerering som
   `filter_case_id`) og lægges i `RawSignal_Creature/RawSignal/` i dette
-  git-projekt, så de kan følges i versionsstyring.
-- CSV-output ved kørsel går til `C:\RawSignal_2026_TS\`, som allerede findes.
+  git-projekt, så de kan følges i versionsstyring. Under udvikling af selve
+  RawSignal-Creature-programmet hedder testfiler i stedet
+  `RawSignal_(Nummer)_Test.el` — se `NOTER.md`.
+- **CSV-output ved kørsel:** navngivning og flytning til den rigtige mappe
+  håndteres nu af det separate EdgeFinder-programmet, ikke af koden i
+  `.el`-filen selv (afklaret 2026-09-22, se `NOTER.md`). `C:\RawSignal_2026_TS\`
+  var det oprindelige, forladte mappe-forslag — bekræft med Thomas, om det
+  stadig er relevant, når skabelonen bygges om.
 
 ## Rækkefølge og validering
 
@@ -148,6 +156,9 @@ mappe. Kort opsummeret er det nu besluttet:
 
 - Ingen ændringer af `filtere`-formlerne.
 - Ingen kørsel af backtests — det gør Thomas selv i TradeStation.
-- Ingen ændring af `TradingDB`.
+- Ingen ændring af `filter_case`-tabellen i `TradingDB`. (Den nye tabel
+  `RawSignal_Case`, som automationsprogrammet læser/skriver, hører til
+  den opgave — se `OPGAVEBESKRIVELSE_Automation.md` — ikke til denne
+  fil-genererings-opgave.)
 - Ingen håndregnet erstatning for MACD/RSI/StandardDev/DMI/ChaikinMoneyFlow
   m.fl. — risikoen er accepteret og dokumenteret, ikke løst, jf. `NOTER.md`.
