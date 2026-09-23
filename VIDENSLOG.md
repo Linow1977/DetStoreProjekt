@@ -1,0 +1,80 @@
+# Videnslog — DetStoreProjekt
+
+Central hukommelse for hele projektet. Her samles den vigtige viden vi får
+undervejs — tekniske fælder, beslutninger og hvorfor, indsigt om markedet
+eller strategierne, og åbne tråde der ikke er lukket endnu.
+
+Skrevet så en ny session (menneske eller Claude, lokal eller cloud) kan
+læse sig ind i, hvad der allerede er lært, uden at have været med i
+samtalen der førte til det.
+
+## Sådan bruges filen
+
+- **Én post pr. læring**, under den kategori (delprojekt) den hører til.
+  Format: `### ÅÅÅÅ-MM-DD — Kort overskrift`, efterfulgt af 2-5 linjer:
+  hvad vi lærte/besluttede, og hvorfor det er vigtigt.
+- **Detaljerede tekniske noter og fulde beslutningslogs hører hjemme i det
+  enkelte delprojekts egen mappe** (som `RawSignal_Creature/NOTER.md`).
+  Her i Videnslog skrives kun det korte, tværgående resumé — med en
+  henvisning til detalje-filen, hvis der findes én.
+- **Nye kategorier oprettes efter behov.** Dukker der viden op om et
+  delprojekt, der ikke allerede har en overskrift her, opretter Claude
+  selv en ny `##`-overskrift til det — men siger det altid tydeligt til
+  Thomas i samme omgang, så det kan rettes hvis kategorien er forkert.
+- Vigtigst øverst i hver kategori er ikke et krav — kronologisk
+  (ældste øverst) er nok, medmindre andet giver bedre overblik.
+
+---
+
+## DetStoreProjekt (tværgående / generelt)
+
+Viden der gælder hele projektet, ikke kun ét delprojekt — fx overordnede
+arkitektur-valg, eller hvordan de forskellige Claude-sessioner arbejder
+sammen.
+
+### 2026-09-18 — To adskilte Claude-sessioner deler kun det, der lægges i GitHub
+Der findes en lokal Claude Code-session med direkte adgang til Thomas'
+server (TradingDB, TradeStation). Denne (cloud-)session har kun adgang til
+GitHub-projektet `DetStoreProjekt`. De to sessioner ser intet af hinandens
+arbejde, ud over det der bevidst committes og pushes til dette projekt.
+**Følge:** al viden der skal deles mellem sessionerne, skal ligge som
+filer i git — herunder denne Videnslog.
+
+### 2026-09-23 — Videnslog oprettet
+Thomas bad om en "selv-lærende" mekanisme: et sted hvor vigtig viden fra
+arbejdet med projektet samles, i stedet for at forsvinde i enkelte
+chat-samtaler. Denne fil er svaret — én central log med
+under-kategorier pr. delprojekt, som Claude selv udvider efter behov.
+
+## TradingApp
+
+*(Ingen poster endnu.)*
+
+## RawSignal-Creature
+
+Se `RawSignal_Creature/NOTER.md` for de fulde tekniske EasyLanguage-regler,
+og `RawSignal_Creature/BESLUTNINGSLOG_2026-09-18.md` for den fulde
+kronologiske gennemgang. Her kun det korte resumé.
+
+### 2026-09-18 — Indbyggede TradeStation-funktioner kan give forkerte tal i en løkke, uden fejlmelding
+Funktioner som MACD, RSI, StandardDev m.fl. husker deres forrige værdi
+knyttet til kodelinjen, ikke til parameterværdien. Kaldes de i en løkke
+med mange forskellige parametre, kan resultatet blive forkert uden nogen
+fejlmeddelelse. **Besluttet:** risikoen accepteres for alle 381 filtre
+(hurtigere end at håndregne hver funktion selv), men skal dokumenteres i
+hver fils hoved. Se `NOTER.md` punkt 3 for detaljer.
+
+### 2026-09-18 — `Print(File(...))` kræver et fast filnavn, `FileAppend` tillader en variabel
+`Print(File("..."))` skal have et bogstaveligt filnavn i anførselstegn —
+en variabel giver compile-fejlen `File name expected here`. `FileAppend`
+kan bruge en variabel, men åbner/lukker filen for hver skrevet linje og er
+derfor langsommere. Valget mellem de to hænger sammen med det åbne
+navngivnings-spørgsmål, se `NOTER.md`, afsnittet "Åbne punkter".
+
+## EdgeFinder
+
+*(Ingen poster endnu.)*
+
+## EdgeCruncher
+
+*(Ingen poster endnu.)*
