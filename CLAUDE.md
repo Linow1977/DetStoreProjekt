@@ -21,6 +21,10 @@ Thomas er ikke programmør så spørgsmål og svar skal forklares så et barn ka
 ## Før en opgave startes
 - Læs den vedhæftede/uploadede plan-fil grundigt, før noget bygges
 - Hvis planen er uklar eller mangler noget vigtigt, spørg Thomas først
+- **Tjek `VIDENSLOG.md` for relevant viden om det, der skal arbejdes med**
+  (og evt. delprojektets egen `NOTER.md`), før arbejdet går i gang — så
+  tidligere fejl og beslutninger ikke gentages. Dette er den anden halvdel
+  af selv-forbedringen: viden skal både skrives ned og slås op igen.
 
 ## Før en opgave afsluttes
 - Test at det virker, før det kaldes "færdigt" — vis testen til Thomas
@@ -34,6 +38,9 @@ Thomas er ikke programmør så spørgsmål og svar skal forklares så et barn ka
 - `VIDENSLOG.md` i roden af projektet er den centrale hukommelse for vigtig
   viden — tekniske fælder, beslutninger og hvorfor, markeds-/strategi-
   indsigt, åbne tråde.
+- **Læs den, før en opgave startes** (se "Før en opgave startes" ovenfor) —
+  ikke kun bagefter. Uden det led er filen bare en logbog, ikke noget der
+  gør fremtidige sessioner bedre.
 - Når en opgave afsluttes og der er lært noget vigtigt undervejs, tilføj en
   kort post under den relevante kategori i `VIDENSLOG.md` (se filens egen
   "Sådan bruges filen"-afsnit for format).
