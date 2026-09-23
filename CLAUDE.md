@@ -30,6 +30,18 @@ Thomas er ikke programmør så spørgsmål og svar skal forklares så et barn ka
 ## Hvis noget går ud over opgavens rammer
 - Stop og spørg først — udvid ikke omfanget på egen hånd
 
+## Videnslog (gælder alle sessioner, lokal og cloud)
+- `VIDENSLOG.md` i roden af projektet er den centrale hukommelse for vigtig
+  viden — tekniske fælder, beslutninger og hvorfor, markeds-/strategi-
+  indsigt, åbne tråde.
+- Når en opgave afsluttes og der er lært noget vigtigt undervejs, tilføj en
+  kort post under den relevante kategori i `VIDENSLOG.md` (se filens egen
+  "Sådan bruges filen"-afsnit for format).
+- Findes kategorien (delprojektet) ikke endnu, opret den selv — men sig det
+  tydeligt til Thomas i samme omgang.
+- Detaljerede tekniske noter hører til i det enkelte delprojekts egen mappe;
+  i Videnslog skrives kun det korte, tværgående resumé.
+
 ## Mål
 - skabe fundamentet for en privat daytrading hedge-fund bygget op omkring et fuldautomatisk strategiudviklingssystem baseret på teknisk analyse og prisdata
 ## Ambitionsniveau 
