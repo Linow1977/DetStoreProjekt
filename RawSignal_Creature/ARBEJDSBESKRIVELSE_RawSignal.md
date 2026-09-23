@@ -38,20 +38,31 @@ Byg hver fil efter samme opskrift som `RawSignalTest_1.el` og
 `RawSignalTest_2.el` i denne mappe. Ikke som inspiration — som skabelon.
 Afvigelser herfra har tidligere kostet flere timers fejlsøgning:
 
-1. **Input-blok:** `DataFilter_A` (int, standard 2), `Mappe` (string, standard
-   `"C:\RawSignal_2026_TS\"`), `RawSignalNavn` (string, sat til det
-   pågældende `RawSignal###`), og Fra/Til/Step-inputs for hver parameter
-   formlen bruger.
+1. **Input-blok:** `DataFilter_A` (int, standard 2), og Fra/Til/Step-inputs
+   for hver parameter formlen bruger. **Ingen `Mappe`- eller
+   `RawSignalNavn`-Input** — se punkt 2, filnavnet skrives direkte som
+   bogstavelig tekst i koden, ikke som en variabel.
 
 2. **`Once`-blok:**
-   - Byg `KoerselsID` = `RawSignalNavn + "__" + BarInterval-tal for data1,
-     data2, data3, adskilt med "_" + "__" + kørselsmåned (yyyy_MM)`.
-   - Byg `FilNavn` = `Mappe + KoerselsID + ".csv"`.
-   - `FileDelete(FilNavn)`.
-   - `FileAppend(FilNavn, "RunID,N1,N2,Starttid,AntalBars" + NewLine)` — kun
-     de kolonner der er relevante for filteret (spring `N2` over, hvis
-     formlen ikke bruger den; spring både `N1` og `N2` over, hvis ingen af
-     dem bruges).
+   - **Navngivning ændret 2026-09-22:** ingen dynamisk opbygning af
+     filnavnet ud fra `BarInterval`/`ComputerDateTime` længere, og ingen
+     `Mappe`/`RawSignalNavn`-variabel. Der laves kun **én universal fil**
+     pr. filter. Navngivning ift. workspace/tidsramme og flytning af den
+     færdige CSV-fil til den rigtige mappe håndteres eksternt af det
+     separate **EdgeFinder-programmet** — ikke i denne kode.
+   - `Print(File("..."))` kræver et fast, bogstaveligt filnavn i
+     anførselstegn og kan **ikke** tage en variabel (giver compile-fejlen
+     "File name expected here"). Skriv derfor det fulde filnavn (fx
+     `"C:\RawSignal_2026_TS\RawSignal###.csv"`) direkte, ens, i **alle**
+     `Print(File(...))`-kald i filen — ét i `Once`-blokken, ét ved hver
+     "SLUKKER"-hændelse. Se `RawSignalTest_1.el`/`RawSignalTest_2.el`.
+   - `FileDelete("...")` med samme faste filnavn, før overskriftsrækken
+     skrives, så gentagne beregninger af chartet ikke dubler linjerne.
+   - Skriv overskriftsrækken: `Print(File("..."), "RunID,N1,N2,Starttid,AntalBars")`
+     — kun de kolonner der er relevante for filteret (spring `N2` over,
+     hvis formlen ikke bruger den; spring både `N1` og `N2` over, hvis
+     ingen af dem bruges). **`FileAppend` bruges IKKE** — se `NOTER.md`,
+     punkt 1 under "EasyLanguage-regler".
 
 3. **Løkke(r) over parametrene** med `While`, styret af Fra/Til/Step-inputs
    (ikke faste `For`-løkker) — se `RawSignalTest_1.el`.
@@ -67,8 +78,10 @@ Afvigelser herfra har tidligere kostet flere timers fejlsøgning:
    array pr. kombination af parametre, `Filter1[...]`, `Filter1_Forrige[...]`,
    `SignalBars[...]`, `StartTekst[...]`.
 
-6. **Skriv linjen med `FileAppend`** ved slukning, samme format som i
-   eksemplerne, kun med de kolonner der er relevante for netop dette filter.
+6. **Skriv linjen ved slukning** med `Print(File("..."), ...)` — samme
+   faste, bogstavelige filnavn som i `Once`-blokken, og samme format som
+   i eksemplerne, kun med de kolonner der er relevante for netop dette
+   filter. **`FileAppend` bruges IKKE.**
 
 7. **Filens hoved (kommentarblok)** skal indeholde:
    - Filterets `filter_case_id` og den oprindelige formel fra `filtere`.
@@ -91,8 +104,14 @@ valgte størrelse som kommentar ved array-deklarationen.
 
 - De færdige `.el`-filer navngives `RawSignal###.el` (samme nummerering som
   `filter_case_id`) og lægges i `RawSignal_Creature/RawSignal/` i dette
-  git-projekt, så de kan følges i versionsstyring.
-- CSV-output ved kørsel går til `C:\RawSignal_2026_TS\`, som allerede findes.
+  git-projekt, så de kan følges i versionsstyring. Under udvikling af selve
+  RawSignal-Creature-programmet hedder testfiler i stedet
+  `RawSignal_(Nummer)_Test.el` — se `NOTER.md`.
+- **CSV-output ved kørsel:** navngivning og flytning til den rigtige mappe
+  håndteres nu af det separate EdgeFinder-programmet, ikke af koden i
+  `.el`-filen selv (afklaret 2026-09-22, se `NOTER.md`). `C:\RawSignal_2026_TS\`
+  var det oprindelige, forladte mappe-forslag — bekræft med Thomas, om det
+  stadig er relevant, når skabelonen bygges om.
 
 ## Rækkefølge og validering
 
@@ -115,43 +134,37 @@ lokale. Skal de 381 filer verificeres uden at Thomas selv skal åbne og
 klikke Verify 381 gange, skal der bygges et selvstændigt program til det,
 som kører på Thomas' maskine ved siden af TradeStation.
 
-Det ønskede forløb, fil for fil:
-1. Programmet lægger én `.el`-fil ind i TradeStation (som Analysis
-   Technique/Strategy).
-2. Det trykker Verify (eller tilsvarende).
-3. Det læser resultatet — kompileret uden fejl, eller fejlbesked.
-4. Ved succes: gå til næste fil. Ved fejl: notér filnavn og fejltekst, gå
-   videre — stop ikke hele kørslen på grund af én fejlende fil, medmindre
-   andet besluttes (se åbent spørgsmål nedenfor).
-5. Til sidst: en samlet rapport — hvor mange verificerede, hvor mange
-   fejlede, og med hvilken fejl.
+**Fuld opgavebeskrivelse: se `OPGAVEBESKRIVELSE_Automation.md`** i denne
+mappe. Kort opsummeret er det nu besluttet:
 
-### Åbne spørgsmål — SKAL afklares, før dette bygges
+- Programmet er en del af RawSignal-Creature og styres fra en fane i
+  TradingApp.bat (Kør / maskine-valg / Fra filter nummer / kontrolfunktion
+  til/fra / antal mellem kontrol / Pause / Live Log).
+- **Adfærd ved fejl (afklaret):** stopper aldrig hele kørslen — noterer
+  fejlen og fortsætter til næste fil.
+- Resultatet skrives til en ny tabel i TradingDB, `RawSignal_Case` (navn,
+  byggedato, filsti, verificeringsresultat, note), ikke kun til en logfil.
+- Bygges kun til **TradeStation** i første omgang. Multicharts er en
+  selvstændig, separat blok, der tilføjes senere — de to platforme deler
+  ikke automations-logik.
 
-Disse er ikke besvaret endnu. Gæt ikke på svarene — spørg Thomas, eller
-undersøg og rapportér tilbage før noget bygges:
+### Adgangsvej og filhentning — begge afklaret 2026-09-22
 
-1. **Findes der en kommandolinje- eller API-adgang til TradeStation**
-   (fx til at åbne/kompilere en EasyLanguage-fil uden den grafiske flade)?
-   Det ville gøre automationen markant mere robust end at simulere
-   museklik og tastatur, som knækker ved uventede dialogbokse eller hvis et
-   vindue flytter sig. Undersøg TradeStations dokumentation og installerede
-   værktøjer for dette, før der bygges på ren UI-automatisering.
-
-2. **Adfærd ved fejl:** skal programmet stoppe helt ved første fejlende
-   fil, eller notere fejlen og fortsætte til næste? (Anbefalingen ovenfor er
-   "fortsæt og saml op", men det er ikke besluttet endnu.)
-
-3. **Hvordan når filerne frem til Thomas' maskine?** Ligger den lokale
-   Claude Code-session i det samme git-projekt (`DetStoreProjekt`), hentet
-   ned med `git pull`, eller et andet sted på serveren uden forbindelse til
-   GitHub? Det afgør, om automationsprogrammet selv skal hente filerne fra
-   GitHub, eller om de allerede ligger lokalt.
+- **Ingen CLI/API til TradeStation Development Environment.** TDE er en
+  lokal editor uden internetforbindelse. TradeStations Web API findes,
+  men er kun til handel (kurser, konto, ordrer) og har ingen bro til TDE.
+  Automationen bygges derfor som ren UI-automatisering — se
+  `OPGAVEBESKRIVELSE_Automation.md` for detaljer.
+- **Filhentning:** automationsprogrammet henter selv `.el`-filerne (fra
+  git) og lægger dem ind i TDE.
 
 ## Ikke en del af denne opgave
 
 - Ingen ændringer af `filtere`-formlerne.
 - Ingen kørsel af backtests — det gør Thomas selv i TradeStation.
-- Ingen ændring af `TradingDB`.
+- Ingen ændring af `filter_case`-tabellen i `TradingDB`. (Den nye tabel
+  `RawSignal_Case`, som automationsprogrammet læser/skriver, hører til
+  den opgave — se `OPGAVEBESKRIVELSE_Automation.md` — ikke til denne
+  fil-genererings-opgave.)
 - Ingen håndregnet erstatning for MACD/RSI/StandardDev/DMI/ChaikinMoneyFlow
   m.fl. — risikoen er accepteret og dokumenteret, ikke løst, jf. `NOTER.md`.

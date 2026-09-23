@@ -34,34 +34,17 @@ om kolonnerne er udfyldt. Nogle formler bruger kun `Filter1_N2` og slet ikke
 læses for at se, hvilke af `Filter1_N1`/`Filter1_N2` der rent faktisk
 forekommer.
 
-## Navngivning (gældende metode)
+## Navngivning (gældende metode — se "Navngivning — afklaret 2026-09-22" nedenfor)
 
-Filnavnet og RunID bygges af **strategien selv, ved kørsel** — ikke skrevet
-ind på forhånd. Det løser to problemer på én gang: samme filter kan køres på
-flere workspaces (forskellige tidsrammer) uden at overskrive hinanden, og
-køredatoen kommer automatisk med.
+**Forladt metode (historisk, ikke længere brugt):** filnavnet og RunID blev
+oprindeligt tænkt bygget af strategien selv, ved kørsel — ud fra
+`BarInterval of data(1/2/3)` og `ComputerDateTime` — for at holde flere
+workspaces (forskellige tidsrammer) adskilt uden at overskrive hinanden.
+Denne metode krævede `FileAppend` (se punkt 1 nedenfor) og er droppet.
 
-```
-Mappe:    C:\RawSignal_2026_TS\
-Filnavn:  RawSignal(Nummer)__tf1_tf2_tf3__år_måned.csv
-RunID:    Samme streng som filnavnet, uden mappe og uden .csv
-```
-
-Eksempel: kører `RawSignal069` på et chart med data1=5 min, data2=10 min,
-data3=60 min, i september 2026:
-
-```
-C:\RawSignal_2026_TS\RawSignal069__5_10_60__2026_09.csv
-```
-
-De tre tidsrammer aflæses med `BarInterval of data(1/2/3)`. Alle tre skal med
-— to forskellige workspaces kan dele samme filter-tidsramme, og så er det de
-to andre tal, der adskiller dem.
-
-Datoen kommer fra `ComputerDateTime` — computerens ur ved kørsel, ikke
-hvornår koden blev skrevet.
-
-Se `RawSignalTest_2.el` for den fungerende kode, det bygger på.
+**Gældende metode:** se afsnittet "Navngivning — afklaret 2026-09-22"
+længere nede i denne fil, og de fungerende filer `RawSignalTest_1.el` /
+`RawSignalTest_2.el`.
 
 ## EasyLanguage-regler vi har lært (dyrt betalte)
 
@@ -72,10 +55,17 @@ en ny RawSignal-fil.
    En variabel giver compile-fejlen `File name expected here` og dermed
    `Strategy not verified`.
 
-   **Løsning:** brug `FileAppend(FilNavn, tekst)` i stedet. Den kan tage en
-   variabel som filnavn. Prisen: den åbner og lukker filen for hver linje,
-   der skrives, og er derfor langsommere end `Print(File(...))`. Det er
-   accepteret, fordi det er den eneste måde at bygge filnavnet dynamisk på.
+   **Historik:** dengang filnavnet skulle bygges dynamisk (med
+   tidsrammer/dato indlejret, se den forladte metode nedenfor), var
+   `FileAppend(FilNavn, tekst)` løsningen, fordi den kan tage en variabel
+   som filnavn — prisen var at den åbner og lukker filen for hver linje,
+   der skrives, og derfor er langsommere.
+
+   **Gældende beslutning (2026-09-22): `FileAppend` bruges IKKE.** Der
+   laves nu kun én universal fil pr. filter, med et fast, bogstaveligt
+   filnavn — EdgeFinder-programmet omdøber og flytter den færdige CSV-fil
+   bagefter. Dermed er den oprindelige grund til at bruge `FileAppend`
+   væk, og der skrives i stedet med `Print(File("fast_navn.csv"))`.
 
 2. **Optimering kan ikke bruges, når der skrives til fil.**
    TradeStation kører optimeringspas parallelt. Kun det første pas får lov at
@@ -147,34 +137,94 @@ en ny RawSignal-fil.
 - Er et filter stadig **tændt** på den allersidste bar i dataene, bliver den
   sidste periode ikke skrevet ud. Linjen skrives først, når filteret slukker.
   Det er højst én manglende linje pr. variant.
-- `FileAppend` er ikke endnu tidsmålt på en fil med mange hundredtusind
-  linjer. Testen kører i `RawSignalTest_1.el` — resultatet er ikke kendt endnu.
+
+## Navngivning — afklaret 2026-09-22
+
+**Beslutning 2026-09-19: `FileAppend` droppes.** Den var for langsom på
+RawSignalTest_1's 625 kombinationer (åbner/lukker filen for hver skrevet
+linje). Det genåbnede navngivnings-problemet, som `FileAppend` oprindeligt
+løste: hvordan holdes de fire workspaces (5,10,60 / 10,20,60 / 5,30,120 /
+5,10,120) adskilt, når filnavnet er en fast tekststreng i koden.
+
+**Løsning, valgt af Thomas:** ingen af de tre oprindelige forslag bruges.
+Der laves kun **én universal `.el`-fil pr. filter** (ikke fire varianter,
+og ikke et manuelt indtastet filnavn). Selve navngivningen og flytningen
+af den færdige CSV-fil til den rigtige mappe håndteres **eksternt, af det
+separate EdgeFinder-programmet** — ikke inde i RawSignal-filens egen kode.
+
+**Skrivemetode — afklaret: `FileAppend` bruges IKKE.** Siden der kun er
+brug for ét fast, bogstaveligt filnavn (én universal fil pr. filter, ingen
+dynamisk workspace-opbygning), er hele grunden til at bruge `FileAppend`
+(punkt 1 i "EasyLanguage-regler" ovenfor) væk. Der skrives i stedet med
+`Print(File("fast_navn.csv"))`, som er hurtigere og holder filen åben hele
+kørslen i stedet for at åbne/lukke den for hver linje.
+
+**Rettet 2026-09-23:** `RawSignalTest_1.el` og `RawSignalTest_2.el` er
+bygget om til den nye model — fast, bogstaveligt filnavn skrevet direkte i
+hvert `Print(File("..."))`-kald, ingen `Mappe`/`RawSignalNavn`-Input, ingen
+`FileAppend`. Se filerne for den fungerende kode.
+
+- **Hastighedstest af `FileAppend`**: ikke længere relevant, da metoden droppes.
+- **Filnavne under udvikling af RawSignal-Creature:** mens selve
+  RawSignal-Creature-programmet (fil-generering + automation) udvikles,
+  hedder testfilerne `RawSignal_(Nummer)_Test.el` — ikke det endelige
+  `RawSignal###.el`.
+
+## TradingDB — ny tabel til automations-sporing
+
+Ud over `Filter_Case` (kilden til selve filtrene, se ovenfor) er der
+besluttet en ny tabel, **`RawSignal_Case`**, som automationsprogrammet
+læser og skriver til (se `OPGAVEBESKRIVELSE_Automation.md`):
+
+| Felt | Indhold |
+|---|---|
+| `RawSignal-Name` | Filens navn, fx `RawSignal069` |
+| `Dev. date` | Byggedato for `.el`-filen |
+| `File Path` | Hvor filen ligger |
+| `Verification` | Resultat af Verify i TradeStation |
+| `Note` | Fx fejltekst ved en mislykket verificering |
+
+Automationsprogrammet bruger denne tabel til at se, hvilke filer der
+allerede er kørt, og hvilke der er nye og mangler at blive verificeret.
+
+## TradeStation Development Environment — bekræftet arbejdsgang
+
+Manuelt testet, én fil ad gangen, i `TSDev.exe`:
+
+1. Åbn `TSDev.exe`, hvis det ikke allerede er åbent.
+2. Ny strategi: `Ctrl+Alt+S`.
+3. Navngiv strategien `RawSignal...` → Enter.
+4. Indsæt signalteksten.
+5. Verify: `F3`.
+6. Luk: `Alt+C`.
+
+Verify-resultatet vises i Output-panelet (`0 error(s), 0 warning(s)` ved
+succes, ellers fejltekst med Technique/Line/Type) og i statuslinjen
+("VERIFIED" ved godkendt fil). Dette er det, automationsprogrammet skal
+aflæse — se `OPGAVEBESKRIVELSE_Automation.md`.
+
+## TradeStation Development Environment har ingen API — afklaret 2026-09-22
+
+TDE (hvor EasyLanguage skrives og verificeres) er en ren lokal editor uden
+internetforbindelse og uden officiel API. TradeStations **Web API**
+findes, men er et helt separat system til handel (kurser, konto, ordrer,
+streaming) og har ingen forbindelse til TDE. Den eneste kommunikationsvej
+den anden vej ("Command Line Commands") går fra EasyLanguage *til*
+TradeStation, ikke omvendt.
+
+**Konsekvens:** automationsprogrammet, der skal lægge `.el`-filer ind og
+trykke Verify, kan **ikke** bygges på et API — det skal være ren
+UI-automatisering (simuleret tastatur/museklik), med resultatet aflæst fra
+Output-panelet/status-linjen, som beskrevet ovenfor. Se
+`OPGAVEBESKRIVELSE_Automation.md` for den fulde beskrivelse.
+
+Automationsprogrammet henter desuden selv `.el`-filerne fra git — det skal
+ikke leveres manuelt.
 
 ## Åbne punkter
 
-- **Beslutning 2026-09-19: `FileAppend` droppes.** Den var for langsom på
-  RawSignalTest_1's 625 kombinationer (åbner/lukker filen for hver skrevet
-  linje). Vi går tilbage til `Print(File("..."))` med fast filnavn.
-
-  **Det genåbner navngivnings-problemet**, som `FileAppend` oprindeligt
-  løste: hvordan holdes de fire workspaces (5,10,60 / 10,20,60 / 5,30,120 /
-  5,10,120) adskilt, når filnavnet igen skal være en fast tekststreng i
-  koden og ikke kan bygges ud fra `BarInterval`/`ComputerDateTime` længere?
-
-  Tre løsninger er lagt frem for Thomas, endnu **ikke valgt**:
-  1. Fast RunID/filnavn i Input, skrevet manuelt af Thomas før hver kørsel.
-  2. Én `.el`-fil pr. workspace-kombination (fire varianter af hvert filter).
-  3. Tidsrammerne skrives som kolonner i selve CSV-filen i stedet for i
-     filnavnet, indtastet manuelt i Input ved kørsel.
-
-  **Følgevirkning, ikke rettet endnu:** `RawSignalTest_1.el` og
-  `RawSignalTest_2.el` bruger stadig `FileAppend` med dynamisk filnavn — de
-  skal bygges om, når valget mellem de tre løsninger er truffet.
-  `ARBEJDSBESKRIVELSE_RawSignal.md` bygger også på den forladte metode og
-  skal opdateres samtidig.
-
-- **Hastighedstest af `FileAppend`**: ikke længere relevant, da metoden droppes.
-- **Arbejdsbeskrivelse til den lokale Claude Code-session**, der skal
-  generere alle 381 .EL-filer ud fra TradingDB, er under udarbejdelse
-  (`ARBEJDSBESKRIVELSE_RawSignal.md`) — afventer valg af navngivningsmetode
-  ovenfor, før den kan færdiggøres.
+Ingen kendte åbne punkter tilbage pr. 2026-09-23. Både fil-genererings-
+opgaven (`ARBEJDSBESKRIVELSE_RawSignal.md`) og automationsprogrammet
+(`OPGAVEBESKRIVELSE_Automation.md`) er opdateret til de seneste
+beslutninger, og skabelonfilerne (`RawSignalTest_1.el`/`_2.el`) er bygget
+om til den nye navngivningsmodel.
