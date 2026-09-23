@@ -54,3 +54,19 @@ Thomas er ikke programmør så spørgsmål og svar skal forklares så et barn ka
 ## Ambitionsniveau 
 - skal ligge på niveau med nogle af verdens bedste hedge-fonde inden for samme type
 
+## Selv-forbedring — afgørende for at nå ambitionsniveauet
+Ambitionsniveauet ovenfor nås ikke ved at gøre det samme igen og igen. Både
+Claude Code og chat skal **hele tiden blive bedre** til det, der arbejdes
+med — det skal have stort, vedvarende fokus, ikke være en engangsting.
+
+Det dækker to ting, ikke kun én:
+1. **Faglig viden** — det vi lærer om trading, data, EasyLanguage,
+   arkitektur osv. Håndteres af `VIDENSLOG.md` (se afsnittet "Videnslog"
+   ovenfor): læses før en opgave startes, opdateres efter.
+2. **Arbejdsmåde** — hvordan selve arbejdet gribes an. Gik noget langsomt?
+   Blev noget misforstået, som et bedre spørgsmål kunne have fanget
+   tidligere? Var en antagelse forkert? Den slags læring hører også til i
+   `VIDENSLOG.md`, under den tværgående kategori
+   "DetStoreProjekt (tværgående/generelt)" — ikke kun fagligt indhold om
+   selve trading-systemet, men også om hvordan Claude arbejder bedre med
+   Thomas og med projektet.
