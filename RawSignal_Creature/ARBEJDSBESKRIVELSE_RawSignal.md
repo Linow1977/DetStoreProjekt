@@ -49,14 +49,17 @@ Afvigelser herfra har tidligere kostet flere timers fejlsøgning:
      kun **én universal fil** pr. filter. Navngivning og flytning af den
      færdige CSV-fil til den rigtige mappe håndteres eksternt af det
      separate **EdgeFinder-programmet** — ikke i denne kode.
-   - Sæt `FilNavn` til det faste, forventede outputnavn (afklares endeligt
-     når skabelonen bygges om — se `NOTER.md`, afsnittet "Navngivning —
-     afklaret 2026-09-22").
-   - `FileDelete(FilNavn)`.
-   - Skriv overskriftsrækken, `"RunID,N1,N2,Starttid,AntalBars" + NewLine`
+   - Sæt `FilNavn` til et fast, bogstaveligt filnavn (fx
+     `"RawSignal###.csv"`) — ikke bygget dynamisk. EdgeFinder-programmet
+     omdøber og flytter den færdige fil bagefter, se `NOTER.md`.
+   - `FileDelete(FilNavn)`, så gentagne beregninger af chartet ikke dubler
+     linjerne (bekræft ved ombygning af skabelonen, om `Print(File(...))`
+     kræver dette, eller nulstiller filen af sig selv ved første kald).
+   - Skriv overskriftsrækken med `Print(File(FilNavn), "RunID,N1,N2,Starttid,AntalBars")`
      — kun de kolonner der er relevante for filteret (spring `N2` over,
      hvis formlen ikke bruger den; spring både `N1` og `N2` over, hvis
-     ingen af dem bruges).
+     ingen af dem bruges). **`FileAppend` bruges IKKE** — se `NOTER.md`,
+     punkt 1 under "EasyLanguage-regler".
 
 3. **Løkke(r) over parametrene** med `While`, styret af Fra/Til/Step-inputs
    (ikke faste `For`-løkker) — se `RawSignalTest_1.el`.
@@ -72,10 +75,9 @@ Afvigelser herfra har tidligere kostet flere timers fejlsøgning:
    array pr. kombination af parametre, `Filter1[...]`, `Filter1_Forrige[...]`,
    `SignalBars[...]`, `StartTekst[...]`.
 
-6. **Skriv linjen ved slukning** (skrivemetode — `Print(File(...))` eller
-   `FileAppend` — afklares når skabelonen bygges om, se `NOTER.md`),
-   samme format som i eksemplerne, kun med de kolonner der er relevante
-   for netop dette filter.
+6. **Skriv linjen ved slukning** med `Print(File(FilNavn), ...)` — samme
+   format som i eksemplerne, kun med de kolonner der er relevante for
+   netop dette filter. **`FileAppend` bruges IKKE.**
 
 7. **Filens hoved (kommentarblok)** skal indeholde:
    - Filterets `filter_case_id` og den oprindelige formel fra `filtere`.

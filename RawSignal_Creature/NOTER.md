@@ -72,10 +72,17 @@ en ny RawSignal-fil.
    En variabel giver compile-fejlen `File name expected here` og dermed
    `Strategy not verified`.
 
-   **Løsning:** brug `FileAppend(FilNavn, tekst)` i stedet. Den kan tage en
-   variabel som filnavn. Prisen: den åbner og lukker filen for hver linje,
-   der skrives, og er derfor langsommere end `Print(File(...))`. Det er
-   accepteret, fordi det er den eneste måde at bygge filnavnet dynamisk på.
+   **Historik:** dengang filnavnet skulle bygges dynamisk (med
+   tidsrammer/dato indlejret, se den forladte metode nedenfor), var
+   `FileAppend(FilNavn, tekst)` løsningen, fordi den kan tage en variabel
+   som filnavn — prisen var at den åbner og lukker filen for hver linje,
+   der skrives, og derfor er langsommere.
+
+   **Gældende beslutning (2026-09-22): `FileAppend` bruges IKKE.** Der
+   laves nu kun én universal fil pr. filter, med et fast, bogstaveligt
+   filnavn — EdgeFinder-programmet omdøber og flytter den færdige CSV-fil
+   bagefter. Dermed er den oprindelige grund til at bruge `FileAppend`
+   væk, og der skrives i stedet med `Print(File("fast_navn.csv"))`.
 
 2. **Optimering kan ikke bruges, når der skrives til fil.**
    TradeStation kører optimeringspas parallelt. Kun det første pas får lov at
@@ -164,12 +171,12 @@ og ikke et manuelt indtastet filnavn). Selve navngivningen og flytningen
 af den færdige CSV-fil til den rigtige mappe håndteres **eksternt, af det
 separate EdgeFinder-programmet** — ikke inde i RawSignal-filens egen kode.
 
-**Ikke endeligt afklaret:** hvilken skrivemetode `.el`-filen selv bruger
-internt (`Print(File("..."))` med fast, bogstaveligt filnavn, eller
-`FileAppend` med et simplere, ikke-workspace-specifikt navn) — det er ikke
-længere kritisk, da EdgeFinder-programmet uanset hvad står for det endelige
-navn og placering. Afklares når skabelonen i `RawSignalTest_1.el` /
-`RawSignalTest_2.el` bygges om.
+**Skrivemetode — afklaret: `FileAppend` bruges IKKE.** Siden der kun er
+brug for ét fast, bogstaveligt filnavn (én universal fil pr. filter, ingen
+dynamisk workspace-opbygning), er hele grunden til at bruge `FileAppend`
+(punkt 1 i "EasyLanguage-regler" ovenfor) væk. Der skrives i stedet med
+`Print(File("fast_navn.csv"))`, som er hurtigere og holder filen åben hele
+kørslen i stedet for at åbne/lukke den for hver linje.
 
 **Følgevirkning, ikke rettet endnu:** `RawSignalTest_1.el` og
 `RawSignalTest_2.el` bruger stadig `FileAppend` med dynamisk,
