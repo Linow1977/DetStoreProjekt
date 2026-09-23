@@ -38,24 +38,27 @@ Byg hver fil efter samme opskrift som `RawSignalTest_1.el` og
 `RawSignalTest_2.el` i denne mappe. Ikke som inspiration — som skabelon.
 Afvigelser herfra har tidligere kostet flere timers fejlsøgning:
 
-1. **Input-blok:** `DataFilter_A` (int, standard 2), `Mappe` (string, standard
-   `"C:\RawSignal_2026_TS\"`), `RawSignalNavn` (string, sat til det
-   pågældende `RawSignal###`), og Fra/Til/Step-inputs for hver parameter
-   formlen bruger.
+1. **Input-blok:** `DataFilter_A` (int, standard 2), og Fra/Til/Step-inputs
+   for hver parameter formlen bruger. **Ingen `Mappe`- eller
+   `RawSignalNavn`-Input** — se punkt 2, filnavnet skrives direkte som
+   bogstavelig tekst i koden, ikke som en variabel.
 
 2. **`Once`-blok:**
    - **Navngivning ændret 2026-09-22:** ingen dynamisk opbygning af
-     filnavnet ud fra `BarInterval`/`ComputerDateTime` længere. Der laves
-     kun **én universal fil** pr. filter. Navngivning og flytning af den
+     filnavnet ud fra `BarInterval`/`ComputerDateTime` længere, og ingen
+     `Mappe`/`RawSignalNavn`-variabel. Der laves kun **én universal fil**
+     pr. filter. Navngivning ift. workspace/tidsramme og flytning af den
      færdige CSV-fil til den rigtige mappe håndteres eksternt af det
      separate **EdgeFinder-programmet** — ikke i denne kode.
-   - Sæt `FilNavn` til et fast, bogstaveligt filnavn (fx
-     `"RawSignal###.csv"`) — ikke bygget dynamisk. EdgeFinder-programmet
-     omdøber og flytter den færdige fil bagefter, se `NOTER.md`.
-   - `FileDelete(FilNavn)`, så gentagne beregninger af chartet ikke dubler
-     linjerne (bekræft ved ombygning af skabelonen, om `Print(File(...))`
-     kræver dette, eller nulstiller filen af sig selv ved første kald).
-   - Skriv overskriftsrækken med `Print(File(FilNavn), "RunID,N1,N2,Starttid,AntalBars")`
+   - `Print(File("..."))` kræver et fast, bogstaveligt filnavn i
+     anførselstegn og kan **ikke** tage en variabel (giver compile-fejlen
+     "File name expected here"). Skriv derfor det fulde filnavn (fx
+     `"C:\RawSignal_2026_TS\RawSignal###.csv"`) direkte, ens, i **alle**
+     `Print(File(...))`-kald i filen — ét i `Once`-blokken, ét ved hver
+     "SLUKKER"-hændelse. Se `RawSignalTest_1.el`/`RawSignalTest_2.el`.
+   - `FileDelete("...")` med samme faste filnavn, før overskriftsrækken
+     skrives, så gentagne beregninger af chartet ikke dubler linjerne.
+   - Skriv overskriftsrækken: `Print(File("..."), "RunID,N1,N2,Starttid,AntalBars")`
      — kun de kolonner der er relevante for filteret (spring `N2` over,
      hvis formlen ikke bruger den; spring både `N1` og `N2` over, hvis
      ingen af dem bruges). **`FileAppend` bruges IKKE** — se `NOTER.md`,
@@ -75,9 +78,10 @@ Afvigelser herfra har tidligere kostet flere timers fejlsøgning:
    array pr. kombination af parametre, `Filter1[...]`, `Filter1_Forrige[...]`,
    `SignalBars[...]`, `StartTekst[...]`.
 
-6. **Skriv linjen ved slukning** med `Print(File(FilNavn), ...)` — samme
-   format som i eksemplerne, kun med de kolonner der er relevante for
-   netop dette filter. **`FileAppend` bruges IKKE.**
+6. **Skriv linjen ved slukning** med `Print(File("..."), ...)` — samme
+   faste, bogstavelige filnavn som i `Once`-blokken, og samme format som
+   i eksemplerne, kun med de kolonner der er relevante for netop dette
+   filter. **`FileAppend` bruges IKKE.**
 
 7. **Filens hoved (kommentarblok)** skal indeholde:
    - Filterets `filter_case_id` og den oprindelige formel fra `filtere`.

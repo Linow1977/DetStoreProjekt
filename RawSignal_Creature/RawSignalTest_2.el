@@ -9,66 +9,44 @@
 // og kan læses af Python på samme måde.
 //
 //
-// FILNAVNET BYGGES AF STRATEGIEN SELV
+// FAST FILNAVN — kun én universal fil pr. filter (ændret 2026-09-22)
 //
-// Samme filter køres på flere workspaces med hver sin opsætning af
-// tidsrammer (5,10,60 - 10,20,60 - 5,30,120 - 5,10,120). Skrev de alle til
-// samme filnavn, ville hver kørsel slette den forrige, uden varsel.
+// Print(File("...")) kræver et fast, bogstaveligt filnavn i anførselstegn
+// og kan IKKE tage en variabel — en variabel giver compile-fejlen
+// "File name expected here". Filnavnet er derfor skrevet direkte i hvert
+// Print-kald nedenfor, ikke bygget dynamisk ud fra tidsramme/dato.
 //
-// Strategien aflæser derfor selv tidsrammerne med BarInterval og sætter dem
-// ind i filnavnet sammen med kørselsmåneden:
+// Navngivning af den færdige CSV-fil i forhold til workspace/tidsramme,
+// og flytning til den rigtige mappe, håndteres eksternt af det separate
+// EdgeFinder-programmet — ikke i denne kode. Se NOTER.md.
 //
-//   RawSignalTest_2__5_10_60__2026_09.csv
-//
-// Alle tre tidsrammer skal med. To af opsætningerne (5,10,60 og 5,10,120)
-// bruger samme tidsramme som filter-data, så kun filterets eget tal ville
-// ikke kunne skelne dem fra hinanden.
-//
-// Datoen kommer fra computerens ur på kørselstidspunktet - altså hvornår
-// backtesten blev kørt, ikke hvornår koden blev skrevet.
-//
-// Derfor bruges FileAppend i stedet for Print(File(...)): Print kræver et
-// fast filnavn i anførselstegn og kan ikke bruge en variabel.
+// FileAppend bruges IKKE. Print(File(...)) er hurtigere, fordi filen
+// holdes åben hele kørslen i stedet for at blive åbnet og lukket for
+// hver skrevet linje, som FileAppend gør.
 //
 //
 // VIGTIGT: Kør som almindelig backtest - IKKE via Optimize.
 // VIGTIGT: CSV-filen skal være lukket i Excel, mens der køres.
-// VIGTIGT: Chartet skal have mindst tre data-strømme, da data(3) aflæses.
+// VIGTIGT: Skift filnavnet i de to Print-kald nedenfor, hvis denne fil
+//          bruges som udgangspunkt for en anden RawSignal-fil.
 }
 
 Input:
-	int    DataFilter_A( 2 ),
-	string Mappe( "C:\Test\" ),
-	string RawSignalNavn( "RawSignalTest_2" );
+	int    DataFilter_A( 2 );
 
 Var:
 	int    Filter1( 0 ),
 	int    Filter1_Forrige( 0 ),
 	int    SignalBars( 0 ),
-	string StartTekst( "" ),
-	string KoerselsID( "" ),
-	string FilNavn( "" );
+	string StartTekst( "" );
 
 
-//----- Engangsopsætning: byg kørsels-ID og filnavn, og start filen forfra -----//
+//----- Engangsopsætning: nulstil filen og skriv overskriftsrække -----//
 
 	Once
 		Begin
-
-		// Kørsels-ID og filnavn er det samme, så data og filnavn altid passer sammen
-		KoerselsID = RawSignalNavn
-		           + "__"
-		           + NumToStr( BarInterval of data(1), 0 ) + "_"
-		           + NumToStr( BarInterval of data(2), 0 ) + "_"
-		           + NumToStr( BarInterval of data(3), 0 )
-		           + "__"
-		           + FormatDate( "yyyy_MM", ComputerDateTime );
-
-		FilNavn = Mappe + KoerselsID + ".csv";
-
-		FileDelete( FilNavn );
-		FileAppend( FilNavn, "RunID,N1,Starttid,AntalBars" + NewLine );
-
+		FileDelete( "C:\RawSignal_2026_TS\RawSignalTest_2.csv" );
+		Print( File("C:\RawSignal_2026_TS\RawSignalTest_2.csv"), "RunID,N1,Starttid,AntalBars" );
 		End;
 
 
@@ -98,12 +76,11 @@ Var:
 	// SLUKKER — linjen skrives her
 	If Filter1 = 0 and Filter1_Forrige = 1 Then
 		Begin
-		FileAppend( FilNavn,
-		            KoerselsID + ","
-		          + "1" + ","
-		          + StartTekst + ","
-		          + NumToStr( SignalBars, 0 )
-		          + NewLine );
+		Print( File("C:\RawSignal_2026_TS\RawSignalTest_2.csv"),
+		       "RawSignalTest_2" + ","
+		     + "1" + ","
+		     + StartTekst + ","
+		     + NumToStr( SignalBars, 0 ) );
 		SignalBars = 0;
 		End;
 

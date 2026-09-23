@@ -34,34 +34,17 @@ om kolonnerne er udfyldt. Nogle formler bruger kun `Filter1_N2` og slet ikke
 læses for at se, hvilke af `Filter1_N1`/`Filter1_N2` der rent faktisk
 forekommer.
 
-## Navngivning (gældende metode)
+## Navngivning (gældende metode — se "Navngivning — afklaret 2026-09-22" nedenfor)
 
-Filnavnet og RunID bygges af **strategien selv, ved kørsel** — ikke skrevet
-ind på forhånd. Det løser to problemer på én gang: samme filter kan køres på
-flere workspaces (forskellige tidsrammer) uden at overskrive hinanden, og
-køredatoen kommer automatisk med.
+**Forladt metode (historisk, ikke længere brugt):** filnavnet og RunID blev
+oprindeligt tænkt bygget af strategien selv, ved kørsel — ud fra
+`BarInterval of data(1/2/3)` og `ComputerDateTime` — for at holde flere
+workspaces (forskellige tidsrammer) adskilt uden at overskrive hinanden.
+Denne metode krævede `FileAppend` (se punkt 1 nedenfor) og er droppet.
 
-```
-Mappe:    C:\RawSignal_2026_TS\
-Filnavn:  RawSignal(Nummer)__tf1_tf2_tf3__år_måned.csv
-RunID:    Samme streng som filnavnet, uden mappe og uden .csv
-```
-
-Eksempel: kører `RawSignal069` på et chart med data1=5 min, data2=10 min,
-data3=60 min, i september 2026:
-
-```
-C:\RawSignal_2026_TS\RawSignal069__5_10_60__2026_09.csv
-```
-
-De tre tidsrammer aflæses med `BarInterval of data(1/2/3)`. Alle tre skal med
-— to forskellige workspaces kan dele samme filter-tidsramme, og så er det de
-to andre tal, der adskiller dem.
-
-Datoen kommer fra `ComputerDateTime` — computerens ur ved kørsel, ikke
-hvornår koden blev skrevet.
-
-Se `RawSignalTest_2.el` for den fungerende kode, det bygger på.
+**Gældende metode:** se afsnittet "Navngivning — afklaret 2026-09-22"
+længere nede i denne fil, og de fungerende filer `RawSignalTest_1.el` /
+`RawSignalTest_2.el`.
 
 ## EasyLanguage-regler vi har lært (dyrt betalte)
 
@@ -154,8 +137,6 @@ en ny RawSignal-fil.
 - Er et filter stadig **tændt** på den allersidste bar i dataene, bliver den
   sidste periode ikke skrevet ud. Linjen skrives først, når filteret slukker.
   Det er højst én manglende linje pr. variant.
-- `FileAppend` er ikke endnu tidsmålt på en fil med mange hundredtusind
-  linjer. Testen kører i `RawSignalTest_1.el` — resultatet er ikke kendt endnu.
 
 ## Navngivning — afklaret 2026-09-22
 
@@ -178,10 +159,10 @@ dynamisk workspace-opbygning), er hele grunden til at bruge `FileAppend`
 `Print(File("fast_navn.csv"))`, som er hurtigere og holder filen åben hele
 kørslen i stedet for at åbne/lukke den for hver linje.
 
-**Følgevirkning, ikke rettet endnu:** `RawSignalTest_1.el` og
-`RawSignalTest_2.el` bruger stadig `FileAppend` med dynamisk,
-workspace-baseret filnavn (den forladte metode) — de skal bygges om til
-den nye, simplere model, når automationsprogrammet skal bruge dem.
+**Rettet 2026-09-23:** `RawSignalTest_1.el` og `RawSignalTest_2.el` er
+bygget om til den nye model — fast, bogstaveligt filnavn skrevet direkte i
+hvert `Print(File("..."))`-kald, ingen `Mappe`/`RawSignalNavn`-Input, ingen
+`FileAppend`. Se filerne for den fungerende kode.
 
 - **Hastighedstest af `FileAppend`**: ikke længere relevant, da metoden droppes.
 - **Filnavne under udvikling af RawSignal-Creature:** mens selve
@@ -242,8 +223,8 @@ ikke leveres manuelt.
 
 ## Åbne punkter
 
-- **Arbejdsbeskrivelse til den lokale Claude Code-session**, der skal
-  generere alle 381 .EL-filer ud fra TradingDB
-  (`ARBEJDSBESKRIVELSE_RawSignal.md`), skal opdateres til den nye,
-  simplere navngivningsmodel (ingen dynamisk workspace-navngivning i
-  koden selv).
+Ingen kendte åbne punkter tilbage pr. 2026-09-23. Både fil-genererings-
+opgaven (`ARBEJDSBESKRIVELSE_RawSignal.md`) og automationsprogrammet
+(`OPGAVEBESKRIVELSE_Automation.md`) er opdateret til de seneste
+beslutninger, og skabelonfilerne (`RawSignalTest_1.el`/`_2.el`) er bygget
+om til den nye navngivningsmodel.
