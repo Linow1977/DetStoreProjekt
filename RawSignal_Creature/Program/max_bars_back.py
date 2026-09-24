@@ -1,13 +1,22 @@
-# Regner ud, hvor mange bars en formel ser tilbage (Max Bars Back), ved de
-# højeste parameterværdier. Resultatet skrives i filernes hoved.
+# Tjekker, om Max Bars Back er høj nok til en formel, og skriver det i
+# filernes hoved.
 #
-# Kan det ikke regnes sikkert (ukendt funktion), stopper bygningen, så der
-# aldrig skrives et gættet tal. Så skal funktionen tilføjes herunder.
+# Max Bars Back står på STANDARD (1000) i TradeStation (besluttet 24-09-2026).
+# Programmet regner ud, hvor mange bars formlen ser tilbage ved de højeste
+# parameterværdier:
+#   - højst STANDARD:            filen bygges, og behovet skrives i hovedet
+#   - over STANDARD:             bygningen stopper - strategien ville fejle
+#   - kan ikke regnes helt ud:   filen bygges, og hovedet siger, hvad der ikke
+#                                kunne regnes ud, og at STANDARD antages nok
+#                                (fx en funktion, programmet ikke kender endnu)
 
 import math
 import re
 
 from formel import ByggeFejl, tal_tekst, udskift
+
+# Max Bars Back som Thomas har sat den i TradeStation
+STANDARD = 1000
 
 # Funktioner, der ser tilbage i historikken, og hvilke argumenter (tællet
 # fra 0) der er en længde i bars. Den længste længde bestemmer, hvor mange
@@ -23,9 +32,13 @@ LAENGDE_ARGUMENTER = {
 # and/or/not står med, fordi "and (" ligner et funktionskald.
 UDEN_HISTORIK = {"data", "maxlist", "minlist", "floor", "absvalue", "truerange",
                  "and", "or", "not"}
-# Dagsværdier: første argument er antal DAGE tilbage, ikke bars. De styres
-# ikke af Max Bars Back, men de første dage i dataene har ingen gyldig værdi.
-DAGS_FUNKTIONER = {"opend", "highd", "lowd", "closed"}
+# Dags- og sessionsværdier tæller i dage/sessioner, ikke bars, og styres ikke
+# af Max Bars Back. Tallet angiver, hvilket argument der er "antal tilbage":
+# OpenD(1) = i går, OpenSession(0, 1) = forrige session.
+PERIODE_FUNKTIONER = {
+    "opend": 0, "highd": 0, "lowd": 0, "closed": 0,
+    "opensession": 1, "highsession": 1, "lowsession": 1, "closesession": 1,
+}
 # Regnefunktioner, som en længde må indeholde
 REGNE = {"maxlist": max, "minlist": min, "floor": math.floor, "absvalue": abs}
 
@@ -57,16 +70,20 @@ def _regn(udtryk):
     return v if isinstance(v, (int, float)) else None
 
 
-def _tilbage(tekst, fid, dage):
-    """Hvor mange bars et stykke formel ser tilbage. Dage tilbage for
-    dagsværdier samles i listen 'dage'."""
+def _tilbage(tekst, perioder, uvisse):
+    """Hvor mange bars et stykke formel ser tilbage, så vidt det kan regnes ud.
+
+    Dags-/sessionsværdier samles i 'perioder' som (funktion, antal tilbage).
+    Det, der ikke kan regnes ud, samles i 'uvisse' som tekst.
+    """
     stoerst = 0
     # Bar-henvisninger som High[1]
     for m in re.finditer(r"\[([^\[\]]+)\]", tekst):
         v = _regn(m.group(1))
         if v is None:
-            raise ByggeFejl(f"Filter {fid}: kan ikke regne [{m.group(1)}] ud.")
-        stoerst = max(stoerst, int(math.ceil(v)))
+            uvisse.append(f"[{m.group(1)}]")
+        else:
+            stoerst = max(stoerst, int(math.ceil(v)))
 
     # Funktionskald: navn( ... )
     i = 0
@@ -82,50 +99,60 @@ def _tilbage(tekst, fid, dage):
             j += 1
         indhold = tekst[m.end():j - 1]
         args = _del_argumenter(indhold)
-        inde = max(_tilbage(x, fid, dage) for x in args)
+        inde = max(_tilbage(x, perioder, uvisse) for x in args)
 
         if navn in LAENGDE_ARGUMENTER:
-            laengder = []
-            for nr in LAENGDE_ARGUMENTER[navn]:
-                v = _regn(args[nr]) if nr < len(args) else None
-                if v is None:
-                    raise ByggeFejl(f"Filter {fid}: kan ikke regne længden i {m.group(1)}({indhold}) ud.")
-                laengder.append(int(math.ceil(v)))
-            # En funktion af en funktion skal bruge begges historik
-            stoerst = max(stoerst, max(laengder) + inde)
+            laengder = [_regn(args[nr]) if nr < len(args) else None
+                        for nr in LAENGDE_ARGUMENTER[navn]]
+            if None in laengder:
+                uvisse.append(f"længden i {m.group(1)}")
+                stoerst = max(stoerst, inde)
+            else:
+                # En funktion af en funktion skal bruge begges historik
+                stoerst = max(stoerst, int(math.ceil(max(laengder))) + inde)
+        elif navn in PERIODE_FUNKTIONER:
+            nr = PERIODE_FUNKTIONER[navn]
+            v = _regn(args[nr]) if nr < len(args) else None
+            if v is None:
+                uvisse.append(f"antal tilbage i {m.group(1)}")
+            else:
+                perioder.append((m.group(1), int(math.ceil(v))))
+            stoerst = max(stoerst, inde)
         elif navn in UDEN_HISTORIK:
             stoerst = max(stoerst, inde)
-        elif navn in DAGS_FUNKTIONER:
-            v = _regn(args[0])
-            if v is None:
-                raise ByggeFejl(f"Filter {fid}: kan ikke regne antal dage i {m.group(1)}({indhold}) ud.")
-            dage.append((m.group(1), int(math.ceil(v))))
-            stoerst = max(stoerst, inde)
         else:
-            raise ByggeFejl(f"Filter {fid}: Max Bars Back kender ikke funktionen {m.group(1)}. "
-                            "Programmet skal udvides, før filteret kan bygges.")
+            uvisse.append(f"funktionen {m.group(1)}")
+            stoerst = max(stoerst, inde)
         i = j
     return stoerst
 
 
 def tekst(a):
-    """Linjerne om Max Bars Back til filernes hoved."""
+    """Linjerne om Max Bars Back til filernes hoved. Stopper bygningen, hvis
+    formlen med sikkerhed skal bruge mere end STANDARD."""
     hoejeste = {"Filter1_" + x["navn"]: tal_tekst(x["slut"]) for x in a["parametre"]}
     formel = udskift(a["formel"], hoejeste)
-    dage = []
-    bars = _tilbage(formel, a["id"], dage)
+    perioder, uvisse = [], []
+    bars = _tilbage(formel, perioder, uvisse)
+
+    vaerdier = ", ".join(f"{k.replace('Filter1_', '')}={v}" for k, v in hoejeste.items())
+    ved = f" ved {vaerdier}" if vaerdier else ""
+    if bars > STANDARD:
+        raise ByggeFejl(f"Filter {a['id']}: formlen skal bruge {bars} bars{ved}, men Max Bars Back "
+                        f"står på {STANDARD}. Hæv Max Bars Back for dette filter, eller sænk N-værdierne.")
 
     if bars == 0:
-        linjer = ["Formlen ser ikke tilbage i bars. Auto Detect er nok."]
+        linjer = [f"Står på {STANDARD} (standard). Formlen ser ikke tilbage i bars."]
     else:
-        vaerdier = ", ".join(f"{k.replace('Filter1_', '')}={v}" for k, v in hoejeste.items())
-        ved = f" ved {vaerdier}" if vaerdier else ""
-        linjer = [f"Længste beregning er {bars} bars{ved}.",
-                  f"Sæt Max Bars Back til mindst {bars}."]
-    if dage:
-        flest = max(d for _, d in dage)
-        navne = ", ".join(sorted({n for n, _ in dage}))
-        linjer += [f"Formlen bruger dagsværdier ({navne}) op til {flest} dag(e) tilbage.",
-                   "De tælles i dage og styres ikke af Max Bars Back. De første",
-                   f"{flest} handelsdag(e) i dataene har ingen gyldig dagsværdi."]
+        linjer = [f"Står på {STANDARD} (standard). Længste beregning er {bars} bars{ved}."]
+    if perioder:
+        flest = max(d for _, d in perioder)
+        navne = ", ".join(sorted({n for n, _ in perioder}))
+        linjer += [f"Formlen bruger dags-/sessionsværdier ({navne}) op til {flest} tilbage.",
+                   "De styres ikke af Max Bars Back, men de første dage/sessioner i",
+                   "dataene har ingen gyldig værdi."]
+    if uvisse:
+        linjer += [f"Kunne ikke regnes helt ud: {', '.join(sorted(set(uvisse)))}.",
+                   f"{STANDARD} antages at være nok. Stopper strategien med en fejl om",
+                   "for få bars, skal Max Bars Back hæves for dette filter."]
     return linjer
