@@ -113,6 +113,12 @@ TDE's menukommandoer kan sendes direkte som `WM_COMMAND`. Numrene står i
 Knapper skal klikkes med `PostMessage`, fordi `SendMessage` hænger på TDE's
 fejlbokse.
 
+### 2026-09-24 — Max Bars Back står på 1000; ukendte funktioner stopper ikke længere
+Thomas har sat Max Bars Back til 1000 som standard. Programmet stopper nu kun,
+hvis et filter med sikkerhed skal bruge mere end 1000. Højeste udregnede behov
+er 609 (MACD). Kan behovet ikke regnes ud, fx for CCI, bygges filen med 1000
+som antagelse. Alle 380 filtre kan nu bygges.
+
 ### 2026-09-24 — AvgTrueRange i en løkke er målt og ser ud til at virke
 Det nye filter 1 (AvgTrueRange, 625 kombinationer) gav forskellige
 signalrækker for alle 620 kombinationer, der kan tænde. Sammen med Average

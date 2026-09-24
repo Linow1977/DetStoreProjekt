@@ -34,7 +34,7 @@ For hvert filter laves to filer:
 | `faelles.py` | Mapper, log og forbindelse til TradingDB |
 | `database.py` | Læsning og skrivning i `filter_case`, `rawsignal`, `rawsignal_kontrol` |
 | `formel.py` | Læser formlen: parametre, decimaltal, DataFilter_B, seriefunktioner |
-| `max_bars_back.py` | Regner Max Bars Back ud til filernes hoved |
+| `max_bars_back.py` | Tjekker, at Max Bars Back (1000) er nok, og skriver det i filernes hoved |
 | `generer.py` | Bygger teksten til strategi og ShowMe |
 | `tde_styring.py` | Finder, åbner og genstarter TDE og kalder verify-scriptet |
 | `tde\verify-one.ps1` | Opretter én fil i TDE, indsætter koden, kører Verify, lukker |
@@ -46,8 +46,13 @@ For hvert filter laves to filer:
 
 - Formlen fra `filter_case` sættes ind ordret. Kun `Filter1_N1`/`Filter1_N2`
   udskiftes, og det kontrolleres, at formlen er ens i begge filer.
-- Kan noget ikke bygges sikkert (fx ukendt funktion i Max Bars Back), stopper
-  programmet hellere end at gætte.
+- Kan noget ikke bygges sikkert, stopper programmet hellere end at gætte.
+- Max Bars Back står på 1000 som standard i TradeStation. Programmet regner
+  ud, hvor mange bars formlen skal bruge ved de højeste parameterværdier:
+  over 1000 stopper bygningen; kan det ikke regnes helt ud (fx CCI, som
+  programmet ikke kender endnu), bygges filen, og hovedet siger, at 1000
+  antages at være nok. Dags- og sessionsfunktioner (`CloseD`,
+  `OpenSession` osv.) tæller i dage/sessioner og påvirker ikke Max Bars Back.
 - Der skrives kun i databasen, når BEGGE filer er godkendt i TDE. Så
   markeres filteret færdigt i `filter_case.rawsignal_faerdig` i samme
   transaktion.
@@ -61,5 +66,7 @@ For hvert filter laves to filer:
 
 - Seriefunktioner (MACD m.fl.) i en løkke kan give forkerte tal uden fejl.
   Filens hoved viser, om filteret er målt.
-- Max Bars Back kender endnu ikke alle funktioner i `filter_case`.
+- Max Bars Back kan ikke regnes helt ud for 36 filtre (CCI, ChaikinMoneyFlow,
+  CountIf, PercentR, Pivot-funktionerne m.fl.). De bygges med 1000 som antagelse.
+  Højeste behov blandt dem, der kan regnes ud, er 609 bars (filter 68, MACD).
 - Programmet kører ét filter ad gangen.

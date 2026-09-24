@@ -51,9 +51,19 @@ GAMLE numre. Gamle 069 (MACD) er nu 68, gamle 266 er nu 265, og gamle 113
 - `DataFilter_A( 2 )` og `DataFilter_B( 3 )` står som Inputs.
 - Strategien stopper med en fejl (RaiseRunTimeError), hvis Data1 ikke har
   samme tidsramme som Data2. Data1 kan ikke rettes af koden, kun i chartet.
-- Max Bars Back regnes ud af programmet og står i filens hoved. Kender
-  programmet ikke en funktion, stopper det i stedet for at gætte. Det gælder
-  74 filtre i dag: CCI, `*Session`, ChaikinMoneyFlow, PercentR, Pivot* m.fl.
+- **Max Bars Back står på 1000 som standard** i TradeStation (besluttet af
+  Thomas samme aften). Programmet regner behovet ud ved de højeste
+  parameterværdier og skriver det i filens hoved:
+  - Over 1000: bygningen stopper. Det gælder ingen filtre i dag. Højeste
+    behov er 609 (filter 68, MACD).
+  - Kan ikke regnes helt ud: filen bygges alligevel, og hovedet siger, at
+    1000 antages at være nok. Det gælder 36 filtre (CCI 18,
+    ChaikinMoneyFlow 8, længden i Highest/Lowest 4, CountIf, PercentR,
+    SquareRoot og Pivot*).
+  - `OpenSession`/`HighSession`/`LowSession`/`CloseSession` tæller i
+    sessioner ligesom `CloseD` tæller i dage og påvirker ikke Max Bars Back.
+  - Alle 380 filtre kan nu bygges. Om morgenen stoppede 74 på ukendte
+    funktioner.
 
 ## CSV-formatet (besluttet i RawSignal_CSV-format.docx)
 
@@ -125,8 +135,8 @@ ser altså ikke ud til at være ramt af hukommelsesproblemet.
   uenige med denne log, gælder denne log.
 - Scripts i `RawSignal_Creature/Automation/` er forældede og erstattet af
   `RawSignal_Creature/Program/`.
-- Max Bars Back skal udvides med de funktioner, som de 74 stoppede filtre
-  bruger.
+- Max Bars Back kan læres de sidste funktioner (CCI m.fl.), så de 36 filtre
+  også får et udregnet behov. Det er ikke nødvendigt for at bygge dem.
 - Dagsfunktionerne (`CloseD`, `HighD` osv.) giver TradeStation-advarslen om
   seriefunktioner i en løkke, men står ikke på programmets liste over
   seriefunktioner. Thomas har besluttet ikke at tilføje dem.
