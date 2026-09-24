@@ -1,66 +1,78 @@
-# RawSignal – opgavebeskrivelse
+# RawSignal Creature – opgavebeskrivelse
 
-Opdateret 23. september 2026. Erstatter alle tidligere versioner.
-Læs også `BYGGEVEJLEDNING_RawSignal.md` og `NOTAT_til_BYGGEVEJLEDNING_RawSignal.md`.
-Er de uenige med dette dokument, følg dette dokument.
-
-Regler for Claude Code: tænk før du bygger, gæt aldrig, spørg ved tvivl, og lav kun de ændringer,
-opgaven kræver. Punkt 12 er de ting, Thomas endnu ikke har afgjort. Dem må du ikke selv afgøre.
+Opdateret 24. september 2026. Erstatter alle tidligere versioner.
+Er andre filer uenige med dette dokument, følg dette dokument.
 
 ---
 
-## 1. Formål
-
-RawSignal-filer registrerer kun to ting: HVORNÅR et filter tænder, og hvor mange Data2-bars det er
-tændt. Ingen handelslogik, ingen analyse. De bruges kun, mens signalerne analyseres. En rigtig
-handelskode skrives senere.
-
-## 2. To filer pr. filter (besluttet af Thomas)
+## 1. Opgaven i fire trin
 
 ```
-Filter_Case (databasen)   <- det eneste Thomas ændrer
-        |
-        v   programmet laver begge filer ud fra samme række
-RawSignal069             Strategi  Skriver CSV. Bruges i rørledningen som planlagt.
-RawSignal069_Kontrol     ShowMe    Tegner kun. Bruges, når Thomas selv vil se signalet.
+1. Filteret hentes i TradingDB (Filter_Case)
+2. Omskrives til to filer:
+     RawSignal<nr>            strategi
+     RawSignal<nr>_Kontrol    ShowMe
+3. Verificeres i TDE (af RawSignal Creature selv, som dagen før)
+4. Info lægges i TradingDB-tabellerne:
+     strategi -> rawsignal
+     ShowMe   -> RawSignal_Kontrol
 ```
 
-- Begge filer laves, verificeres og lægges i hver sin mappe.
-- Filerne rettes aldrig i hånden. Kun `Filter_Case` ændres, og programmet laver filerne forfra.
-- Formelteksten skal være ordret ens i begge filer. Programmet skal tjekke det, før filerne gemmes.
-- ShowMe'en åbnes i TDE med Alt+Ctrl+M, så koden kan lægges ind, navngives og verificeres.
-- Navne: strategien hedder `RawSignal<nr>`, ShowMe'en `RawSignal<nr>_Kontrol`.
-- Strategi- og studienavne skal være unikke i TradeStation. Slå altid op i tabellen først (punkt 3),
-  og spring over, hvis navnet allerede findes.
-- Versionsnummer i filnavnene (når en formel i `Filter_Case` ændres) tages først, når det bliver aktuelt.
+Alt andet i dette dokument er detaljer om trin 2. Det fortæller, hvad de to filer skal indeholde.
 
-## 3. Tabeller i TradingDB
+**Sådan arbejdes der:**
+- Kvalitet over hastighed. Tænk før du bygger. Gæt aldrig. Spørg ved tvivl.
+- Kun `Filter_Case` ændres. De genererede filer rettes aldrig i hånden. Programmet laver dem forfra.
+- Lav kun de ændringer, opgaven kræver.
+- Alle filer fra 22. september er slettet. Vi starter friskt.
+
+## 2. Rækkefølge
+
+**Trin A: tabellen `RawSignal_Kontrol`**
+- Læs den faktiske struktur af `rawsignal` i databasen (kolonner, typer, primærnøgle, regler).
+- Lav `RawSignal_Kontrol` som en tro kopi af strukturen, uden rækker. (PostgreSQL gemmer navnet som
+  `rawsignal_kontrol`. Det er fint.)
+- Vis SQL'en, før den køres. Rør ikke `rawsignal`.
+- Tjek de 10 rækker i `rawsignal` og eventuelle strategier med samme navne i TDE. Programmet springer
+  over, hvis et navn allerede findes, så gamle rester kan blokere. Slet intet uden Thomas' OK.
+- Stop og vis resultatet.
+
+**Trin B: programmet (kun efter trin A er godkendt)**
+- Bygges og afprøves for 8 forskellige filtre, ÉT ad gangen, så fejl kan findes og rettes undervejs.
+- Efter hvert filter: stop, og skriv hvad der blev lavet og hvad verificeringen gav. Vent på Thomas'
+  besked, før næste filter.
+- De 8 filtre skal tilsammen dække: ingen parametre, kun N1, kun N2, begge parametre, decimaltal,
+  `DataFilter_B`, med seriefunktion og uden seriefunktion. Foreslå de 8 ud fra `Filter_Case`. Simpleste
+  først. Thomas godkender listen.
+- Programmet køres ikke på alle 381 filtre, før alle 8 er godkendt.
+
+## 3. Tabellerne (trin 4)
 
 | Fil | Tabel |
 |---|---|
-| Strategi `RawSignal<nr>` | `rawsignal` (findes allerede, uændret) |
-| ShowMe `RawSignal<nr>_Kontrol` | `RawSignal_Kontrol` (NY, gemmes af PostgreSQL som `rawsignal_kontrol`) |
+| Strategi `RawSignal<nr>` | `rawsignal` (findes, beholder sit navn) |
+| ShowMe `RawSignal<nr>_Kontrol` | `RawSignal_Kontrol` (ny, samme kolonner) |
 
-Den nye tabel har samme kolonner som `rawsignal`:
+Kolonnerne i `rawsignal` (bekræft mod databasen): `rawsignal_name` (primærnøgle), `dev_date`,
+`signal_path`, `verification` (`OK` eller `FEJLET`) og `note` (fejl- eller advarselstekst fra
+Output-panelet).
 
-| Kolonne | Indhold |
-|---|---|
-| `rawsignal_name` | fx `RawSignal069_Kontrol`, primærnøgle, sikrer unikke navne |
-| `dev_date` | byggedato, hele sekunder |
-| `signal_path` | hvor `.el`-filen ligger |
-| `verification` | `OK` eller `FEJLET` |
-| `note` | fejl- eller advarselstekst fra Output-panelet |
+- Navne skal være unikke. Slå op i tabellen før noget oprettes, og spring over, hvis navnet findes.
+- Strategi åbnes i TDE med Ctrl+Alt+S, ShowMe med Alt+Ctrl+M, som i den eksisterende automation.
+- `RawSignal_Case` er ikke aktuelt. Ret gamle omtaler i NOTER, Automation og beslutningsloggen.
 
-Koblingen mellem de to filer ligger i navnet (`RawSignal069` og `RawSignal069_Kontrol`).
-Skal tabellen til strategifilen omdøbes for symmetriens skyld: se punkt 12.
+---
 
-## 4. Signal-definition (låst)
+## 4. Hvad filerne skal indeholde (opslag til trin 2)
 
-- Signal = filteret skifter fra FALSK til SAND.
-- Varighed (`AntalBars`) = antal Data2-bars filteret bliver ved med at være SAND i træk.
-- Én linje pr. signal, skrevet når filteret slukker.
-- "Én linje pr. sand bar" må IKKE bruges.
-- Ændres definitionen, skal alle backtests køres om. Spørg Thomas først.
+### 4.1 Signalet (gælder begge filer)
+
+- Filteret er SAND eller FALSK på hver bar. Signal = skiftet fra FALSK til SAND.
+- Varighed (`AntalBars`) = antal Data2-bars filteret bliver SAND i træk.
+- Formelteksten fra `Filter_Case` sættes ind ordret. Kun `Filter1_N1` og `Filter1_N2` udskiftes.
+  Formelteksten skal være ens i strategi og ShowMe. Tjek det, før filerne gemmes.
+- Hvilke parametre filteret bruger, afgøres af formelteksten, ikke af databasekolonnerne.
+- `DataFilter_A` er altid 2 og `DataFilter_B` altid 3. Data3 er større end Data2.
 
 ```
 Data2-bar:  1    2    3    4    5    6    7    8
@@ -70,28 +82,24 @@ Filter:     nej  nej  JA   JA   JA   nej  JA   nej
                  AntalBars 3     AntalBars 1
 ```
 
-## 5. AntalBars tælles i Data2-bars
+### 4.2 Strategien `RawSignal<nr>`
 
-- Data2 er filterets egen tidsramme (`DataFilter_A`, altid 2).
-- I dag er Data1 og Data2 lige store (bekræftet af Thomas). Så tæller strategien, som kører på Data1,
-  allerede rigtigt. Eksisterende filer skal ikke køres om på grund af tællingen. (069 skal køres om
-  på grund af MACD-problemet, se punkt 10.)
-- Senere skal Data1 bruges til at finpudse entry med mindre bars (fx 1, 2, 3 eller 5 minutter). Så
-  bliver Data1 mindre end Data2, og strategien ville se ufærdige Data2-bars og tælle forkert.
-- Mindstekrav: strategien stopper med en tydelig fejl, hvis Data1 og Data2 ikke er lige store.
-  Fuld løsning (kun opdatering når en Data2-bar er færdig) bygges først, når Thomas beslutter det.
-- Data3 er altid større end Data2. Den påvirker ikke tællingen.
-
-## 6. Strategien (CSV)
-
-- Filnavn og sti står ordret i koden, ens de tre steder: `FileDelete`, overskriftsrækken og linjen
-  ved slukning. Python skriver dem ind, når kodefilen laves. Ingen mappe- eller filnavn-Inputs.
-  `FileAppend` må ikke bruges.
-- Fra/Til/Step og DataFilter-numre er Inputs.
+- Skriver én linje pr. signal til en CSV-fil, når filteret slukker. Ikke andet. Ingen handelslogik.
+- Struktur, Inputs, løkker og arrays følger BYGGEVEJLEDNING punkt 3 og 4, afhængigt af hvilke
+  parametre formlen bruger. Array-størrelse altid 25.
+- Værdi/plads-opdelingen (to variable) bruges KUN i de 8 filtre med decimaltal. Alle andre følger
+  skabelonen, hvor N1 (eller N2) er både værdi og plads.
+- `Once`-blokken sletter filen med `FileDelete` og skriver overskriftsrækken.
+- Filnavn og sti står ordret i koden, ens de tre steder: `FileDelete`, overskriftsrækken og linjen,
+  der skrives ved slukning. Python skriver dem ind. `Print(File(...))` skal bruges, ikke `FileAppend`.
 - CSV-mappe: `C:\TradingDB_Folder\FilterFolder\RawSignal.CSV\`
 - `RunID` i hver linje = filnavnet uden mappe og endelse.
-- Kør som almindelig backtest. IKKE via Optimize.
-- Filnavnet på ShowMe'en (`_Kontrol`) skrives aldrig til CSV-mappen.
+- Tidsstemplet regnes én gang pr. bar, uden for løkken, med formatet `2020-03-15 10:45`.
+- Et signal, der stadig er tændt ved backtestens slutning, skrives ikke. Det er et bevidst valg.
+- Der skrives parameterens VÆRDI, aldrig dens plads i arrayet.
+- Max Bars Back skal dække den længste beregning ved de højeste parameterværdier. Skriv den ind som
+  kommentar i filens hoved.
+- Kørsel: almindelig backtest, ikke Optimize.
 
 | Filteret bruger | Overskriftsrække |
 |---|---|
@@ -100,86 +108,51 @@ Filter:     nej  nej  JA   JA   JA   nej  JA   nej
 | Kun N2 | `RunID,N2,Starttid,AntalBars` |
 | Begge | `RunID,N1,N2,Starttid,AntalBars` |
 
-- Komma som skilletegn. Punktum som decimaltegn. Dato/tid: `2020-03-15 10:45`.
-- Overskriftsrækken skrives én gang, i `Once`-blokken. Alle linjer har samme antal kolonner.
-- Der skrives parameterens VÆRDI, aldrig dens plads i arrayet.
+Komma som skilletegn. Punktum som decimaltegn. Windows-linjeskift er fint.
 
-## 7. Efter kørslen
+### 4.3 ShowMe'en `RawSignal<nr>_Kontrol`
 
-- Filen flyttes af næste trin (EdgeFinder / RawSignal-Analysis) ind i kørslens egen mappe.
-- Filen SKAL være flyttet, før samme filter køres igen. `FileDelete` i starten sletter ellers den
-  gamle fil uden fejlmelding.
-- `RunID` i filen er filterets navn, ikke kørslen. Hvilken kørsel og hvilket instrument det er,
-  står kun i mappenavnet. Filen må aldrig flyttes uden mappenavn.
-- Før filen flyttes: tjek at den findes og har mere end overskriftsrækken.
-
-## 8. Signal der stadig er tændt ved backtestens slutning
-
-Ignoreres. Skrives ikke. Det er et bevidst valg og må ikke "rettes". Begrundelse: højst ét signal pr.
-variant, det har ingen kendt varighed, og analysen mangler kurser efter signalet.
-
-## 9. Kontrol-ShowMe (`_Kontrol`)
-
-Formål: Thomas skal kunne kontrollere signalet med øjnene. Den bruges kun, når han selv sætter den på
-et chart, ikke i den automatiske proces.
-
-- Den tegner KUN. Ingen CSV, ingen `FileDelete`, intet filnavn i koden.
-- Plot1 = aktiveringen: den bar, hvor filteret skifter fra falsk til sand. Skal kunne skelnes tydeligt.
-- Plot2 (valgfri) = bars hvor filteret bliver ved med at være sandt, i en anden farve eller størrelse.
+- Tegner KUN. Ingen CSV, ingen `FileDelete`, intet filnavn i koden.
+- Plot1 sætter en markering på hver bar, hvor signalet aktiveres (skiftet FALSK til SAND).
+- Ét fast parametersæt vælges med inputs (`Vis_N1` og/eller `Vis_N2`, kun de parametre filteret bruger).
+  Har filteret decimaltal, skal inputtet være `double`.
 - `Vis_Forrige` (forrige bars status) bruges til at skille aktivering fra fortsættelse. Den opdateres
   efter plottet.
-- Ét fast parametersæt vælges med `Vis_N1` og `Vis_N2`, kun for de parametre filteret bruger.
-  Har filteret decimaltal, skal inputtet være `double`.
-- Plottet regnes på sin egen kodelinje med faste længder, uden løkke. Ellers rammes det af
-  hukommelsesproblemet (punkt 10) og kontrollerer ingenting.
-- Formlen er ordret den samme som i strategien.
-- Chartet skal have de samme datastrømme som strategiens kørsel (Data2, og Data3 hvis formlen bruger
+- Plottet regnes på sin egen kodelinje med faste længder, uden løkke (se 4.4).
+- Chartet skal have de samme datastrømme som strategien (Data2, og Data3 hvis formlen bruger
   `DataFilter_B`).
 - Max Bars Back skal dække den længste beregning ved de valgte værdier.
-- `RawSignal069_MedPlot` og `RawSignal069ShowMe.csv` var en engangsting fra Thomas' side og bruges ikke.
 
-Kontrol med plottet:
-- Antal aktiveringer på chartet for én kombination = antal linjer i CSV-filen for samme kombination og
-  samme periode. Højst 1 i forskel (punkt 8).
-- Flyt `Vis_N1` og `Vis_N2` (fx fra 1,1 til 25,25). Markeringerne skal flytte sig. Står CSV-filen stille
-  for de samme kombinationer, er hukommelsesfejlen bekræftet.
-
-## 10. Kendt problem: hukommelsen i seriefunktioner
+### 4.4 Kendt problem: hukommelsen i seriefunktioner (ikke løst i dag)
 
 Indbyggede funktioner som MACD og DMI husker deres forrige værdi, og hukommelsen hører til kodelinjen,
 ikke til parameterværdien. Kaldes samme linje i en løkke med mange parametre, deler alle kombinationer
 hukommelse, og tallene bliver forkerte uden fejlmelding.
 
-- RawSignal069 (MACD): målt. Alle 625 kombinationer har de samme 4.918 signaler. Værdiløs som den er.
-- RawSignal266 (Average): målt. Alle 25 N1-værdier giver forskellige signaler (528 til 1.453 pr. N1).
-  Virker altså sandsynligvis.
-- RawSignal020 (DMI) og RawSignal004_Test: ikke målt. Antag intet.
-- Verify beviser ikke, at en fil virker. Advarsler ved Verify er ikke et sikkert tegn hverken den ene
-  eller den anden vej (kun to løkke-filer er målt).
-- Hvilken vej for de 304 filtre med parametre er ikke besluttet (punkt 12).
+- RawSignal069 (MACD) er målt: alle 625 kombinationer gav de samme 4.918 signaler.
+- RawSignal266 (Average) er målt: forskellige signaler for hver N1. Virker altså sandsynligvis.
+- Andre filtre er ikke målt. Antag intet.
+- Verify beviser ikke, at en fil virker. Det viser kun, at den kan kompileres.
+- Programmet skal bygge filtre med og uden seriefunktion på samme måde. Hvilken vej de filtre skal
+  tage, hvor løkken giver forkerte tal, er ikke besluttet.
+- Formelteksten må aldrig "forbedres", heller ikke selvom den kalder samme funktion flere gange.
 
-## 11. Tests før noget kaldes færdigt (vis dem til Thomas)
+---
 
-1. Kør på et lille testinterval. Åbn CSV-filen i en teksteditor: én signal pr. linje, ens antal kolonner,
-   korrekt datoformat, ingen tomme eller sammenklistrede linjer.
-2. **Kontrolkørsel:** kør ÉN kombination alene (Fra og Til ens), og sammenlign med samme kombination i
-   løkke-filen. Signalerne skal være præcis ens.
-3. Kontrol-ShowMe'en (punkt 9): antal aktiveringer mod linjer i CSV.
-4. Kør samme test to gange i træk: filen må ikke få dobbelt så mange linjer.
-5. `RunID` er identisk med filnavnet.
-6. Python kan indlæse filen uden fejl.
-7. Findes ingen CSV overhovedet: tjek Max Bars Back først.
-8. Begge filer: `verification` og `note` er gemt i den rigtige tabel.
-9. Formelteksten er ordret ens i strategi og `_Kontrol`.
+## 5. Ikke en del af opgaven nu
 
-## 12. Spørg Thomas, gæt ikke
+- Hvad der sker med CSV-filen bagefter (flytning, EdgeFinder, RawSignal-Analysis).
+- Hvilken vej de 304 filtre med parametre skal tage ved hukommelsesproblemet.
+- Data1, når den senere bliver mindre end Data2 (entry-finpudsning i handelskode).
+- Versionsnumre i filnavne, når en formel i `Filter_Case` ændres.
+- Thomas' egen manuelle test og kontrol.
 
-1. Skal tabellen til strategifilen forblive `rawsignal`, eller omdøbes den (fx `RawSignal_Strategi`)?
-   Til Thomas har svaret: lad den være.
-2. Hvilken mappe skal `_Kontrol`-filerne ligge i?
-3. Hvilken vej skal de 304 filtre med parametre tage?
-   Sikreste rækkefølge: start med filtre uden hukommelsesproblem.
-4. De 381 maskinlavede filer bruger værdi/plads-opdelingen i alle filer. Den må kun bruges i de 8 med
-   decimaltal. De øvrige skal bygges om efter skabelonen, og én fil pr. type skal afprøves, før resten laves.
-5. Skal strategien kunne køre med en mindre Data1 (entry-finpudsning), eller sker det først i et senere
-   trin?
+## 6. Åbne punkter, der skal spørges om (afgør ikke selv)
+
+1. Hvilke mapper skal `.el`-filerne ligge i (strategi og `_Kontrol`)? Foreslå, og vent på OK, før filer skrives.
+2. Skal ShowMe'en også have Plot2 (bars hvor filteret bliver ved med at være sandt)?
+3. Skal filens hoved have en advarsel om hukommelsesproblemet i alle filer, eller kun i filer med
+   seriefunktion? Teksten må kun oplyse status (målt og virker, målt og ramt, ikke målt). Den må aldrig
+   forudsige et resultat.
+4. Skal strategien stoppe med en tydelig fejl, hvis Data1 og Data2 ikke er lige store?
+5. Hvilke 8 filtre skal testes (punkt 2, trin B)?
