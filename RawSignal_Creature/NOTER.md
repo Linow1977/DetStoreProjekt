@@ -1,5 +1,9 @@
 # Noter — RawSignal og EasyLanguage
 
+> **24. september 2026:** Dele af dette dokument er forældede (CSV-format, tabelkolonner,
+> filternumre, automation med tastetryk). `BESLUTNINGSLOG_2026-09-24.md` gælder foran dette
+> dokument, hvor de er uenige.
+
 Kort hukommelse for arbejdet med signal-eksport fra TradeStation.
 Skrevet så den kan læses uden forhåndskendskab til koden.
 

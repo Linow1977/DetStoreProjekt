@@ -46,6 +46,25 @@ arbejdet med projektet samles, i stedet for at forsvinde i enkelte
 chat-samtaler. Denne fil er svaret — én central log med
 under-kategorier pr. delprojekt, som Claude selv udvider efter behov.
 
+### 2026-09-24 — Ved fejl: ret, ryd op og kør forfra — lap aldrig
+Da ShowMe-delen af et filter fejlede, blev den verificeret for sig, og
+rækkerne blev skrevet i hånden. Thomas afviste det: "hvis der opstår en
+fejl, skal processen starte forfra med problemet løst." **Følge:** stop, ret
+årsagen, slet alt, hvad kørslen lavede, og kør det hele igen. Programmet er
+bygget, så det aldrig skriver et halvt resultat i databasen.
+
+### 2026-09-24 — Vis ændringer i databasen, før de laves, og tilføj intet ekstra
+En tabelændring blev kørt med små tilføjelser, der ikke stod i den viste
+SQL. Thomas: "du var lige hurtig nok". **Følge:** den SQL, der vises, er
+præcis den, der køres. Ændres noget, vises det igen først.
+
+### 2026-09-24 — Test før "færdig" fanger rigtige fejl
+Den dybdegående test af det rensede program fandt fire fejl, som de tidligere
+kørsler ikke havde vist. Den vigtigste var, at "10 error(s)" blev godkendt.
+En anden var, at programmet hang, når en strategi fandtes i forvejen.
+**Følge:** hver vej gennem programmet skal afprøves mindst én gang, også
+fejl- og genstartsvejene.
+
 ## TradingApp
 
 *(Ingen poster endnu.)*
@@ -70,6 +89,35 @@ en variabel giver compile-fejlen `File name expected here`. `FileAppend`
 kan bruge en variabel, men åbner/lukker filen for hver skrevet linje og er
 derfor langsommere. Valget mellem de to hænger sammen med det åbne
 navngivnings-spørgsmål, se `NOTER.md`, afsnittet "Åbne punkter".
+
+### 2026-09-24 — RawSignal Creature bygget og testet; filter_case omnummereret
+Programmet ligger i `RawSignal_Creature/Program/`. Det bygger strategi og
+ShowMe pr. filter, verificerer dem i TDE og markerer filteret færdigt i
+`filter_case.rawsignal_faerdig`.
+- `filter_case` nr. 1 (`True;`) er slettet, og alle andre er rykket ét nummer
+  ned. Det betyder, at gamle numre i ældre dokumenter er én for høje.
+- CSV-formatet er én linje pr. signal: `RunID,N1,N2,Starttid,AntalBars,Afsluttet`.
+- Data ligger i `rawsignal.rawsignal<nr>`.
+
+Se `RawSignal_Creature/BESLUTNINGSLOG_2026-09-24.md`.
+
+### 2026-09-24 — TDE skal styres med menukommandoer, ikke tastetryk
+Simulerede tastetryk virker ikke, når fjernskrivebordet er minimeret.
+TDE's menukommandoer kan sendes direkte som `WM_COMMAND`. Numrene står i
+`TSResourceDllEng.dll`:
+- New Strategy = 10576
+- New ShowMe = 10569
+- Open = 57601
+- Verify = 10602
+
+Knapper skal klikkes med `PostMessage`, fordi `SendMessage` hænger på TDE's
+fejlbokse.
+
+### 2026-09-24 — AvgTrueRange i en løkke er målt og ser ud til at virke
+Det nye filter 1 (AvgTrueRange, 625 kombinationer) gav forskellige
+signalrækker for alle 620 kombinationer, der kan tænde. Sammen med Average
+(gamle 266) er det to funktioner, der virker. MACD (gamle 069) er stadig den
+eneste målte, der er ramt.
 
 ## EdgeFinder
 

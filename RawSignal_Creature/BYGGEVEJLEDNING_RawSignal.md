@@ -1,5 +1,9 @@
 # Byggevejledning: sådan laves en RawSignal-fil
 
+> **24. september 2026:** Dele af dette dokument er forældede (CSV-format, tabelkolonner,
+> filternumre, automation med tastetryk). `BESLUTNINGSLOG_2026-09-24.md` gælder foran dette
+> dokument, hvor de er uenige.
+
 Skrevet 23. september 2026, efter at have bygget og afprøvet filer for seks
 forskellige filtertyper i TradeStation.
 
