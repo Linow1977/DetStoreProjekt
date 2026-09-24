@@ -3,6 +3,13 @@
 Opdateret 24. september 2026. Erstatter alle tidligere versioner.
 Er andre filer uenige med dette dokument, følg dette dokument.
 
+> **Tilføjet 24. september om aftenen:** Opgaven er udført. Beslutningerne
+> fra dagen står i `BESLUTNINGSLOG_2026-09-24.md` og gælder foran dette
+> dokument, hvor de er uenige. Det gælder især CSV-formatet (ny kolonne
+> `Afsluttet`, sidste signal skrives), tabelkolonnerne, omnummereringen af
+> `filter_case` (alle numre én ned) og svarene på de åbne punkter i afsnit 6.
+> Programmet ligger i `Program/`.
+
 ---
 
 ## 1. Opgaven i fire trin
@@ -53,9 +60,10 @@ Alt andet i dette dokument er detaljer om trin 2. Det fortæller, hvad de to fil
 | Strategi `RawSignal<nr>` | `rawsignal` (findes, beholder sit navn) |
 | ShowMe `RawSignal<nr>_Kontrol` | `RawSignal_Kontrol` (ny, samme kolonner) |
 
-Kolonnerne i `rawsignal` (bekræft mod databasen): `rawsignal_name` (primærnøgle), `dev_date`,
-`signal_path`, `verification` (`OK` eller `FEJLET`) og `note` (fejl- eller advarselstekst fra
-Output-panelet).
+Kolonnerne (besluttet 24. september, ens i begge tabeller): `dev_date`, `rawsignal_kontrol_name`,
+`rawsignal_kontrol_path`, `verification` (`Pass` eller `Fail`), `rawsignal_name`, `rawsignal_path`
+og `note` (tekst fra Output-panelet). Primærnøgle: `rawsignal_name` i `rawsignal`,
+`rawsignal_kontrol_name` i `rawsignal_kontrol`.
 
 - Navne skal være unikke. Slå op i tabellen før noget oprettes, og spring over, hvis navnet findes.
 - Strategi åbnes i TDE med Ctrl+Alt+S, ShowMe med Alt+Ctrl+M, som i den eksisterende automation.
@@ -148,6 +156,10 @@ hukommelse, og tallene bliver forkerte uden fejlmelding.
 - Thomas' egen manuelle test og kontrol.
 
 ## 6. Åbne punkter, der skal spørges om (afgør ikke selv)
+
+> **Besvaret 24. september:** 1. `RawSignal.EL\` og ny `RawSignal_Kontrol.EL\` (+ `.TXT`-kopier).
+> 2. Kun Plot1. 3. Kun i filer med seriefunktion i en løkke. 4. Ja, strategien stopper med en
+> fejl; Data1 rettes i chartet. 5. Testet på 13 filtre, se `BESLUTNINGSLOG_2026-09-24.md`.
 
 1. Hvilke mapper skal `.el`-filerne ligge i (strategi og `_Kontrol`)? Foreslå, og vent på OK, før filer skrives.
 2. Skal ShowMe'en også have Plot2 (bars hvor filteret bliver ved med at være sandt)?
