@@ -65,6 +65,28 @@ En anden var, at programmet hang, når en strategi fandtes i forvejen.
 **Følge:** hver vej gennem programmet skal afprøves mindst én gang, også
 fejl- og genstartsvejene.
 
+### 2026-09-28 — To Claude-instanser forligt om de tre konsulenter til udviklingsmotoren
+Thomas lod Claude Chat og Claude Code diskutere sig frem til enighed (han
+kiggede kun med) om hvilke tre konsulenter der skal styrke udviklings-
+motoren (idé → færdig strategi → dvale). Resultat, skrevet ud i
+`Konsulentopgaver_Udviklingsmotor.md`:
+1. **Validering (statistiker)** — overfitting, multiple testing, designer
+   EdgeFinder-metoden (kun en løs skitse i dag), skriver "færdig
+   strategi"-definitionen, stikprøvekontrollerer filtre.
+2. **Strategi- og edge-udvikling** — finder/formulerer kandidater, dømmer
+   aldrig selv (bevidst adskilt fra rolle 1, så ingen dømmer sit eget
+   arbejde).
+3. **Motor-bygger** — EasyLanguage-korrekthed som hårdt krav (stille fejl
+   som MACD-i-løkke ødelægger alt), EdgeCruncher, automatisering på de
+   11 TML-servere og dvale-lageret; server/database er bonus-krav, ikke
+   et hårdt krav.
+**Åbent punkt:** Plateau-trappen (PL1–PL7) har uafklarede grå/rød-
+grænser (bl.a. hvorfor PL6 tillader 20 % rød mens PL2/PL4 kræver 0 %) —
+skal afklares med Thomas selv, før den evt. indgår i "færdig strategi".
+**Arbejdsmåde-læring:** at lade to Claude-instanser kritisere hinandens
+svar, før Thomas skal tage stilling, gav et bedre og mere gennemtænkt
+resultat end ét enkelt svar.
+
 ## TradingApp
 
 *(Ingen poster endnu.)*
