@@ -76,6 +76,18 @@ hvor konsulenterne læser hinandens udkast, løste flere uenigheder med det
 samme. LibreOffice kan ikke konvertere filer i cloud-sessionen, så en
 Word-fil tjekkes ved at læse den tilbage med pandoc.
 
+### 2026-09-28 — Konsulentrapport v2: dybde kræver projektets egne filer
+Thomas fandt v1 for overfladisk. Årsagen var, at konsulenterne kun havde
+statusrapporten og derfor gav generelle råd. I v2 læste de koden og logs
+og fandt konkrete fejl med fil og linje. Hovedfund: millioner af forsøg,
+ikke 380 (kræver t ≈ 4,65). Datalængden er det vigtigste ukendte tal.
+Anbefalingen er en "Fase 0" før den fulde kørsel.
+Se `Konsulentrapport/Konsulentrapport_v2_2026-09-28.md`.
+**Arbejdsmåde:** Giv altid agenter læseadgang til projektets filer, når
+målet er dybde. Cloud-netværket blokerer de fleste kilder (SSRN, arXiv,
+tradestation.com, multicharts.com). Sig det til Thomas tidligt.
+PostgreSQL-dokumentation kan læses via GitHub-kildefilerne.
+
 ## TradingApp
 
 *(Ingen poster endnu.)*
@@ -142,6 +154,19 @@ viser ikke, at tallene er rigtige: forkerte tal kan også være forskellige
 fra hinanden. Konsulentrapporten (`Konsulentrapport/`, del 1 afsnit 6 og
 del 2 afsnit 2) foreslår derfor at sammenligne med en uafhængig beregning
 i Python, bar for bar. Ikke afgjort. Thomas beslutter.
+
+### 2026-09-28 — Åben tråd: MACD-fejlen er sandsynligvis "én gang pr. bar", og kun ét marked kan gemmes
+Konsulentrapport v2 (del 2 og 3), tjekket i koden:
+- **MACD-fejlen:** 625 *ens* rækker passer bedre med, at en series function
+  regnes én gang pr. bar, end med, at "hukommelsen blandes" (NOTER.md punkt 3).
+  Er det rigtigt, kan også en fil med Fra = Til være forkert. En test mod en
+  fil uden løkke afgør det.
+- **Verify ignorerer advarsler:** `verify-one.ps1:277` godkender "0 error(s)"
+  uanset TDE's advarsel om series functions.
+- **Kun ét marked kan gemmes:** `indlaes_csv.py:72` sletter hele tabellen,
+  og hverken tabellen eller CSV'en har marked eller kørsel.
+
+Ikke rettet. Thomas beslutter.
 
 ## EdgeFinder
 
