@@ -65,6 +65,17 @@ En anden var, at programmet hang, når en strategi fandtes i forvejen.
 **Følge:** hver vej gennem programmet skal afprøves mindst én gang, også
 fejl- og genstartsvejene.
 
+### 2026-09-28 — Konsulentgruppe: fælles rapport om udviklingsmotoren
+Tre konsulent-agenter (statistiker, EasyLanguage, data-arkitekt) og en
+overordnet agent skrev en fælles rapport ud fra kun opgaven og
+statusrapporten. Resultat: `Konsulentrapport/`. Den foreslår "færdig
+strategi" = F1–F10, et dvale-lager i databasen og 25 åbne punkter til Thomas.
+**Arbejdsmåde:** Tjek, at alle nævnte bilag faktisk er uploadet, før
+agenterne startes (statusrapporten manglede i første omgang). En runde,
+hvor konsulenterne læser hinandens udkast, løste flere uenigheder med det
+samme. LibreOffice kan ikke konvertere filer i cloud-sessionen, så en
+Word-fil tjekkes ved at læse den tilbage med pandoc.
+
 ## TradingApp
 
 *(Ingen poster endnu.)*
@@ -124,6 +135,13 @@ Det nye filter 1 (AvgTrueRange, 625 kombinationer) gav forskellige
 signalrækker for alle 620 kombinationer, der kan tænde. Sammen med Average
 (gamle 266) er det to funktioner, der virker. MACD (gamle 069) er stadig den
 eneste målte, der er ramt.
+
+### 2026-09-28 — Åben tråd: "forskellige signalrækker" beviser ikke rigtige tal
+Testen af AvgTrueRange viser, at kombinationerne ikke falder sammen. Den
+viser ikke, at tallene er rigtige: forkerte tal kan også være forskellige
+fra hinanden. Konsulentrapporten (`Konsulentrapport/`, del 1 afsnit 6 og
+del 2 afsnit 2) foreslår derfor at sammenligne med en uafhængig beregning
+i Python, bar for bar. Ikke afgjort. Thomas beslutter.
 
 ## EdgeFinder
 
