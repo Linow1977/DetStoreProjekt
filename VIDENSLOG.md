@@ -88,6 +88,27 @@ målet er dybde. Cloud-netværket blokerer de fleste kilder (SSRN, arXiv,
 tradestation.com, multicharts.com). Sig det til Thomas tidligt.
 PostgreSQL-dokumentation kan læses via GitHub-kildefilerne.
 
+### 2026-09-28 — Det Runde Bord: Thomas' afgørelser om døde filtre, datalag og inkubation
+Thomas har afgjort følgende:
+- Et filter, der fejler, er endeligt dødt (`rejected`, slettes aldrig).
+- Der valideres out-of-sample.
+- Der er en inkubationstid før live.
+
+Datalagene er 2020–2024 in-sample, 2025 out-of-sample, derefter embargo og til
+sidst inkubation. Lag A (låst liste), Lag B (begrænset søgning) og Lag C (forbudt).
+Se `Konsulentrapport/Kilder/Det_Runde_Bord_Sammenfatning.txt`.
+**Følge (konsulentrapport v3):** Ingen Lag A-dom, før filterets tal er
+kontrolleret, for en dom på forkerte tal kan aldrig rettes.
+
+### 2026-09-28 — Konsulentrapport v3: værktøjskassen
+Vigtigste fund: med 5 års data kan fabrikken ærligt kun finde edges med årlig
+Sharpe ≳ 2,3–2,5 pr. marked, men ca. 1,6 ved samme regel på 6 markeder. Flere
+markeder sænker grænsen, og flere forsøg hæver den. Anbefalet: StepM (`arch`),
+TA-Lib som facit, formel-parser, Parquet til signaler og PostgreSQL til journal.
+**Arbejdsmåde:** Når hjemmesider er blokeret i skyen, virker
+raw.githubusercontent.com, pypi.org og `pip download`. Læs kildekoden til
+anerkendte pakker. Det giver bekræftet ekspertviden.
+
 ## TradingApp
 
 *(Ingen poster endnu.)*
@@ -170,7 +191,14 @@ Ikke rettet. Thomas beslutter.
 
 ## EdgeFinder
 
-*(Ingen poster endnu.)*
+### 2026-09-28 — Første EdgeFinder-protokol godkendt (som råd)
+Konsulentrapport v3, del 2B §4: skrevet af K2 og godkendt af K1 med ændringer,
+som alle er indarbejdet. Protokollen indeholder:
+- Lag A/B/C og dom på råt nettoafkast.
+- StepM som grænse for `rejected` og walk-forward.
+- Mindst (1,28/δ)² signaler pr. celle og charts fra senest 2017 (opvarmning).
+
+Er ikke taget i brug. Thomas' valg i metodefilen mangler.
 
 ## EdgeCruncher
 

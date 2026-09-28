@@ -1,0 +1,122 @@
+DET RUNDE BORD - SAMMENFATNING AF FORSLAG OG KONKLUSIONER
+Emne: Hvornaar maa man lede efter "hvad der virker" i signalerne, hvornaar er et
+filter dødt, og hvad skal en strategi igennem foer den maa handle live?
+Deltagere: Chan, Lopez de Prado, Cont, Kaufman, Shaw, Almgren, Destroyer + Claude
+(som projektets hukommelse)
+================================================================================
+
+DEL 1 - SPOERGSMAALET OG SVARET
+--------------------------------------------------------------------------------
+Spoergsmaal: Skal en aaben soegning efter "forudsigende kolonner" (fx volatilitet,
+tid paa dagen, signalets varighed) vaere en del af selve Event Study - eller
+foerst bagefter, naar Event Study har vist en grundlaeggende effekt?
+
+Bordet afviste begge yderpunkter og landede paa en TREDELING:
+
+LAG A - Indbygget i Event Study (laast, ikke en soegning)
+  En kort, fast liste af opdelinger, der er ens for ALLE filtre og er skrevet ned
+  og versioneret FOER det foerste filter koeres. Forslag til listen: aar/regime,
+  volatilitetsniveau, tid paa dagen, signal-varighed. Formaalet er ikke at finde
+  noget nyt, men at afsloere om en effekt kun kommer fra én periode (fx 2020).
+  Der kraeves et minimum antal signaler pr. celle.
+
+LAG B - Separat, begraenset fase
+  Fri soegning efter forudsigende kolonner maa KUN koeres paa filtre, der allerede
+  har bestaaet Lag A. Kun paa in-sample (2020-2024). Antallet af prøvede
+  kolonne/graense-kombinationer skal logges som tal i databasen og der korrigeres
+  for det. Fund proeves derefter paa 2025 og saa paa embargo.
+
+LAG C - Forbudt
+  Aaben soegning maa aldrig bruges til at genoplive et filter, der fejlede Lag A.
+
+Thomas' afgoerelse: Et filter der fejler, maa IKKE gaa videre. Det er endeligt
+dødt.
+
+DEL 2 - HVAD "DØDT FILTER" BETYDER I SYSTEMET
+--------------------------------------------------------------------------------
+Thomas: "Filter rejected, filter-journalen foeres, og filteret koeres ikke igen."
+
+Bordets krav for at reglen kan holde i praksis:
+ 1. To forskellige statusser i journalen:
+      failed   = teknisk fejl (maskine gik ned, fil ikke skrevet) - maa koeres igen
+      rejected = analytisk dødt - endeligt, maa aldrig hentes igen af nogen maskine
+ 2. Døde filtre slettes ALDRIG. De bliver staaende med resultat og dødsaarsag. De
+    er "nævneren", naar man senere skal korrigere for hvor mange filtre der er
+    proevet i alt (500 testet, 20 overlever = de 20 er udvalgt blandt 500).
+ 3. Filterets betingelse (selve formlen, parameterinterval, instrument og
+    tidsramme) gemmes som filterets identitet. Ellers kan et dødt filter komme
+    tilbage med lidt aendrede tal, og systemet opdager det ikke.
+ 4. Lag A-listen bærer nu hele vægten. Er den for smal, dræber man rigtige edges
+    for altid uden at se det.
+ 5. AEndres Lag A-listen eller graensen senere, skal ALLE filtre koeres om,
+    ogsaa de døde. Ellers er de dømt efter forskellige regler.
+
+DEL 3 - VALIDERING OG INKUBATION
+--------------------------------------------------------------------------------
+Thomas: Der valideres efter out-of-sample-metoden, og der ligger en
+inkubationstid paa x uger/maaneder, foer en strategi koeres live.
+
+Bordet vil have FIRE lag med hvert sit navn i databasen:
+   1. In-sample      2020-2024   (her udvikles og soeges)
+   2. Out-of-sample  2025        (første kontrol)
+   3. Embargo        laast historik (anden kontrol)
+   4. Inkubation     fremtidig data (den endelige test)
+Hvert lag bruges kun EN gang pr. filter og kun i denne raekkefølge.
+
+Vigtigste pointer:
+ - Inkubation er den staerkeste test, fordi data endnu ikke findes. Det er den
+   eneste test hvor det er fysisk umuligt at snyde. Den er ikke et stempel til
+   sidst, men vaegtes som det staerkeste bevis.
+ - 2025 kan ikke baere 500 domme. Efter de første ca. 20 filtre er det i praksis
+   blevet et udvaelgelseskriterium. Antal filtre der har roert 2025 skal tælles og
+   logges. Er tallet højt, hæves kravet paa 2025, eller den endelige afgørelse
+   flyttes til embargo og inkubation.
+ - Inkubation maales i BAADE tid og antal handler. "12 uger" er meningsløst hvis
+   der kun kom 9 handler.
+ - Inkubation skal koeres med realistisk execution (rigtige fills og slippage),
+   ellers tester man det samme som backtesten, bare langsommere. Slippage
+   beregnes paa samme maade som i backtesten (signalpris minus fillpris), saa tal
+   kan sammenlignes direkte.
+ - ENHVER aendring i strategien under inkubation nulstiller uret. Teknisk, ikke
+   efter aftale. Ellers bliver inkubationen bare finpudsning mod frisk data.
+ - `rejected` faar en aarsag: faldt i gaten, i out-of-sample, i embargo eller i
+   inkubation. Kun den sidste er dyr.
+ - En strategi i inkubation har egen status med startdato og handelstaeller.
+   SYSTEMET aabner for live, naar begge krav er opfyldt - ikke et menneske en
+   fredag eftermiddag.
+
+DEL 4 - KONKRET AT GØRE (SAMLET LISTE)
+--------------------------------------------------------------------------------
+ 1. Beslut og nedskriv Lag A-listen, plateau-graensen og minimum signaler pr.
+    celle som en versioneret metodefil FOER første filter koeres.
+ 2. Afgør nu hvilke prisdata der gemmes. Skal Lag B kunne koeres uden nye
+    backtests, skal prisdata for de relevante tidsrammer gemmes fra start.
+ 3. Journal: tilføj status failed/rejected, dødsaarsag, filter-identitet, antal
+    tests kørt i Lag B pr. filter, og antal filtre der har rørt 2025.
+ 4. Haandhaev Lag C teknisk (som embargoen): et filter med status rejected kan
+    ikke vaelges af nogen analyse eller genstartes af en maskine.
+ 5. Almgrens krav til Lag B: en kolonne godkendes kun, hvis resultatet EFTER
+    slippage og kommission stiger nok til at opveje de signaler, kolonnen koster.
+    Tallet saettes paa forhaand.
+ 6. Skriv inkubationsreglen ned som tal FOER første strategi gaar ind.
+
+DEL 5 - UENIGHEDER DER BLIVER STAAENDE
+--------------------------------------------------------------------------------
+ - Lag A: Kaufman mener en for stram liste koster rigtige edges (dyre fejl man
+   aldrig opdager). Destroyer og Lopez de Prado mener enhver udvidelse er en
+   bagdør til data-snooping. Begge er enige om at listen ikke maa roeres, naar
+   den er laast.
+ - 2025: Lopez de Prado vil nedgradere 2025 til mellemtjek og lægge dommen i
+   inkubationen. Kaufman mener det gør flowet for langsomt (tre maaneders
+   inkubation pr. kandidat bliver selv en flaskehals). De er enige om at
+   problemet findes, ikke om hvor det skal betales.
+
+DEL 6 - ÅBENT SPOERGSMAAL TIL THOMAS
+--------------------------------------------------------------------------------
+Hvad er beslutningsreglen ved inkubationens slutning, skrevet som tal?
+  - Hvor mange handler minimum?
+  - Hvilket resultat kraeves for at faa lov at gaa live?
+  - Hvad sker der ellers: doer strategien, eller forlaenges inkubationen?
+Uden dette tal er inkubationen en ventetid uden dom, og reglen bliver skrevet af
+humøret den dag.
+================================================================================
