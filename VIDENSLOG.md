@@ -65,6 +65,14 @@ En anden var, at programmet hang, når en strategi fandtes i forvejen.
 **Følge:** hver vej gennem programmet skal afprøves mindst én gang, også
 fejl- og genstartsvejene.
 
+### 2026-09-29 — Fokus flyttet fra filtre til analyse; konsulentopgave v2
+Thomas: det vigtige nu er analyse af data, pipelinen, RSA, Edge-Finder/CC
+og Pharos, ikke de enkelte filtre (MACD-sporet er droppet). Konsulent 2 er
+skiftet fra EasyLanguage-ekspert til kvantitativ pipeline-/analyseudvikler.
+EasyLanguage-arbejdet er et åbent punkt, ikke en fast rolle. Ny kæde:
+TradingDB → RawSignal Maker → RSA → Code Creater → Edge-Finder/Cruncher →
+Incubator → Pharos. Se `Konsulentopgaver/Opgave_til_konsulentgruppen_v2_2026-09-29.docx`.
+
 ## TradingApp
 
 *(Ingen poster endnu.)*
