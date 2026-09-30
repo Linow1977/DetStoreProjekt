@@ -98,6 +98,17 @@ nøgleord, ikke læst helt, og posten om, at Average og AvgTrueRange virker i
 løkken, blev overset. **Følge:** læs hele VIDENSLOG før en opgave, ikke kun
 søg i den.
 
+### 2026-09-30 — Arbejdsmåde: "let læst" betyder voksent almindeligt dansk
+De første letlæste udgaver af rapporterne blev afvist som "for barnlige"
+(sammenligninger med plat og krone, skabe og fodboldtrænere). Thomas vil have
+**hele indholdet i samme opbygning**, voksent almindeligt dansk, fagord
+forklaret, og formler, SQL og kode **ordret uændret**. **Følge:** spørg ved
+"let læst" om tone og omfang, før der skrives. Kodeblokke kopieres maskinelt
+fra originalen (linjenumre) i stedet for at blive skrevet af, og et script
+tjekker bagefter, at alle blokke findes ordret, og at antallet af afsnit er
+det samme. Resultat: `Rapport_konsulentgruppen_almdansk_2026-09-29.docx` og
+`Pharos_udkast_almdansk_2026-09-29.docx` i `Konsulentopgaver/`.
+
 ## RSA (RawSignal-Analyser)
 
 Andet led i kæden: analyserer signal-backtests for stabilitet. Metoden står i
