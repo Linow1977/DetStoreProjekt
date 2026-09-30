@@ -65,6 +65,14 @@ En anden var, at programmet hang, når en strategi fandtes i forvejen.
 **Følge:** hver vej gennem programmet skal afprøves mindst én gang, også
 fejl- og genstartsvejene.
 
+### 2026-09-30 — "Filter" og RawSignal-filer er det samme, når Thomas udelukker emner
+Thomas bad om et spørgeskema uden spørgsmål om "Filter". Claude tolkede det
+snævert og tog stadig spørgsmål om RawSignal-filer og RawSignal Creature
+med. Thomas: "Filter og RawSignal filer går som det samme i det her
+tilfælde." **Følge:** når "Filter" udelukkes, udelukkes RawSignal-filerne og
+programmet, der bygger dem, også. Er afgrænsningen uklar, så spørg, før der
+skrives, i stedet for at vælge en tolkning og nævne den bagefter.
+
 ## TradingApp
 
 *(Ingen poster endnu.)*
