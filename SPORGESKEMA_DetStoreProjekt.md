@@ -29,21 +29,24 @@ RawSignal Creature, der bygger dem.
 1. Mål, vision og succes
 2. Rammer: tid, penge, folk og regler
 3. Markeder og instrumenter
-4. Prisdata
-5. TradingServer (database, bibliotek, lager)
-6. TML-Server (backtest, analyse, selektering)
-7. EdgeFinder (event-studie)
-8. EdgeCruncher
-9. Statistik og beskyttelse mod selvbedrag
-10. Fra enkelt-strategi til portefølje
-11. Handel i virkeligheden (execution)
-12. Risikostyring
-13. Drift, overvågning og fejl
-14. TradeStation og MultiCharts
-15. Automatisering og "fuldautomatisk"
-16. Arbejdsmåde, dokumentation og Claude
-17. Sikkerhed, backup og hardware
-18. Prioritering og næste skridt
+4. Markedsforståelse og strategityper
+5. Prisdata
+6. TradingServer (database, bibliotek, lager)
+7. TML-Server (backtest, analyse, selektering)
+8. EdgeFinder (event-studie)
+9. EdgeCruncher
+10. Statistik og beskyttelse mod selvbedrag
+11. Fra enkelt-strategi til portefølje
+12. Handel i virkeligheden (execution)
+13. Risikostyring
+14. Drift, overvågning og fejl
+15. TradeStation og MultiCharts
+16. Automatisering og "fuldautomatisk"
+17. Arbejdsmåde, dokumentation og Claude
+18. Sikkerhed, backup og hardware
+19. Læring og forbedring over tid
+20. Rapportering og nøgletal
+21. Prioritering og næste skridt
 
 ---
 
@@ -69,8 +72,8 @@ RawSignal Creature, der bygger dem.
    Om 3 år?
    Svar:
 
-6. Hvornår skal den første strategi handle med rigtige penge? Er der en
-   dato eller en betingelse?
+6. Hvornår skal den første strategi handle med rigtige penge? Er der en dato
+   eller en betingelse?
    Svar:
 
 7. Hvad er "daytrading" for dig: skal alle handler være lukket ved dagens
@@ -97,705 +100,1133 @@ RawSignal Creature, der bygger dem.
     hvilke der handles, og selv sætte dem i drift?
     Svar:
 
+13. Hvordan skal man kunne se, om projektet bevæger sig i den rigtige
+    retning måned for måned (delmål)?
+    Svar:
+
+14. Er målet at slå et bestemt indeks, eller at tjene penge uanset om
+    markedet går op eller ned?
+    Svar:
+
+15. Hvad er vigtigst for dig: højt afkast, jævnt afkast eller lav risiko?
+    Sæt dem i rækkefølge.
+    Svar:
+
+16. Hvad skal der til, for at du stoler nok på systemet til at lade det
+    handle, uden at du kigger med?
+    Svar:
+
+17. Er der en tidsfrist, hvor projektet skal kunne betale for sig selv?
+    Svar:
+
 ## 2. Rammer: tid, penge, folk og regler
 
-13. Hvor mange timer om ugen bruger du på projektet i dag, og hvor mange
-    kan du bruge fremover?
+18. Hvor mange timer om ugen bruger du på projektet i dag, og hvor mange kan
+    du bruge fremover?
     Svar:
 
-14. Hvor meget kapital er afsat til handel, når systemet er klar?
+19. Hvor meget kapital er afsat til handel, når systemet er klar?
     Svar:
 
-15. Hvor meget må projektet koste pr. måned i software, data, servere og
+20. Hvor meget må projektet koste pr. måned i software, data, servere og
     abonnementer?
     Svar:
 
-16. Er der andre personer involveret nu eller senere (partner, programmør,
+21. Er der andre personer involveret nu eller senere (partner, programmør,
     revisor, advokat)?
     Svar:
 
-17. Hvis du er væk i en måned, hvem holder så øje med systemet og de åbne
+22. Hvis du er væk i en måned, hvem holder så øje med systemet og de åbne
     handler?
     Svar:
 
-18. Skal handlen ske som privatperson eller gennem et selskab? Er det
+23. Skal handlen ske som privatperson eller gennem et selskab? Er det
     afklaret med en revisor, hvordan gevinster og tab beskattes?
     Svar:
 
-19. Har du undersøgt, hvilke regler (fx Finanstilsynet) der gælder, hvis du
+24. Har du undersøgt, hvilke regler (fx Finanstilsynet) der gælder, hvis du
     senere vil forvalte andres penge?
     Svar:
 
-20. Hvilken broker (mægler) skal handlerne gå gennem? Er det besluttet?
+25. Hvilken broker (mægler) skal handlerne gå gennem? Er det besluttet?
     Svar:
 
-21. Er der krav fra brokeren om minimumskapital, margin (sikkerhedsstillelse)
-    eller særlige kontotyper for futures?
+26. Er der krav fra brokeren om minimumskapital, margin
+    (sikkerhedsstillelse) eller særlige kontotyper for futures?
     Svar:
 
-22. Hvad er din erfaring med at handle futures manuelt? Hvilke markeder og
+27. Hvad er din erfaring med at handle futures manuelt? Hvilke markeder og
     hvor længe?
     Svar:
 
-23. Hvilke af dine tidligere strategier eller erfaringer skal systemet bygge
+28. Hvilke af dine tidligere strategier eller erfaringer skal systemet bygge
     videre på, og hvilke skal glemmes?
     Svar:
 
-24. Hvor meget af beslutningerne vil du selv tage, og hvor meget må Claude
+29. Hvor meget af beslutningerne vil du selv tage, og hvor meget må Claude
     beslutte uden at spørge?
+    Svar:
+
+30. Hvor meget af din egen formue er du parat til at sætte på spil i alt?
+    Svar:
+
+31. Hvad sker der med projektet og kontoen, hvis du bliver syg i længere
+    tid?
+    Svar:
+
+32. Hvilke dele af arbejdet vil du gerne have hjælp fra et menneske til (fx
+    revisor eller programmør)?
+    Svar:
+
+33. Har brokeren regler for automatisk handel (fx krav om at godkende et
+    handelsprogram)?
     Svar:
 
 ## 3. Markeder og instrumenter
 
-25. Præcis hvilke futures-markeder skal systemet handle (fx ES, NQ, CL, GC)?
+34. Præcis hvilke futures-markeder skal systemet handle (fx ES, NQ, CL, GC)?
     Svar:
 
-26. Skal alle strategier virke på alle markeder, eller må en strategi kun
+35. Skal alle strategier virke på alle markeder, eller må en strategi kun
     virke på ét marked?
     Svar:
 
-27. Skal der kunne handles micro-kontrakter (små kontrakter), så positionen
+36. Skal der kunne handles micro-kontrakter (små kontrakter), så positionen
     kan gøres mindre?
     Svar:
 
-28. Hvilke tidspunkter på døgnet må systemet handle: kun den normale
+37. Hvilke tidspunkter på døgnet må systemet handle: kun den normale
     børstid, eller også natten (elektronisk handel)?
     Svar:
 
-29. Hvordan håndteres dage med vigtige nyheder (fx renteudmelding,
-    jobtal)? Skal systemet holde pause?
+38. Hvordan håndteres dage med vigtige nyheder (fx renteudmelding, jobtal)?
+    Skal systemet holde pause?
     Svar:
 
-30. Hvordan håndteres helligdage, halve handelsdage og lukkede børser?
+39. Hvordan håndteres helligdage, halve handelsdage og lukkede børser?
     Svar:
 
-31. Hvordan skifter systemet fra én kontrakt til den næste, når en
+40. Hvordan skifter systemet fra én kontrakt til den næste, når en
     futures-kontrakt udløber (rollover)?
     Svar:
 
-32. Hvilke tidsrammer skal der arbejdes med? I dag nævnes fire workspaces
+41. Hvilke tidsrammer skal der arbejdes med? I dag nævnes fire workspaces
     (5,10,60 / 10,20,60 / 5,30,120 / 5,10,120). Er det den endelige liste,
     og hvorfor netop dem?
     Svar:
 
-33. Hvad betyder de tre tal i hvert workspace helt præcist (Data1, Data2,
+42. Hvad betyder de tre tal i hvert workspace helt præcist (Data1, Data2,
     Data3), og hvad bruges hver af dem til?
     Svar:
 
-34. Skal systemet kunne bruge data fra ét marked til at handle et andet
-    (fx renter til at handle aktieindeks)?
+43. Skal systemet kunne bruge data fra ét marked til at handle et andet (fx
+    renter til at handle aktieindeks)?
     Svar:
 
-35. Er der markeder, du bevidst vil holde dig fra, og hvorfor?
+44. Er der markeder, du bevidst vil holde dig fra, og hvorfor?
     Svar:
 
-36. Hvor mange markeder skal handles samtidig, når systemet er i fuld drift?
+45. Hvor mange markeder skal handles samtidig, når systemet er i fuld drift?
     Svar:
 
-## 4. Prisdata
+46. Hvor stor en daglig omsætning (likviditet = hvor let man kan købe og
+    sælge) skal et marked mindst have for at være med?
+    Svar:
 
-37. Hvor kommer prisdataene fra i dag? Kun TradeStation, eller også andre
+47. Hvordan kommer nye markeder på listen senere, og efter hvilke regler?
+    Svar:
+
+48. Skal strategierne handle i begge retninger (købe og sælge først), eller
+    kun den ene vej?
+    Svar:
+
+49. Hvordan håndteres det, at markederne opfører sig forskelligt, når Asien,
+    Europa og USA har åbent?
+    Svar:
+
+50. Skal der tages højde for mønstre, der følger årstiden (fx energimarkeder
+    om vinteren)?
+    Svar:
+
+## 4. Markedsforståelse og strategityper
+
+51. Hvilken slags markedsadfærd tror du mest på: trend (prisen fortsætter),
+    tilbagevenden (prisen vender tilbage), udbrud eller noget andet?
+    Svar:
+
+52. Hvorfor skulle der overhovedet være en edge i teknisk analyse på
+    futures? Hvem er det, der taber de penge, systemet skal vinde?
+    Svar:
+
+53. Hvilke markedsforhold tror du, systemet vil have sværest ved?
+    Svar:
+
+54. Må systemet bruge volumen og open interest (antal åbne kontrakter),
+    eller kun prisen?
+    Svar:
+
+55. Hvor hurtigt tror du, en edge forsvinder, når den først er fundet?
+    Svar:
+
+56. Skal systemet lede efter edges, der virker på tværs af markeder, eller
+    edges, der kun gælder ét marked?
+    Svar:
+
+57. Hvad har du lært af andre systematiske tradere eller bøger, som skal
+    bygges ind i systemet?
+    Svar:
+
+58. Hvilke idéer har du testet før, som ikke virkede, og hvorfor tror du, de
+    ikke virkede?
+    Svar:
+
+## 5. Prisdata
+
+59. Hvor kommer prisdataene fra i dag? Kun TradeStation, eller også andre
     kilder?
     Svar:
 
-38. Hvor mange års historik findes der for hvert marked, og er det nok?
+60. Hvor mange års historik findes der for hvert marked, og er det nok?
     Svar:
 
-39. Hvordan kontrolleres dataene for fejl (huller, dubletter, forkerte
+61. Hvordan kontrolleres dataene for fejl (huller, dubletter, forkerte
     priser, spring)?
     Svar:
 
-40. Bruges "continuous contracts" (sammensatte kontrakter over flere udløb)?
+62. Bruges "continuous contracts" (sammensatte kontrakter over flere udløb)?
     Hvis ja: hvordan er de sat sammen (justeret eller ikke justeret)?
     Svar:
 
-41. Hvilken tidszone gemmes tiderne i, og hvordan håndteres sommer- og
+63. Hvilken tidszone gemmes tiderne i, og hvordan håndteres sommer- og
     vintertid?
     Svar:
 
-42. Er det sikkert, at TradeStation og MultiCharts giver præcis de samme
+64. Er det sikkert, at TradeStation og MultiCharts giver præcis de samme
     bars (prisstænger) for samme marked og tidsramme?
     Svar:
 
-43. Skal prisdata også gemmes i TradingDB, eller kun ligge i TradeStation?
+65. Skal prisdata også gemmes i TradingDB, eller kun ligge i TradeStation?
     Svar:
 
-44. Hvad sker der, hvis dataleverandøren retter historiske data bagefter?
+66. Hvad sker der, hvis dataleverandøren retter historiske data bagefter?
     Opdager systemet det?
     Svar:
 
-45. Skal der bruges tick-data eller kun minut-bars? Hvornår er minut-bars
+67. Skal der bruges tick-data eller kun minut-bars? Hvornår er minut-bars
     ikke præcise nok?
     Svar:
 
-46. Hvordan sikres det, at en backtest kun bruger data, der rent faktisk
-    var kendt på det tidspunkt (ingen "look-ahead" = snyd med fremtidige
-    data)?
+68. Hvordan sikres det, at en backtest kun bruger data, der rent faktisk var
+    kendt på det tidspunkt (ingen "look-ahead" = snyd med fremtidige data)?
     Svar:
 
-47. Hvor mange data skal gemmes til side, som aldrig bruges under udvikling
+69. Hvor mange data skal gemmes til side, som aldrig bruges under udvikling
     (out-of-sample), men kun til den endelige kontrol?
     Svar:
 
-48. Hvem "ejer" beslutningen om, hvilke dataperioder der må bruges til hvad
+70. Hvem "ejer" beslutningen om, hvilke dataperioder der må bruges til hvad
     — og står det skrevet ned?
     Svar:
 
-49. Skal der bruges andre data end pris og volumen (fx volatilitetsindeks,
+71. Skal der bruges andre data end pris og volumen (fx volatilitetsindeks,
     kalender, sæson)? Eller holdes det strengt til prisdata?
     Svar:
 
-## 5. TradingServer (database, bibliotek, lager)
+72. Hvordan gemmes de rå data, så de aldrig kan ændres ved en fejl (fx en
+    skrivebeskyttet kopi)?
+    Svar:
 
-50. Hvad er den fulde liste over tabeller i TradingDB i dag, og hvad bruges
+73. Hvilken tidsramme er den mindste, der skal bruges, og hvorfor?
+    Svar:
+
+74. Hvordan håndteres bars med meget lidt handel (fx om natten)?
+    Svar:
+
+75. Skal der hver dag være en kort data-rapport, der viser, om de nye data
+    er kommet rigtigt ind?
+    Svar:
+
+76. Hvordan sikres det, at alle backtests bruger præcis samme udgave af
+    dataene, så de kan sammenlignes?
+    Svar:
+
+77. Hvad koster bedre data fra en separat dataleverandør, og er det pengene
+    værd?
+    Svar:
+
+## 6. TradingServer (database, bibliotek, lager)
+
+78. Hvad er den fulde liste over tabeller i TradingDB i dag, og hvad bruges
     hver til?
     Svar:
 
-51. Findes der en tegning eller beskrivelse af, hvordan tabellerne hænger
+79. Findes der en tegning eller beskrivelse af, hvordan tabellerne hænger
     sammen? Hvis ikke — skal der laves en?
     Svar:
 
-52. Hvordan tages der backup af TradingDB? Hvor ofte, hvor ligger den, og er
+80. Hvordan tages der backup af TradingDB? Hvor ofte, hvor ligger den, og er
     en gendannelse nogensinde blevet afprøvet?
     Svar:
 
-53. Hvad er forskellen på "Database", "Bibliotek" og "Lager" i
+81. Hvad er forskellen på "Database", "Bibliotek" og "Lager" i
     TradingServer? Hvad hører til hvilken?
     Svar:
 
-54. Hvor skal resultatfilerne fra backtests ligge, og hvor længe skal de gemmes?
+82. Hvor skal resultatfilerne fra backtests ligge, og hvor længe skal de
+    gemmes?
     Svar:
 
-55. Hvor meget diskplads forventes der at blive brugt, når alle backtests
+83. Hvor meget diskplads forventes der at blive brugt, når alle backtests
     for alle workspaces og markeder er kørt?
     Svar:
 
-56. Hvordan navngives mapper og filer, så man om 2 år stadig kan finde ud
+84. Hvordan navngives mapper og filer, så man om 2 år stadig kan finde ud
     af, hvad der er hvad?
     Svar:
 
-57. Skal hver kørsel have et unikt kørselsnummer, så man altid kan spore et
+85. Skal hver kørsel have et unikt kørselsnummer, så man altid kan spore et
     resultat tilbage til præcis de data og den kode, der lavede det?
     Svar:
 
-58. Hvad sker der i databasen, når en regel eller et program ændres? Skal
+86. Hvad sker der i databasen, når en regel eller et program ændres? Skal
     gamle resultater slettes, markeres som forældede eller beholdes?
     Svar:
 
-59. Hvem må skrive i databasen: kun programmerne, eller også dig manuelt?
+87. Hvem må skrive i databasen: kun programmerne, eller også dig manuelt?
     Svar:
 
-60. Hvordan undgås det, at to programmer skriver i samme tabel samtidig og
+88. Hvordan undgås det, at to programmer skriver i samme tabel samtidig og
     ødelægger data for hinanden?
     Svar:
 
-61. Skal den lokale Claude-session og cloud-sessionen på et tidspunkt kunne
+89. Skal den lokale Claude-session og cloud-sessionen på et tidspunkt kunne
     se databasen på samme måde (fx via et udtræk, der lægges i git)?
     Svar:
 
-## 6. TML-Server (backtest, analyse, selektering)
+90. Skal der være en testdatabase ved siden af den rigtige, så nye
+    programmer kan afprøves uden risiko?
+    Svar:
 
-62. Hvad er TML-Serveren fysisk: en separat computer, en virtuel maskine
+91. Hvordan skal databasen klare det, når der kommer millioner af
+    resultatrækker?
+    Svar:
+
+92. Hvilke spørgsmål vil du selv kunne stille databasen uden hjælp (fx "vis
+    alle, der har bestået")?
+    Svar:
+
+93. Skal der være et enkelt skærmbillede (en app), hvor du kan se indholdet
+    uden at skrive kode?
+    Svar:
+
+94. Hvad er reglen for navne på tabeller og kolonner (små eller store
+    bogstaver, dansk eller engelsk)?
+    Svar:
+
+95. Hvordan registreres det, hvilken programudgave der lavede hver række i
+    databasen?
+    Svar:
+
+## 7. TML-Server (backtest, analyse, selektering)
+
+96. Hvad er TML-Serveren fysisk: en separat computer, en virtuel maskine
     eller samme maskine som TradingServer?
     Svar:
 
-63. Hvilke programmer kører på TML-Serveren (TradeStation, MultiCharts,
+97. Hvilke programmer kører på TML-Serveren (TradeStation, MultiCharts,
     Python, andet)?
     Svar:
 
-64. Hvordan sendes arbejde mellem TradingServer og TML-Server (filer,
+98. Hvordan sendes arbejde mellem TradingServer og TML-Server (filer,
     database, netværksmappe)?
     Svar:
 
-65. Hvor mange backtests kan køres samtidig, og hvad er flaskehalsen:
+99. Hvor mange backtests kan køres samtidig, og hvad er flaskehalsen:
     computerkraft, TradeStation-licenser eller tid?
     Svar:
 
-66. Hvor lang tid tager én backtest i dag? Hvor lang tid
-    vil alle tage samlet?
-    Svar:
+100. Hvor lang tid tager én backtest i dag? Hvor lang tid vil alle tage
+     samlet?
+     Svar:
 
-67. Hvad betyder "Selektering" konkret: hvem eller hvad vælger, og efter
-    hvilke regler?
-    Svar:
+101. Hvad betyder "Selektering" konkret: hvem eller hvad vælger, og efter
+     hvilke regler?
+     Svar:
 
-68. Hvilke analyser skal ligge på TML-Serveren, og hvilke skal ligge i
-    Python et andet sted?
-    Svar:
+102. Hvilke analyser skal ligge på TML-Serveren, og hvilke skal ligge i
+     Python et andet sted?
+     Svar:
 
-69. Hvad sker der, hvis TML-Serveren går ned midt i en lang kørsel? Kan
-    den fortsætte, hvor den slap?
-    Svar:
+103. Hvad sker der, hvis TML-Serveren går ned midt i en lang kørsel? Kan den
+     fortsætte, hvor den slap?
+     Svar:
 
-70. Skal TML-Serveren kunne styres, mens du ikke er ved computeren (fx
-    over fjernskrivebord eller telefon)?
-    Svar:
+104. Skal TML-Serveren kunne styres, mens du ikke er ved computeren (fx over
+     fjernskrivebord eller telefon)?
+     Svar:
 
-71. Skal der være adskillelse mellem maskinen, der udvikler strategier, og
-    maskinen, der handler med rigtige penge?
-    Svar:
+105. Skal der være adskillelse mellem maskinen, der udvikler strategier, og
+     maskinen, der handler med rigtige penge?
+     Svar:
 
-72. Hvordan holdes programversioner ens på de to servere?
-    Svar:
+106. Hvordan holdes programversioner ens på de to servere?
+     Svar:
 
-## 7. EdgeFinder (event-studie)
+107. Hvor mange TradeStation-installationer og -licenser er der, og kan der
+     købes flere?
+     Svar:
 
-73. Forklar med dine egne ord, hvad EdgeFinder skal finde. Hvad er en
-    "edge" for dig?
-    Svar:
+108. Kan backtests køre om natten uden opsyn? Hvad forhindrer det i dag?
+     Svar:
 
-74. Hvad er et event-studie i dette projekt: hvad måles der efter hvert
-    signal (fx prisbevægelse efter 5, 10, 30 bars)?
-    Svar:
+109. Hvordan fordeles arbejdet, hvis der kommer flere TML-maskiner?
+     Svar:
 
-75. Hvilke tidshorisonter efter et signal skal måles?
-    Svar:
+110. Hvordan sikres det, at en backtest giver præcis samme resultat, hvis
+     den køres igen?
+     Svar:
 
-76. Hvad sammenlignes signalets resultat med? Med tilfældige tidspunkter,
-    med markedet generelt, eller med noget andet?
-    Svar:
+111. Hvor gemmes backtest-indstillingerne (kurtage, slippage, handelstider),
+     så de ikke ændres ved et uheld?
+     Svar:
 
-77. Hvornår er et resultat "Passed"? Hvilke tal skal være opfyldt?
-    Svar:
+## 8. EdgeFinder (event-studie)
 
-78. Hvornår er det "Failed"? Og skal "næsten bestået" være en tredje
-    kategori?
-    Svar:
+112. Forklar med dine egne ord, hvad EdgeFinder skal finde. Hvad er en
+     "edge" for dig?
+     Svar:
 
-79. Hvor mange hændelser skal der mindst være i en test, før resultatet
-    kan bruges?
-    Svar:
+113. Hvad er et event-studie i dette projekt: hvad måles der efter hvert
+     signal (fx prisbevægelse efter 5, 10, 30 bars)?
+     Svar:
 
-80. Skal EdgeFinder se på både køb- og salgsretning for hvert signal?
-    Svar:
+114. Hvilke tidshorisonter efter et signal skal måles?
+     Svar:
 
-81. Hvordan håndteres signaler, der ligger tæt efter hinanden og derfor
-    måler den samme prisbevægelse flere gange?
-    Svar:
+115. Hvad sammenlignes signalets resultat med? Med tilfældige tidspunkter,
+     med markedet generelt, eller med noget andet?
+     Svar:
 
-82. Skal resultatet deles op i perioder (fx år for år) for at se, om edgen
-    er stabil over tid?
-    Svar:
+116. Hvornår er et resultat "Passed"? Hvilke tal skal være opfyldt?
+     Svar:
 
-83. Skal resultatet deles op efter markedstype (stigende, faldende,
-    sidelæns, rolig, urolig)?
-    Svar:
+117. Hvornår er det "Failed"? Og skal "næsten bestået" være en tredje
+     kategori?
+     Svar:
 
-84. Hvilke workspace-indstillinger skal EdgeFinder sætte i TradeStation, og
-    hvor er de beskrevet?
-    Svar:
+118. Hvor mange hændelser skal der mindst være i en test, før resultatet kan
+     bruges?
+     Svar:
 
-85. Hvad skal ske, hvis backtest-data i mappen er ufuldstændige eller
-    forkerte ("stop process og meld fejl")? Hvem får beskeden, og hvordan?
-    Svar:
+119. Skal EdgeFinder se på både køb- og salgsretning for hvert signal?
+     Svar:
 
-86. Hvilke resultater skal "journalføres", og i hvilken tabel?
-    Svar:
+120. Hvordan håndteres signaler, der ligger tæt efter hinanden og derfor
+     måler den samme prisbevægelse flere gange?
+     Svar:
 
-87. Skal EdgeFinder skrives i Python? Findes der allerede noget
+121. Skal resultatet deles op i perioder (fx år for år) for at se, om edgen
+     er stabil over tid?
+     Svar:
+
+122. Skal resultatet deles op efter markedstype (stigende, faldende,
+     sidelæns, rolig, urolig)?
+     Svar:
+
+123. Hvilke workspace-indstillinger skal EdgeFinder sætte i TradeStation, og
+     hvor er de beskrevet?
+     Svar:
+
+124. Hvad skal ske, hvis backtest-data i mappen er ufuldstændige eller
+     forkerte ("stop process og meld fejl")? Hvem får beskeden, og hvordan?
+     Svar:
+
+125. Hvilke resultater skal "journalføres", og i hvilken tabel?
+     Svar:
+
+126. Skal EdgeFinder skrives i Python? Findes der allerede noget
      analysekode, der skal genbruges?
      Svar:
 
-88. Hvem bestemmer rækkefølgen, tingene testes i i EdgeFinder, og er der
-     en prioritering?
+127. Hvem bestemmer rækkefølgen, tingene testes i i EdgeFinder, og er der en
+     prioritering?
      Svar:
 
-## 8. EdgeCruncher
+128. Hvordan måles det, om en edge er stor nok til at betyde noget i kroner
+     og øre, og ikke kun i statistikken?
+     Svar:
 
-89. Hvad skal EdgeCruncher gøre? Beskriv det, som du forestiller dig det,
+129. Skal EdgeFinder allerede regne kurtage og slippage med i event-studiet?
+     Svar:
+
+130. Hvad gør EdgeFinder med et resultat, der er godt på én tidsramme og
+     dårligt på en anden?
+     Svar:
+
+131. Skal samme test køres på alle fire workspaces, og hvordan vægtes
+     resultaterne mod hinanden?
+     Svar:
+
+132. Hvordan vælges indstillingerne for selve event-studiet (fx hvor længe
+     der måles), uden at de også bliver tilpasset til at se godt ud?
+     Svar:
+
+133. Skal EdgeFinder kunne køre igen af sig selv, når der kommer nye data?
+     Svar:
+
+134. Hvor mange tests forventer du vil bestå? Og hvad gør vi, hvis næsten
+     ingen eller næsten alle består?
+     Svar:
+
+## 9. EdgeCruncher
+
+135. Hvad skal EdgeCruncher gøre? Beskriv det, som du forestiller dig det,
      selvom det ikke er færdigt.
      Svar:
 
-90. Hvad får EdgeCruncher ind (kun "Passed" fra EdgeFinder?), og hvad
+136. Hvad får EdgeCruncher ind (kun "Passed" fra EdgeFinder?), og hvad
      sender den videre?
      Svar:
 
-91. Skal EdgeCruncher kombinere flere signaler til én strategi? Hvor mange
+137. Skal EdgeCruncher kombinere flere signaler til én strategi? Hvor mange
      må der højst kombineres?
      Svar:
 
-92. Hvor kommer indgang, udgang, stop-loss og gevinstmål ind i billedet?
-     Er det EdgeCruncher eller et senere trin?
+138. Hvor kommer indgang, udgang, stop-loss og gevinstmål ind i billedet? Er
+     det EdgeCruncher eller et senere trin?
      Svar:
 
-93. Hvad er det næste trin efter EdgeCruncher? Findes der et navn og en
-     idé for det endnu?
+139. Hvad er det næste trin efter EdgeCruncher? Findes der et navn og en idé
+     for det endnu?
      Svar:
 
-94. Hvordan undgår EdgeCruncher at finde tilfældige kombinationer, der kun
+140. Hvordan undgår EdgeCruncher at finde tilfældige kombinationer, der kun
      ser gode ud, fordi der er prøvet så mange?
      Svar:
 
-95. Hvor mange kombinationer forventer du, at EdgeCruncher skal prøve?
+141. Hvor mange kombinationer forventer du, at EdgeCruncher skal prøve?
      Tusinder, millioner?
      Svar:
 
-96. Hvor lang tid må EdgeCruncher bruge pr. kørsel?
+142. Hvor lang tid må EdgeCruncher bruge pr. kørsel?
      Svar:
 
-97. Hvordan vil du selv kunne se og forstå, hvorfor EdgeCruncher har valgt
+143. Hvordan vil du selv kunne se og forstå, hvorfor EdgeCruncher har valgt
      det, den har valgt?
      Svar:
 
-98. "Data1, når den senere bliver mindre end Data2 (entry-finpudsning)" —
+144. "Data1, når den senere bliver mindre end Data2 (entry-finpudsning)" —
      hvor og hvornår hører det til?
      Svar:
 
-## 9. Statistik og beskyttelse mod selvbedrag
+145. Skal EdgeCruncher arbejde i Python, i TradeStation eller i begge?
+     Svar:
 
-99. Hvordan tages der højde for, at der testes tusindvis af signaler, så
+146. Skal EdgeCruncher tage højde for, at markedet ændrer sig over tid (fx
+     ved at teste de nyeste data for sig)?
+     Svar:
+
+147. Hvilke slags udgange skal prøves (efter tid, stop, gevinstmål, modsat
+     signal)?
+     Svar:
+
+148. Skal strategierne fra EdgeCruncher være så enkle som muligt? Hvor mange
+     regler må en strategi højst have?
+     Svar:
+
+149. Hvordan gemmes EdgeCrunchers resultater, så de kan sammenlignes med
+     senere kørsler?
+     Svar:
+
+150. Hvornår er en strategi fra EdgeCruncher "færdig" og klar til næste
+     trin?
+     Svar:
+
+## 10. Statistik og beskyttelse mod selvbedrag
+
+151. Hvordan tages der højde for, at der testes tusindvis af signaler, så
      nogle vil se gode ud af ren tilfældighed (multiple testing)?
      Svar:
 
-100. Tælles det, hvor mange forsøg der i alt er lavet, før en strategi blev
+152. Tælles det, hvor mange forsøg der i alt er lavet, før en strategi blev
      fundet? Det er nødvendigt for at vurdere, hvor meget held der er med.
      Svar:
 
-101. Hvilken metode skal bruges til out-of-sample-test (walk-forward,
-     fast opdeling, andet)?
+153. Hvilken metode skal bruges til out-of-sample-test (walk-forward, fast
+     opdeling, andet)?
      Svar:
 
-102. Må out-of-sample-data nogensinde bruges igen, efter de er set første
+154. Må out-of-sample-data nogensinde bruges igen, efter de er set første
      gang? Hvad er reglen?
      Svar:
 
-103. Hvordan testes, om en strategi er robust, når parametrene ændres en
+155. Hvordan testes, om en strategi er robust, når parametrene ændres en
      smule (fx 20 i stedet for 21)?
      Svar:
 
-104. Skal strategier testes på andre markeder end dem, de blev fundet på,
+156. Skal strategier testes på andre markeder end dem, de blev fundet på,
      som ekstra kontrol?
      Svar:
 
-105. Skal der laves "Monte Carlo"-test (tilfældig blanding af handlerne for
+157. Skal der laves "Monte Carlo"-test (tilfældig blanding af handlerne for
      at se, hvor slemt det kunne være gået)?
      Svar:
 
-106. Hvilke nøgletal skal hver strategi vurderes på (fx Sharpe, profit
+158. Hvilke nøgletal skal hver strategi vurderes på (fx Sharpe, profit
      factor, gennemsnitlig handel, max drawdown)? Og hvilket er det
      vigtigste?
      Svar:
 
-107. Hvad er den mindste gennemsnitlige gevinst pr. handel, der kan
-     overleve kurtage og slippage?
+159. Hvad er den mindste gennemsnitlige gevinst pr. handel, der kan overleve
+     kurtage og slippage?
      Svar:
 
-108. Skal der være et fast sæt af "kontrolsignaler" (tilfældige signaler),
+160. Skal der være et fast sæt af "kontrolsignaler" (tilfældige signaler),
      som alle resultater sammenlignes med?
      Svar:
 
-109. Hvordan opdages det, hvis en resultatperiode domineres af én
-     enkelt ekstrem dag eller hændelse?
+161. Hvordan opdages det, hvis en resultatperiode domineres af én enkelt
+     ekstrem dag eller hændelse?
      Svar:
 
-110. Hvem eller hvad skal "angribe" en strategi, før den godkendes — Det
+162. Hvem eller hvad skal "angribe" en strategi, før den godkendes — Det
      Runde Bord, et fast testprogram eller begge dele?
      Svar:
 
-111. Skal Det Runde Bord have et fast verdikt og en score (fx Go / No-go /
+163. Skal Det Runde Bord have et fast verdikt og en score (fx Go / No-go /
      Juster og 0–10)? Det står som ikke besluttet.
      Svar:
 
-112. Hvordan dokumenteres alle forkastede idéer, så de ikke testes igen ved
+164. Hvordan dokumenteres alle forkastede idéer, så de ikke testes igen ved
      en fejl?
      Svar:
 
-## 10. Fra enkelt-strategi til portefølje
-
-113. Hvor mange strategier skal køre samtidig, når systemet er i fuld drift?
+165. Hvor sikre skal vi være (signifikansniveau), før noget kaldes en edge?
      Svar:
 
-114. Hvordan måles det, om to strategier i virkeligheden gør det samme
-     (for høj sammenhæng/korrelation)?
+166. Skal der rettes for antallet af tests med en fast metode (fx "Deflated
+     Sharpe Ratio")? Hvem vælger metoden?
      Svar:
 
-115. Hvordan fordeles kapitalen mellem strategierne: lige meget, efter
+167. Hvordan undgås det, at man kigger på resultaterne og justerer, til det
+     ser godt ud (skjult overtilpasning)?
+     Svar:
+
+168. Hvor lang skal en out-of-sample-periode være, før den tæller?
+     Svar:
+
+169. Skal systemet testes på "falske" data (fx tilfældigt blandede priser)
+     for at se, om det også finder edge i ren støj?
+     Svar:
+
+170. Hvordan opdages fejl med fremtidige data (look-ahead) automatisk i
+     koden?
+     Svar:
+
+171. Hvordan vurderes en strategi med få handler og stor gevinst mod en med
+     mange handler og lille gevinst?
+     Svar:
+
+## 11. Fra enkelt-strategi til portefølje
+
+172. Hvor mange strategier skal køre samtidig, når systemet er i fuld drift?
+     Svar:
+
+173. Hvordan måles det, om to strategier i virkeligheden gør det samme (for
+     høj sammenhæng/korrelation)?
+     Svar:
+
+174. Hvordan fordeles kapitalen mellem strategierne: lige meget, efter
      risiko, eller efter noget andet?
      Svar:
 
-116. Hvor ofte skal porteføljen gennemgås og ændres?
+175. Hvor ofte skal porteføljen gennemgås og ændres?
      Svar:
 
-117. Hvad er reglen for at tage en strategi ud af drift? (Fx et bestemt tab,
+176. Hvad er reglen for at tage en strategi ud af drift? (Fx et bestemt tab,
      en bestemt periode med dårlige resultater.)
      Svar:
 
-118. Hvad er reglen for at sætte en ny strategi i drift? Skal den først køre
+177. Hvad er reglen for at sætte en ny strategi i drift? Skal den først køre
      på papir (simuleret) i en periode?
      Svar:
 
-119. Hvor lang en papirhandels-periode skal der være, og hvad skal den vise?
+178. Hvor lang en papirhandels-periode skal der være, og hvad skal den vise?
      Svar:
 
-120. Skal strategier kunne slukkes midlertidigt, fx i perioder med meget uro
+179. Skal strategier kunne slukkes midlertidigt, fx i perioder med meget uro
      i markedet?
      Svar:
 
-121. Hvordan håndteres det, når to strategier vil handle modsat hinanden i
+180. Hvordan håndteres det, når to strategier vil handle modsat hinanden i
      samme marked på samme tid?
      Svar:
 
-122. Hvordan vil du se et samlet overblik over hele porteføljen hver dag?
+181. Hvordan vil du se et samlet overblik over hele porteføljen hver dag?
      Svar:
 
-## 11. Handel i virkeligheden (execution)
+182. Skal der være et loft for, hvor stor en del af den samlede risiko én
+     strategi må stå for?
+     Svar:
 
-123. Hvilket program skal sende ordrerne til markedet: TradeStation,
+183. Skal porteføljen have strategier med forskellige tidshorisonter for at
+     sprede risikoen?
+     Svar:
+
+184. Hvordan testes hele porteføljen samlet bagud i tid, og ikke kun
+     strategierne hver for sig?
+     Svar:
+
+185. Hvor mange strategier skal ligge i reserve, klar til at erstatte dem,
+     der tages ud?
+     Svar:
+
+186. Hvad gør du, hvis alle strategier taber på samme tid?
+     Svar:
+
+187. Skal porteføljen tilpasse sig uro i markedet (fx mindre positioner, når
+     det er uroligt)?
+     Svar:
+
+## 12. Handel i virkeligheden (execution)
+
+188. Hvilket program skal sende ordrerne til markedet: TradeStation,
      MultiCharts eller et eget program?
      Svar:
 
-124. Hvilke ordretyper skal bruges (markedsordre, limitordre, stopordre)?
+189. Hvilke ordretyper skal bruges (markedsordre, limitordre, stopordre)?
      Svar:
 
-125. Hvor meget slippage (forskel på forventet og faktisk pris) og kurtage
+190. Hvor meget slippage (forskel på forventet og faktisk pris) og kurtage
      regnes der med i backtests i dag? Er tallene målt eller gættet?
      Svar:
 
-126. Hvordan sammenlignes de rigtige handler med backtesten bagefter, så
+191. Hvordan sammenlignes de rigtige handler med backtesten bagefter, så
      forskelle opdages hurtigt?
      Svar:
 
-127. Hvor store positioner kan de valgte markeder tåle, før dine egne
-     ordrer flytter prisen?
+192. Hvor store positioner kan de valgte markeder tåle, før dine egne ordrer
+     flytter prisen?
      Svar:
 
-128. Hvad sker der, hvis en ordre kun bliver delvist udført?
+193. Hvad sker der, hvis en ordre kun bliver delvist udført?
      Svar:
 
-129. Hvad sker der, hvis internetforbindelsen eller strømmen forsvinder,
+194. Hvad sker der, hvis internetforbindelsen eller strømmen forsvinder,
      mens der er en åben position?
      Svar:
 
-130. Skal der ligge en stop-ordre hos brokeren hele tiden (så den virker,
+195. Skal der ligge en stop-ordre hos brokeren hele tiden (så den virker,
      selvom din computer er slukket)?
      Svar:
 
-131. Hvordan sikres det, at systemet ikke sender den samme ordre to gange
+196. Hvordan sikres det, at systemet ikke sender den samme ordre to gange
      ved en fejl?
      Svar:
 
-132. Skal der være en "nødknap", der lukker alle positioner med ét tryk?
+197. Skal der være en "nødknap", der lukker alle positioner med ét tryk?
      Hvem må trykke på den?
      Svar:
 
-133. Hvordan testes selve ordresystemet, før rigtige penge er på spil?
+198. Hvordan testes selve ordresystemet, før rigtige penge er på spil?
      Svar:
 
-134. Beregnes backtests på bar-lukning, mens den rigtige handel sker midt i
+199. Beregnes backtests på bar-lukning, mens den rigtige handel sker midt i
      en bar? Er forskellen undersøgt?
      Svar:
 
-## 12. Risikostyring
-
-135. Hvor meget må tabes på én handel, i procent af kontoen?
+200. Hvordan måles slippage i den rigtige handel, og hvor gemmes målingerne?
      Svar:
 
-136. Hvor meget må tabes på én dag, før systemet stopper for resten af
+201. Hvad er reglen, hvis en ordre ikke bliver udført inden for en bestemt
+     tid?
+     Svar:
+
+202. Skal systemet undgå at handle i de første og sidste minutter af
+     handelsdagen?
+     Svar:
+
+203. Hvad gør systemet, hvis brokerens system er nede eller afviser ordrer?
+     Svar:
+
+204. Hvordan tjekkes det hver dag, at positionerne i systemet og hos
+     brokeren er de samme?
+     Svar:
+
+## 13. Risikostyring
+
+205. Hvor meget må tabes på én handel, i procent af kontoen?
+     Svar:
+
+206. Hvor meget må tabes på én dag, før systemet stopper for resten af
      dagen?
      Svar:
 
-137. Hvor meget må tabes i en måned, før alt stoppes og gennemgås?
+207. Hvor meget må tabes i en måned, før alt stoppes og gennemgås?
      Svar:
 
-138. Hvor stor en samlet position må der højst være åben i ét marked og i
+208. Hvor stor en samlet position må der højst være åben i ét marked og i
      alle markeder tilsammen?
      Svar:
 
-139. Hvordan beregnes positionsstørrelsen: fast antal kontrakter, efter
+209. Hvordan beregnes positionsstørrelsen: fast antal kontrakter, efter
      volatilitet eller efter noget andet?
      Svar:
 
-140. Hvad gør systemet ved et pludseligt kæmpe prisfald (flash crash) eller
+210. Hvad gør systemet ved et pludseligt kæmpe prisfald (flash crash) eller
      et markedsstop?
      Svar:
 
-141. Hvordan beskyttes systemet mod en programfejl, der fx køber 100
+211. Hvordan beskyttes systemet mod en programfejl, der fx køber 100
      kontrakter i stedet for 1?
      Svar:
 
-142. Findes der en liste over de værste historiske markedsdage, som alle
+212. Findes der en liste over de værste historiske markedsdage, som alle
      strategier skal testes igennem (stresstest)?
      Svar:
 
-143. Hvem overvåger risikoen: et program, dig, eller begge?
+213. Hvem overvåger risikoen: et program, dig, eller begge?
      Svar:
 
-144. Hvordan håndteres margin-krav, der pludselig stiger fra brokeren?
+214. Hvordan håndteres margin-krav, der pludselig stiger fra brokeren?
      Svar:
 
-145. Må systemet øge positionerne efter en god periode, og i så fald efter
+215. Må systemet øge positionerne efter en god periode, og i så fald efter
      hvilken regel?
      Svar:
 
-146. Hvad er dit personlige smertepunkt: hvor stort et tab kan du se på
-     uden at gribe ind manuelt?
+216. Hvad er dit personlige smertepunkt: hvor stort et tab kan du se på uden
+     at gribe ind manuelt?
      Svar:
 
-## 13. Drift, overvågning og fejl
-
-147. Hvordan får du besked, hvis noget går galt (mail, sms, telefon-besked)?
+217. Hvornår må systemet starte igen, efter at det har stoppet på grund af
+     et dagstab?
      Svar:
 
-148. Hvilke fejl skal stoppe alt med det samme, og hvilke må bare
+218. Hvordan håndteres risikoen ved positioner over weekenden, hvis de
+     nogensinde tillades?
+     Svar:
+
+219. Må systemet selv ændre risikogrænserne, eller må kun du?
+     Svar:
+
+220. Hvordan skrives alle ændringer af risikogrænser ned, så man kan se,
+     hvem der ændrede hvad og hvornår?
+     Svar:
+
+221. Hvordan håndteres valutarisiko, hvis kontoen er i kroner og handlen
+     sker i dollars?
+     Svar:
+
+## 14. Drift, overvågning og fejl
+
+222. Hvordan får du besked, hvis noget går galt (mail, sms, telefon-besked)?
+     Svar:
+
+223. Hvilke fejl skal stoppe alt med det samme, og hvilke må bare
      registreres og samles op senere?
      Svar:
 
-149. Skal der være én samlet fejllog for hele projektet, eller én pr.
+224. Skal der være én samlet fejllog for hele projektet, eller én pr.
      delprojekt?
      Svar:
 
-150. Hvordan tjekkes det hver dag, at alle dele kører (data kommer ind,
+225. Hvordan tjekkes det hver dag, at alle dele kører (data kommer ind,
      programmer svarer, databasen er i orden)?
      Svar:
 
-151. Hvad gør du, hvis TradeStation opdateres og en automatisering holder op
+226. Hvad gør du, hvis TradeStation opdateres og en automatisering holder op
      med at virke?
      Svar:
 
-152. Skal der være en fast rutine efter hver handelsdag (gennemgang,
+227. Skal der være en fast rutine efter hver handelsdag (gennemgang,
      afstemning mod brokeren)?
      Svar:
 
-153. Hvordan genstartes hele systemet fra bunden efter et nedbrud, og står
+228. Hvordan genstartes hele systemet fra bunden efter et nedbrud, og står
      det skrevet ned?
      Svar:
 
-154. Reglen "ved fejl: ret, ryd op og kør forfra" — gælder den også for
+229. Reglen "ved fejl: ret, ryd op og kør forfra" — gælder den også for
      EdgeFinder, EdgeCruncher og live-handel?
      Svar:
 
-## 14. TradeStation og MultiCharts
-
-155. Hvorfor skal systemet også laves til MultiCharts? Hvad er gevinsten?
+230. Skal der komme en daglig statusrapport, også når alt går godt?
      Svar:
 
-156. Hvornår skal MultiCharts-delen starte: når hele kæden virker i
+231. Hvordan testes det, at alarmerne rent faktisk virker (fx en prøvealarm
+     hver uge)?
+     Svar:
+
+232. Hvordan undgås det, at Windows-opdateringer genstarter maskinen midt i
+     en kørsel?
+     Svar:
+
+233. Hvad sker der, hvis du ikke svarer på en alarm inden for en bestemt
+     tid?
+     Svar:
+
+234. Skal der føres en log over alle alvorlige fejl, med årsag og løsning?
+     Svar:
+
+## 15. TradeStation og MultiCharts
+
+235. Hvorfor skal systemet også laves til MultiCharts? Hvad er gevinsten?
+     Svar:
+
+236. Hvornår skal MultiCharts-delen starte: når hele kæden virker i
      TradeStation, eller tidligere?
      Svar:
 
-157. Skal resultaterne fra TradeStation og MultiCharts sammenlignes, så de
+237. Skal resultaterne fra TradeStation og MultiCharts sammenlignes, så de
      kontrollerer hinanden?
      Svar:
 
-158. Hvad gør vi, hvis de to platforme giver forskellige resultater for samme
-     test?
+238. Hvad gør vi, hvis de to platforme giver forskellige resultater for
+     samme test?
      Svar:
 
-159. Er der risiko for at blive for afhængig af TradeStation (pris, licens,
+239. Er der risiko for at blive for afhængig af TradeStation (pris, licens,
      at de ændrer programmet)? Hvad er plan B?
      Svar:
 
-160. Skal der på sigt laves en egen backtest-motor i Python, så man ikke er
+240. Skal der på sigt laves en egen backtest-motor i Python, så man ikke er
      afhængig af UI-automatisering af TradeStation?
      Svar:
 
-161. Hvilke begrænsninger i EasyLanguage har vi mødt, som kunne tale for at
+241. Hvilke begrænsninger i EasyLanguage har vi mødt, som kunne tale for at
      flytte dele af beregningerne ud af TradeStation?
      Svar:
 
-## 15. Automatisering og "fuldautomatisk"
+242. Hvilken udgave af TradeStation bruges, og hvornår må den opdateres?
+     Svar:
 
-162. Hvad betyder "fuldautomatisk" for dig? Hvilke trin må ALDRIG ske uden
+243. Skal MultiCharts bruge sin egen dataleverandør eller de samme data som
+     TradeStation?
+     Svar:
+
+244. Findes der ting, vi bruger i TradeStation, som slet ikke findes i
+     MultiCharts?
+     Svar:
+
+245. Hvis TradeStation ændrer priser eller lukker, hvor hurtigt kan vi så
+     flytte?
+     Svar:
+
+## 16. Automatisering og "fuldautomatisk"
+
+246. Hvad betyder "fuldautomatisk" for dig? Hvilke trin må ALDRIG ske uden
      din godkendelse?
      Svar:
 
-163. Hvilke trin i kæden kræver i dag, at du sidder ved computeren?
+247. Hvilke trin i kæden kræver i dag, at du sidder ved computeren?
      Svar:
 
-164. Hvordan startes kæden: af dig, på et fast tidspunkt, eller af sig selv,
+248. Hvordan startes kæden: af dig, på et fast tidspunkt, eller af sig selv,
      når der kommer noget nyt?
      Svar:
 
-165. Skal der være én "dirigent", der styrer alle trin, fx EdgeFinder
-     og EdgeCruncher i rækkefølge, eller kører de hver for sig?
+249. Skal der være én "dirigent", der styrer alle trin, fx EdgeFinder og
+     EdgeCruncher i rækkefølge, eller kører de hver for sig?
      Svar:
 
-166. Hvordan ved det næste trin, at det forrige trin er færdigt og godkendt?
+250. Hvordan ved det næste trin, at det forrige trin er færdigt og godkendt?
      Svar:
 
-167. Hvilken rolle skal Claude have, når systemet kører: udvikler, kontrollant,
-     analytiker, eller slet ingen i den daglige drift?
+251. Hvilken rolle skal Claude have, når systemet kører: udvikler,
+     kontrollant, analytiker, eller slet ingen i den daglige drift?
      Svar:
 
-## 16. Arbejdsmåde, dokumentation og Claude
-
-168. Der er mange dokumenter, der delvist modsiger hinanden (NOTER,
-     BYGGEVEJLEDNING, NOTAT, OPGAVEBESKRIVELSE, BESLUTNINGSLOG). Skal der laves
-     én "sandhed" pr. delprojekt, som altid er opdateret?
+252. Hvordan kan du stoppe hele kæden med ét tryk, hvis noget ser forkert
+     ud?
      Svar:
 
-169. Skal der være en fast oversigt (et "kort") over hele projektet, som
+253. Hvordan ser du, hvor langt kæden er nået lige nu (fx en statusside)?
+     Svar:
+
+254. Må systemet selv rette fejl, eller skal det altid stoppe og spørge?
+     Svar:
+
+255. Skal systemet selv foreslå nye ting at teste ud fra tidligere
+     resultater?
+     Svar:
+
+256. Hvordan undgås det, at automatikken skjuler fejl, som et menneske ville
+     have set?
+     Svar:
+
+## 17. Arbejdsmåde, dokumentation og Claude
+
+257. Der er mange dokumenter, der delvist modsiger hinanden (NOTER,
+     BYGGEVEJLEDNING, NOTAT, OPGAVEBESKRIVELSE, BESLUTNINGSLOG). Skal der
+     laves én "sandhed" pr. delprojekt, som altid er opdateret?
+     Svar:
+
+258. Skal der være en fast oversigt (et "kort") over hele projektet, som
      viser alle delprojekter, deres status og hvordan de hænger sammen?
      Svar:
 
-170. Filnavnet `Task_RawSignal_Creature_EdgeFinder_opgave.md` ligger i roden.
-     Skal procesbeskrivelserne have deres egen fast plads (fx én mappe pr.
-     delprojekt)?
+259. Filnavnet `Task_RawSignal_Creature_EdgeFinder_opgave.md` ligger i
+     roden. Skal procesbeskrivelserne have deres egen fast plads (fx én
+     mappe pr. delprojekt)?
      Svar:
 
-171. Kategorien "TradingApp" står i VIDENSLOG uden poster. Hvad er TradingApp,
-     og er den stadig en del af projektet?
+260. Kategorien "TradingApp" står i VIDENSLOG uden poster. Hvad er
+     TradingApp, og er den stadig en del af projektet?
      Svar:
 
-172. Hvordan skal lokal Claude og cloud-Claude dele arbejdet mellem sig? Hvad
-     skal hver især lave?
+261. Hvordan skal lokal Claude og cloud-Claude dele arbejdet mellem sig?
+     Hvad skal hver især lave?
      Svar:
 
-173. Hvordan får cloud-Claude viden om databasens aktuelle indhold, når den
+262. Hvordan får cloud-Claude viden om databasens aktuelle indhold, når den
      ikke kan se den?
      Svar:
 
-174. Hvordan vil du helst have, at Claude stiller spørgsmål: ét ad gangen,
+263. Hvordan vil du helst have, at Claude stiller spørgsmål: ét ad gangen,
      samlet i en liste, eller i et skema som dette?
      Svar:
 
-175. Er der fejl eller misforståelser i samarbejdet med Claude indtil nu,
+264. Er der fejl eller misforståelser i samarbejdet med Claude indtil nu,
      som skal skrives ind i VIDENSLOG, så de ikke sker igen?
      Svar:
 
-176. Hvordan skal FriSnak-optagelser gemmes, så idéerne ikke går tabt
-     (fx en fast mappe med dato)?
+265. Hvordan skal FriSnak-optagelser gemmes, så idéerne ikke går tabt (fx en
+     fast mappe med dato)?
      Svar:
 
-177. Hvordan skal en idé fra FriSnak blive til en opgave: hvem skriver den
+266. Hvordan skal en idé fra FriSnak blive til en opgave: hvem skriver den
      om til en plan, og hvem godkender den?
      Svar:
 
-## 17. Sikkerhed, backup og hardware
+267. Hvor ofte skal VIDENSLOG gennemgås og ryddes op, så gammel viden ikke
+     vildleder?
+     Svar:
 
-178. Hvor ligger koden, databasen og dataene fysisk, og hvad sker der ved
+268. Skal alle programmer have faste automatiske afprøvninger (tests), der
+     køres før hver ændring?
+     Svar:
+
+269. Hvordan sikres det, at den lokale session altid har den nyeste udgave
+     fra GitHub?
+     Svar:
+
+270. Hvilke opgaver giver du helst til den lokale Claude, og hvilke til
+     cloud-Claude?
+     Svar:
+
+271. Skal der være en fast skabelon for opgavebeskrivelser, så Claude ikke
+     misforstår dem?
+     Svar:
+
+## 18. Sikkerhed, backup og hardware
+
+272. Hvor ligger koden, databasen og dataene fysisk, og hvad sker der ved
      brand, tyveri eller en død harddisk?
      Svar:
 
-179. Er der en kopi af alt vigtigt uden for huset (fx i skyen)?
+273. Er der en kopi af alt vigtigt uden for huset (fx i skyen)?
      Svar:
 
-180. Hvordan beskyttes adgangskoder til broker, database og servere? Står
+274. Hvordan beskyttes adgangskoder til broker, database og servere? Står
      nogen af dem i filer, der kommer i git?
      Svar:
 
-181. Hvem har adgang til fjernskrivebordet på serverne, og er det sikret med
+275. Hvem har adgang til fjernskrivebordet på serverne, og er det sikret med
      mere end en adgangskode?
      Svar:
 
-182. Har serverne nødstrøm (UPS), og hvor længe kan de køre uden strøm?
+276. Har serverne nødstrøm (UPS), og hvor længe kan de køre uden strøm?
      Svar:
 
-183. Er GitHub-projektet privat, og skal det forblive det?
+277. Er GitHub-projektet privat, og skal det forblive det?
      Svar:
 
-## 18. Prioritering og næste skridt
-
-184. Hvis du kun kunne vælge ét hul fra dette skema at lukke den næste måned,
-     hvilket skulle det være?
+278. Hvordan beskyttes serverne mod virus og hackere?
      Svar:
 
-185. Hvilke spørgsmål i skemaet vil du have diskuteret ved Det Runde Bord?
+279. Hvor lang tid tager det at bygge en server op igen fra bunden, og står
+     det skrevet ned?
      Svar:
 
-186. Hvilke emner mangler helt i dette skema?
+280. Findes der en liste over alle programmer og licenser, og hvornår de
+     udløber?
      Svar:
 
-187. Hvad er den næste konkrete opgave, du vil give til Claude, når skemaet
+281. Hvad sker der, hvis din GitHub-konto eller din mail bliver hacket?
+     Svar:
+
+## 19. Læring og forbedring over tid
+
+282. Hvordan skal systemet lære af de strategier, der fejler i den rigtige
+     handel?
+     Svar:
+
+283. Hvor ofte skal hele kæden gennemgås for at se, om metoderne stadig er
+     de bedste?
+     Svar:
+
+284. Hvordan måles det, om selve udviklingssystemet bliver bedre over tid
+     (fx flere holdbare strategier pr. måned)?
+     Svar:
+
+285. Hvad skal der ske med strategier, der holder op med at virke: slettes,
+     gemmes eller undersøges?
+     Svar:
+
+286. Skal der laves en fast gennemgang efter hver måned eller hvert kvartal?
+     Svar:
+
+287. Hvordan sikres det, at nye idéer fra FriSnak bliver vurderet og ikke
+     glemt?
+     Svar:
+
+288. Skal Det Runde Bord være et fast trin i processen, fx før en strategi
+     handler med rigtige penge?
+     Svar:
+
+## 20. Rapportering og nøgletal
+
+289. Hvilke 5 tal vil du gerne se hver morgen?
+     Svar:
+
+290. Hvilke tal vil du se hver uge og hver måned?
+     Svar:
+
+291. Hvordan skal rapporterne se ud: tal, diagrammer, tekst eller en
+     blanding?
+     Svar:
+
+292. Hvor skal rapporterne vises: på mail, i en app eller på telefonen?
+     Svar:
+
+293. Skal der være en rapport, der kan vises til en bank, en revisor eller
+     en investor?
+     Svar:
+
+294. Hvordan skal rapporterne sammenligne de rigtige resultater med det,
+     backtesten lovede?
+     Svar:
+
+## 21. Prioritering og næste skridt
+
+295. Hvis du kun kunne vælge ét hul fra dette skema at lukke den næste
+     måned, hvilket skulle det være?
+     Svar:
+
+296. Hvilke spørgsmål i skemaet vil du have diskuteret ved Det Runde Bord?
+     Svar:
+
+297. Hvilke emner mangler helt i dette skema?
+     Svar:
+
+298. Hvad er den næste konkrete opgave, du vil give til Claude, når skemaet
      er besvaret?
+     Svar:
+
+299. Hvilke tre ting i projektet er du mest usikker på lige nu?
+     Svar:
+
+300. Er der noget, der allerede er bygget, som bør laves om, før der bygges
+     videre ovenpå?
      Svar:
