@@ -1,0 +1,52 @@
+Kalender: 1264 handelsdage 2020-2024 (opdigtet, uden sommertid)
+1-min bars: 1,740,737  (lavet på 0.5 s); 12 barstørrelser bygget på 0.26 s
+Signaler, 25x25 celler på 15-min bars: 5,486,522  (8,778 pr. celle; lavet på 0.4 s)
+
+=== F1: Ren støj (tilfældig gang med klumpet uro). Hvad giver porten? ===
+Dag-klynget t over 625 celler: middel -0.58, spredning 0.71, andel |t|>=3: 0.000, største t: 1.78
+'Naivt' t (hvert signal uafhængigt): spredning 0.78, andel |t|>=3: 0.000
+Pustefaktor (naivt t / dag-klynget t): median 1.09, 90%-fraktil 1.16
+Dage pr. celle: median 1263; signaler pr. celle: median 7855
+Plateau-niveauer på støj (lang retning): PL>=1: 0, PL>=3: 0, PL>=5: 0, PL>=7: 0
+Plateau-niveauer på støj (kort retning): PL>=1: 0, PL>=3: 0, PL>=5: 0, PL>=7: 0
+
+=== F2: Fanger null-testen kig-ind-i-fremtiden? (samme støjdata) ===
+FEJL A (indgang på åbningen af den bar, der skabte signalet): middel t +29.0, andel t>=3: 1.000
+FEJL B (kun signaler med AntalBars >= 2, dvs. fremtidsviden): middel t +12.4, andel t>=3: 1.000
+FEJL B (kun signaler med AntalBars >= 4, dvs. fremtidsviden): middel t +28.1, andel t>=3: 1.000
+Rigtig motor (fra F1): middel t -0.58, andel t>=3: 0.000
+
+=== F3: Plantet edge. Finder kæden den, og kun den? ===
+x = 2 ticks plantet pr. signal i 7x7-området (1-min støj sd ~2 ticks, 60-min sd ~15 ticks):
+  stigning i netto pr. signal: inde i området median 4.17, uden for området median 3.16 (smitter via fælles signaler)
+  t i midten (12,12): 11.5; t inde: median 11.8; uden for: median 9.3
+  plateau: midten (12,12) når PL7; celler med PL>=3 inde 49/49, uden for 392/576
+x = 4 ticks plantet pr. signal i 7x7-området (1-min støj sd ~2 ticks, 60-min sd ~15 ticks):
+  stigning i netto pr. signal: inde i området median 8.37, uden for området median 6.35 (smitter via fælles signaler)
+  t i midten (12,12): 23.4; t inde: median 24.0; uden for: median 19.3
+  plateau: midten (12,12) når PL7; celler med PL>=3 inde 49/49, uden for 392/576
+
+=== F4: Lokkeduer (hele serien flyttet 4-26 kalenderuger, cirkulært) ===
+  handelsdage : signaler beholdt 1.000; ugedag ændret for 0.966
+  kalenderuger: signaler beholdt 0.972; ugedag ændret for 0.000
+  20 runder: lokkeduernes dag-klyngede t: middel -0.49, spredning 0.83 (skal være ~1); spredning af rundernes middel-t: 0.55
+  Lokkeduer, der 'består' t>=2 OG PL>=3: pr. runde middel 0.0, min 0, maks 0; runder med mindst én: 0.00
+  Lokkeduer, der 'består' t>=3 OG PL>=3: pr. runde middel 0.0, min 0, maks 0; runder med mindst én: 0.00
+  Lokkeduer, der 'består' t>=4 OG PL>=3: pr. runde middel 0.0, min 0, maks 0; runder med mindst én: 0.00
+  Ægte kørsel med plantet x=2: celler der består t>=3 OG PL>=3: 441
+  Ægte kørsel med plantet x=2: celler der består t>=4 OG PL>=3: 441
+  Ægte kørsel med plantet x=4: celler der består t>=3 OG PL>=3: 441
+  Ægte kørsel med plantet x=4: celler der består t>=4 OG PL>=3: 441
+  Tid pr. lokkedue-runde (625 celler, hele kæden inkl. plateau): 2.55 s
+
+=== F5: Tid pr. trin og fremskrivning ===
+Event-motor: 2.04 s for 5,486,522 signaler (2.7 mio. signaler/s, én horisont)
+Celle-tal (dag-klynget): 0.26 s (21.3 mio. signaler/s)
+Plateau for ét 25x25-gitter (625 midter, ren Python-løkke): 0.01 s
+=> pr. signal pr. horisont: 419 ns (NumPy, én kerne, uden Numba)
+   1 mia. signaler x 3 horisonter: 0.3 timer på én kerne ~ 0.1 timer på 4 kerner
+   5 mia. signaler x 3 horisonter: 1.7 timer på én kerne ~ 0.4 timer på 4 kerner
+   1,8 mio. kandidater ~ 2,880 gitre a 625 celler; plateau: 0.0 timer på én kerne
+   Pr. lokkedue-runde: samme som én fuld kørsel; 50 runder = 50 x ovenstående
+
+Samlet køretid for forsøgene: 82 s

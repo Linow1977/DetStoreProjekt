@@ -1,0 +1,11 @@
+job 1: døde ved A (exit 9)
+job 2: døde ved B (exit 9)
+job 3: døde ved C (exit 9)
+Efter nedbrud, før oprydning: {'filer uden katalog': 2, 'katalog uden fil': 0, 'tmp-rester': 1} [(1, 'VENTER'), (2, 'VENTER'), (3, 'VENTER')]
+Efter oprydning + forfra: {'filer uden katalog': 0, 'katalog uden fil': 0, 'tmp-rester': 0}
+
+Ren kørsel     : [(1, 20000, 'aa362a8c4f26779a1098656a451fbfad975fab134b5bb20e4d0eea7089c31a2e'), (2, 20000, 'a15a0643da3ebf8983c1f4aa6a3ce89fdedee57d8db10b52a13a6168112f44ac'), (3, 20000, '6fcdc2dc673ed0cb8da226d6fb68ce18bb4088790967d362dd891a6cda82a62e')]
+Nedbrud+forfra : [(1, 20000, 'aa362a8c4f26779a1098656a451fbfad975fab134b5bb20e4d0eea7089c31a2e'), (2, 20000, 'a15a0643da3ebf8983c1f4aa6a3ce89fdedee57d8db10b52a13a6168112f44ac'), (3, 20000, '6fcdc2dc673ed0cb8da226d6fb68ce18bb4088790967d362dd891a6cda82a62e')]
+
+Slutresultat identisk (rækker + SHA-256 af hver fil): True
+Status: [(1, 'FAERDIG'), (2, 'FAERDIG'), (3, 'FAERDIG')]

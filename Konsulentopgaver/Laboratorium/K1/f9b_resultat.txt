@@ -1,0 +1,2 @@
+bedste år <= 40% + >=4 af 5 år positive:  ægte t=4: 83% | ægte t=5: 94% | kun 3 af 5 år (t=5): 44% | kun 2 af 5 år (t=5): 2%
+bedste år <= 50% + >=4 af 5 år positive:  ægte t=4: 96% | ægte t=5: 99% | kun 3 af 5 år (t=5): 71% | kun 2 af 5 år (t=5): 26%

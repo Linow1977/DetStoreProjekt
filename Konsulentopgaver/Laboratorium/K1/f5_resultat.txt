@@ -1,0 +1,27 @@
+Forsøg 5: styrke og OOS. Nabo-korrelation sigma=2.0, T*=4.0
+
+--- Grøn-regel: t >= 2 og >= 50 % af midten ---
+  PL1: falske grupper pr. 1,8 mio. kandidater: 13.4; falske der holder i OOS: K1 z=1,28 27%, K1 z=1,0 19%, fast 10% 5%, fast 20% 7%
+  PL3: falske grupper pr. 1,8 mio. kandidater: 5.1; falske der holder i OOS: K1 z=1,28 26%, K1 z=1,0 18%, fast 10% 4%, fast 20% 6%
+  bredde 2, top t=4: fundet PL1  51%, PL3   0% | ægte (PL3) der holder i OOS: 
+  bredde 2, top t=5: fundet PL1  83%, PL3   1% | ægte (PL3) der holder i OOS: K1 z=1,28 58%, K1 z=1,0 48%, fast 10% 20%, fast 20% 26%
+  bredde 2, top t=6: fundet PL1  97%, PL3   1% | ægte (PL3) der holder i OOS: K1 z=1,28 81%, K1 z=1,0 74%, fast 10% 46%, fast 20% 54%
+  bredde 3, top t=4: fundet PL1  61%, PL3  43% | ægte (PL3) der holder i OOS: K1 z=1,28 78%, K1 z=1,0 69%, fast 10% 40%, fast 20% 48%
+  bredde 3, top t=5: fundet PL1  93%, PL3  69% | ægte (PL3) der holder i OOS: K1 z=1,28 82%, K1 z=1,0 74%, fast 10% 47%, fast 20% 56%
+  bredde 3, top t=6: fundet PL1  99%, PL3  80% | ægte (PL3) der holder i OOS: K1 z=1,28 83%, K1 z=1,0 76%, fast 10% 51%, fast 20% 61%
+  bredde 5, top t=4: fundet PL1  77%, PL3  75% | ægte (PL3) der holder i OOS: K1 z=1,28 75%, K1 z=1,0 66%, fast 10% 36%, fast 20% 45%
+  bredde 5, top t=5: fundet PL1  97%, PL3  97% | ægte (PL3) der holder i OOS: K1 z=1,28 84%, K1 z=1,0 77%, fast 10% 50%, fast 20% 59%
+  bredde 5, top t=6: fundet PL1 100%, PL3 100% | ægte (PL3) der holder i OOS: K1 z=1,28 85%, K1 z=1,0 78%, fast 10% 54%, fast 20% 64%
+
+--- Grøn-regel: t >= 2 (uden 50 %-krav) ---
+  PL1: falske grupper pr. 1,8 mio. kandidater: 14.2; falske der holder i OOS: K1 z=1,28 28%, K1 z=1,0 19%, fast 10% 5%, fast 20% 7%
+  PL3: falske grupper pr. 1,8 mio. kandidater: 5.5; falske der holder i OOS: K1 z=1,28 27%, K1 z=1,0 19%, fast 10% 4%, fast 20% 6%
+  bredde 2, top t=4: fundet PL1  58%, PL3   6% | ægte (PL3) der holder i OOS: K1 z=1,28 66%, K1 z=1,0 55%, fast 10% 26%, fast 20% 35%
+  bredde 2, top t=5: fundet PL1  83%, PL3  17% | ægte (PL3) der holder i OOS: K1 z=1,28 69%, K1 z=1,0 59%, fast 10% 32%, fast 20% 42%
+  bredde 2, top t=6: fundet PL1  98%, PL3  34% | ægte (PL3) der holder i OOS: K1 z=1,28 74%, K1 z=1,0 64%, fast 10% 38%, fast 20% 48%
+  bredde 3, top t=4: fundet PL1  59%, PL3  48% | ægte (PL3) der holder i OOS: K1 z=1,28 75%, K1 z=1,0 66%, fast 10% 38%, fast 20% 46%
+  bredde 3, top t=5: fundet PL1  89%, PL3  82% | ægte (PL3) der holder i OOS: K1 z=1,28 81%, K1 z=1,0 73%, fast 10% 46%, fast 20% 55%
+  bredde 3, top t=6: fundet PL1  98%, PL3  97% | ægte (PL3) der holder i OOS: K1 z=1,28 85%, K1 z=1,0 78%, fast 10% 54%, fast 20% 64%
+  bredde 5, top t=4: fundet PL1  78%, PL3  77% | ægte (PL3) der holder i OOS: K1 z=1,28 75%, K1 z=1,0 66%, fast 10% 36%, fast 20% 45%
+  bredde 5, top t=5: fundet PL1  98%, PL3  98% | ægte (PL3) der holder i OOS: K1 z=1,28 82%, K1 z=1,0 74%, fast 10% 48%, fast 20% 57%
+  bredde 5, top t=6: fundet PL1 100%, PL3 100% | ægte (PL3) der holder i OOS: K1 z=1,28 85%, K1 z=1,0 78%, fast 10% 55%, fast 20% 65%

@@ -1,0 +1,3 @@
+Forsøg 11: morgen-opdrift i markedet, filter N1=10, N2=20, 150 markeder
+         rå: UDEN edge t middel +0.78 (sd 1.04), andel t>2 12% | MED plantet edge t middel +6.90, andel t>=4 99%
+   overskud: UDEN edge t middel +0.01 (sd 0.85), andel t>2 1% | MED plantet edge t middel +6.11, andel t>=4 99%

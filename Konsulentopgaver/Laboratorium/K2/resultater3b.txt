@@ -1,0 +1,5 @@
+F3c andel 0.2 (midlertidig): ubetinget drift -0.11 ticks/60 min; stigning i netto/signal inde 0.21, uden for 0.11; t midte -0.1; t>=4 & PL>=3: inde 0/49, uden for 0/576, grupper 0; repræsentant -
+F3c andel 0.5 (midlertidig): ubetinget drift -0.11 ticks/60 min; stigning i netto/signal inde 0.54, uden for 0.27; t midte 0.9; t>=4 & PL>=3: inde 0/49, uden for 0/576, grupper 0; repræsentant -
+F3c andel 1.0 (midlertidig): ubetinget drift -0.11 ticks/60 min; stigning i netto/signal inde 1.09, uden for 0.54; t midte 2.4; t>=4 & PL>=3: inde 1/49, uden for 7/576, grupper 3; repræsentant (6, 9), højeste t (7, 9)
+F3c k=2 ticks (midlertidig): drift -0.11; stigning inde 2.17, uden for 1.07; t midte 5.5; midte PL4; t>=4 & PL>=3: inde 31/49, uden for 137/576, grupper 1; største gruppes repræsentant (11, 8), højeste t (4, 9)
+F3c k=4 ticks (midlertidig): drift -0.09; stigning inde 4.35, uden for 2.14; t midte 11.6; midte PL6; t>=4 & PL>=3: inde 45/49, uden for 278/576, grupper 2; største gruppes repræsentant (11, 11), højeste t (9, 10)

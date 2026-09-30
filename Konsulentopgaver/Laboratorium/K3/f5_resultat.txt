@@ -1,0 +1,5 @@
+400 jobs, 8 arbejdere, 6.7 s
+Status til sidst: {'FAERDIG': 400}
+Hændelser: {'konflikter': 1782, 'afviste_forsinkede': 2, 'doede': 13}
+Jobs med mere end ét godkendt resultat: 0
+Jobs uden resultat (og ikke OPGIVET): 0

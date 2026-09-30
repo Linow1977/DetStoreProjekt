@@ -1,0 +1,7 @@
+
+Forsøg 10: realistisk opdigtet marked uden edge
+  Ægte signaler (sand nul, 125000 celler):  middel +0.35, spredning 0.97, |t|>2: 5.3%, t>2: 3.5%, t>3: 0.63%
+  Lokkeduer (375000 celler):             middel +0.36, spredning 1.02, |t|>2: 6.2%, t>2: 5.3%, t>3: 0.38%
+  Gitter-gennemsnit af t: ægte middel +0.35 (sd 0.91), lokkeduer middel +0.36 (sd 0.97)
+  Nabo-korrelation af t i gitteret (median over markeder/retninger): 0.93
+  (Middel af t over 0 skyldes opdriften: lange signaler får opdriften med — både ægte og lokkeduer.)

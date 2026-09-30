@@ -1,0 +1,6 @@
+T1 frys 1 af F0200                       afvist: F0200: tvilling af F0069 (overlap 0.84, status KASSERET) - samme familie, må ikke åbnes
+T1 frys 1 af F0300                       frosset (overlap med F0069 = 0.20)
+T2 tal synlige mens runden er åben       0 rækker
+T2 blind dom mens runden er åben         [('F0300', 'LANG', True), ('F0400', 'KORT', False)]
+T2 tal synlige efter lukning             2 rækker
+T2 ny familie efter lukning              afvist: OOS-runden er lukket; ny familie skal vente på en ny, uset periode EFTER 2026 (2026 er embargo)

@@ -1,0 +1,6 @@
+Forsøg 9: stabilitets-kravet B5
+  ÆGTE sand t=4: består B5 82.7%  | delkrav: år 99%, kvartaler 99%, bedste_år 83%, uden_bedste_måned 100%
+  ÆGTE sand t=5: består B5 93.8%  | delkrav: år 100%, kvartaler 100%, bedste_år 94%, uden_bedste_måned 100%
+  ÆGTE sand t=6: består B5 98.2%  | delkrav: år 100%, kvartaler 100%, bedste_år 98%, uden_bedste_måned 100%
+  FALSKE med IS-t>=4 (n=132): består B5 92.4% | delkrav: år 100%, kvartaler 100%, bedste_år 92%, uden_bedste_måned 100%
+  Edge KUN i 3 af 5 år (samlet t=5): består B5 43.7% (burde være lav) | år 75%, kvartaler 100%, bedste_år 46%, uden_bedste_måned 100%

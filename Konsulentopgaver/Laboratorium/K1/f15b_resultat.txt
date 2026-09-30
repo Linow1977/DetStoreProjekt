@@ -1,0 +1,8 @@
+GOD strategi (leverer præcis som lovet), 60 måneder:
+  V1: pensioneret 4.7%, sat på pause mindst én gang 7.0%
+  V2: pensioneret 1.3%, sat på pause mindst én gang 7.0%
+  V3: pensioneret 3.1%, sat på pause mindst én gang 6.9%
+  V4: pensioneret 1.4%, sat på pause mindst én gang 0.0%
+DØD edge (gennemsnit 0 fra frysedatoen), andel pensioneret inden 60 mdr. (median måned):
+  lovet Sharpe 1.0: V1 53% (33), V2 34% (34), V3 48% (33), V4 34% (34)
+  lovet Sharpe 2.0: V1 98% (20), V2 95% (22), V3 98% (20), V4 95% (22)

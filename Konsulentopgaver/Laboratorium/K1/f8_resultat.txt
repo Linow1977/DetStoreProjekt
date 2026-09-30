@@ -1,0 +1,6 @@
+bredde 3, top-t 5:
+        midte: sand edge 4.63, IS-t 5.24, oppustning 0.62, holder i OOS 82.7%  (n=546)
+    højeste t: sand edge 4.67, IS-t 5.35, oppustning 0.68, holder i OOS 82.0%  (n=546)
+bredde 5, top-t 5:
+        midte: sand edge 4.51, IS-t 5.26, oppustning 0.75, holder i OOS 81.3%  (n=656)
+    højeste t: sand edge 4.30, IS-t 5.50, oppustning 1.20, holder i OOS 75.7%  (n=656)

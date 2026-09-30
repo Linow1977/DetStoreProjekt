@@ -1,0 +1,9 @@
+Læst med arkiv/**/*.parquet  ->  rækker pr. år: [(2020, 1873230), (2021, 1874898), (2022, 1873255), (2023, 1873365), (2024, 1764952), (2025, 49248)]
+  => 49,248 OOS-rækker (2025) kom med uden fejl eller advarsel.
+
+Alle test-rækker: 9,259,700 på 0.034 s
+Ét filter x én barstørrelse: 50,000 rækker på 0.023 s
+Fra DuckDB's plan: ['│   Scanning Files: 1/240   │', '│    Total Files Read: 1    │']
+
+Værn: jokertegn over hele arkivet afvist (0.021 s): 2 fil(er) har data efter 2024-12-13, fx arkiv/oos/signaler/barstr=10/filter=F0002/job=000001.parquet
+Værn: kun test/-mappen læst normalt: 9,259,700 rækker

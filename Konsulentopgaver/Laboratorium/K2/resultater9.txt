@@ -1,0 +1,3 @@
+F14 gyldigt filter        : helt ens nabo-par langs N1 0.00, langs N2 0.00; forskellige signal-lister 625/625; fjerne celler min. lighed 0.10; dom: gyldigt; med 2 ticks plantet i (12,12): midten PL2, celler med PL7: 0
+F14 fejl: alle celler ens : helt ens nabo-par langs N1 1.00, langs N2 1.00; forskellige signal-lister 1/625; fjerne celler min. lighed 1.00; dom: ['N1', 'N2']; med 2 ticks plantet i (12,12): midten PL7, celler med PL7: 289
+F14 fejl: N2 virker ikke  : helt ens nabo-par langs N1 0.00, langs N2 1.00; forskellige signal-lister 25/625; fjerne celler min. lighed 0.36; dom: ['N2']; med 2 ticks plantet i (12,12): midten PL7, celler med PL7: 238

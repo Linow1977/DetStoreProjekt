@@ -1,0 +1,2 @@
+F13 stop 12 / target 4: 150 tilfældige 'strategier' a 1.500 handler på støj: t middel -2.74, spredning 0.78, andel t>=3: 0.000, t>=4: 0.000 (normalfordeling: 0,0013 / 0,00003); skævhed middel -0.98
+F13 stop 8 / target 8: 150 tilfældige 'strategier' a 1.500 handler på støj: t middel -2.44, spredning 0.94, andel t>=3: 0.000, t>=4: 0.000 (normalfordeling: 0,0013 / 0,00003); skævhed middel +0.12

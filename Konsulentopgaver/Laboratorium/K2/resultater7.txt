@@ -1,0 +1,2 @@
+F12 edge HELE perioden  : celle (12,12) netto/signal 1.91 ticks; positive år 4/5, positive kvartaler 18/20, bedste år = 35% af gevinsten -> B5 BESTÅET
+F12 edge KUN 2020-2021  : celle (12,12) netto/signal 0.64 ticks; positive år 4/5, positive kvartaler 16/20, bedste år = 65% af gevinsten -> B5 AFVIST

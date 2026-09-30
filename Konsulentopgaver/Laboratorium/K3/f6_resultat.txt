@@ -1,0 +1,14 @@
+A) Sum af netto som kommatal:
+   rækkefølge 1: -4122286.000000002
+   rækkefølge 2: -4122286.000000003
+   løkke       : -4122286.000246034
+   bit-identiske? False
+   Som heltal (1/100 tick): -412228600 / -412228600  -> bit-identiske? True
+   DuckDB gruppesum 1 tråd vs 4 tråde, samme fingeraftryk? False
+
+B) Én million tælle-rækker:
+   Parquet zstd :   12.5 MB
+   DuckDB       :   17.1 MB
+   PostgreSQL   : ca. 97 MB uden indeks (regnet, ikke målt; nøgletal som jsonb gør det større)
+   1 ægte + 20 lokkedue-runder x 12 mio. celler = 252 mio. rækker ~ 24 GB i PostgreSQL (regnet) / 3.2 GB i Parquet
+   1 ægte + 50 lokkedue-runder x 12 mio. celler = 612 mio. rækker ~ 59 GB i PostgreSQL (regnet) / 7.7 GB i Parquet

@@ -1,0 +1,42 @@
+Del 1: ÆGTE, uændret edge, ingen udvælgelse. Andel SMIDT UD af ren støj:
+ sand t (5 år) |   fast 10% |   fast 20% |  K1 z=1,28 |   K1 z=1,0 |     kun >0
+             3 |      45.1% |      40.0% |      13.0% |      17.7% |       9.0%
+             4 |      43.5% |      36.9% |      11.2% |      16.9% |       3.7%
+             5 |      41.7% |      33.7% |      10.9% |      16.8% |       1.3%
+             6 |      40.3% |      30.8% |      11.0% |      16.9% |       0.4%
+             8 |      37.0% |      25.1% |      10.9% |      16.8% |       0.0%
+
+Del 2: MED udvælgelse (kun IS-t >= tærskel går til OOS).
+Andel ægte smidt ud / andel falske der slipper igennem:
+  tærskel 4.0, ægte sand t=4 (ægte valgt: 50%; falske valgt: 297 af 8,000,000):
+       fast 10%: ægte smidt ud  55.4% | falske igennem   4.0%
+       fast 20%: ægte smidt ud  47.2% | falske igennem   6.7%
+      K1 z=1,28: ægte smidt ud  17.0% | falske igennem  31.6%
+       K1 z=1,0: ægte smidt ud  25.1% | falske igennem  22.2%
+         kun >0: ægte smidt ud   3.6% | falske igennem  53.5%
+  tærskel 4.0, ægte sand t=5 (ægte valgt: 84%; falske valgt: 250 af 8,000,000):
+       fast 10%: ægte smidt ud  45.8% | falske igennem   3.6%
+       fast 20%: ægte smidt ud  36.9% | falske igennem   5.2%
+      K1 z=1,28: ægte smidt ud  12.6% | falske igennem  30.4%
+       K1 z=1,0: ægte smidt ud  19.1% | falske igennem  21.2%
+         kun >0: ægte smidt ud   1.3% | falske igennem  50.8%
+  tærskel 4.5, ægte sand t=4 (ægte valgt: 31%; falske valgt: 27 af 8,000,000):
+       fast 10%: ægte smidt ud  60.9% | falske igennem   0.0%
+       fast 20%: ægte smidt ud  52.0% | falske igennem   0.0%
+      K1 z=1,28: ægte smidt ud  20.7% | falske igennem  25.9%
+       K1 z=1,0: ægte smidt ud  29.8% | falske igennem  14.8%
+         kun >0: ægte smidt ud   3.6% | falske igennem  44.4%
+  tærskel 4.5, ægte sand t=5 (ægte valgt: 69%; falske valgt: 27 af 8,000,000):
+       fast 10%: ægte smidt ud  49.3% | falske igennem   3.7%
+       fast 20%: ægte smidt ud  39.8% | falske igennem   3.7%
+      K1 z=1,28: ægte smidt ud  14.3% | falske igennem  22.2%
+       K1 z=1,0: ægte smidt ud  21.5% | falske igennem  11.1%
+         kun >0: ægte smidt ud   1.3% | falske igennem  51.9%
+
+Del 3: edge svinger mellem kvartaler (ekstra kvartals-sd = 2 x den rene).
+  median S_aar(kvartal) / S_aar(ren) = 2.20  (>1,5 => mærkes 'ustabil')
+       fast 10%: ægte smidt ud  46.3%
+       fast 20%: ægte smidt ud  42.6%
+      K1 z=1,28: ægte smidt ud  18.7%
+       K1 z=1,0: ægte smidt ud  21.9%
+         kun >0: ægte smidt ud  15.9%

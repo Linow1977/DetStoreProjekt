@@ -1,0 +1,15 @@
+Forsøg 6: andel af ren støj med t >= 3 og t >= 4 (ensidet)
+  Normalfordelingen siger: t>=3: 0.1350%, t>=4: 0.00317%
+                   fordeling   dage |      t>=3       t>=4 | t>=4 ift. normal
+                      normal    150 |   0.1617%   0.00555% |             1.8x
+                      normal    300 |   0.1451%   0.00445% |             1.4x
+                      normal   1250 |   0.1336%   0.00320% |             1.0x
+               tykhalet (t3)    150 |   0.1169%   0.00280% |             0.9x
+               tykhalet (t3)    300 |   0.1175%   0.00215% |             0.7x
+               tykhalet (t3)   1250 |   0.1221%   0.00210% |             0.7x
+   skæv højre (gevinst-hale)    150 |   0.0027%   0.00000% |             0.0x
+   skæv højre (gevinst-hale)    300 |   0.0070%   0.00000% |             0.0x
+   skæv højre (gevinst-hale)   1250 |   0.0260%   0.00005% |             0.0x
+    skæv venstre (tabs-hale)    150 |   1.6652%   0.36470% |           115.2x
+    skæv venstre (tabs-hale)    300 |   1.0699%   0.17465% |            55.1x
+    skæv venstre (tabs-hale)   1250 |   0.4907%   0.04365% |            13.8x

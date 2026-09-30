@@ -1,0 +1,8 @@
+PF1 ingen fordel      (200 verdener): gns. næste-måneds netto pr. valgt strategi — alle -41 (spr. 1,069), momentum -112 (spr. 2,001), lokkedue +95 (spr. 1,982); momentum slog 'alle' i 49% af verdenerne
+PF1 skiftende fordel  (200 verdener): gns. næste-måneds netto pr. valgt strategi — alle +5,357 (spr. 1,157), momentum +9,267 (spr. 2,264), lokkedue +5,504 (spr. 2,105); momentum slog 'alle' i 98% af verdenerne
+PF2 ingen hukommelse (ingen fordel)              blok 1 md.: momentum 'bestod' i 5% af 60 verdener
+PF2 ingen hukommelse (ingen fordel)              blok 3 md.: momentum 'bestod' i 5% af 60 verdener
+PF2 ingen hukommelse (ingen fordel)              blok 6 md.: momentum 'bestod' i 7% af 60 verdener
+PF2 hukommelse (fordel tænder/slukker 10 %/md.)  blok 1 md.: momentum 'bestod' i 25% af 60 verdener
+PF2 hukommelse (fordel tænder/slukker 10 %/md.)  blok 3 md.: momentum 'bestod' i 18% af 60 verdener
+PF2 hukommelse (fordel tænder/slukker 10 %/md.)  blok 6 md.: momentum 'bestod' i 12% af 60 verdener

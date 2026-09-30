@@ -1,0 +1,4 @@
+Gitter 1..25 skridt 1  : begge parametre = længde -> kan dybt-testes mod ALLE naboer: 37.2%, mod mindst én nabo: 76.8%
+Gitter 5..29 skridt 1  : begge parametre = længde -> kan dybt-testes mod ALLE naboer: 25.1%, mod mindst én nabo: 67.4%
+Gitter 2..50 skridt 2  : begge parametre = længde -> kan dybt-testes mod ALLE naboer: 37.2%, mod mindst én nabo: 76.8%
+Gitter 5..125 skridt 5 : begge parametre = længde -> kan dybt-testes mod ALLE naboer: 37.2%, mod mindst én nabo: 76.8%

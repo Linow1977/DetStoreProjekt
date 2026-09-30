@@ -1,0 +1,11 @@
+Forsøg 6b: mild skævhed. Normal: t>=4 i 0.00317%
+         fordeling  skævhed   dage |     t>=3      t>=4 ift. normal
+    lognormal 0.25    -0.78    150 |   0.264%   0.0140%        4.4x
+    lognormal 0.25    -0.78    300 |   0.230%   0.0097%        3.1x
+    lognormal 0.25    -0.78   1250 |   0.173%   0.0050%        1.6x
+     lognormal 0.5    -1.75    150 |   0.502%   0.0440%       13.9x
+     lognormal 0.5    -1.75    300 |   0.349%   0.0240%        7.6x
+     lognormal 0.5    -1.75   1250 |   0.214%   0.0070%        2.2x
+    target4/stop12    -1.12    150 |   0.386%   0.0338%       10.7x
+    target4/stop12    -1.12    300 |   0.284%   0.0190%        6.0x
+    target4/stop12    -1.12   1250 |   0.174%   0.0100%        3.2x

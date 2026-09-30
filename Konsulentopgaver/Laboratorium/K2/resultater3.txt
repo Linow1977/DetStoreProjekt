@@ -1,0 +1,14 @@
+=== F8a: Andel fælles signaltider mellem midten (12,12) og en nabo (Jaccard) ===
+  afstand  1 (N1): 0.90
+  afstand  1 (N2): 0.43
+  afstand  2 (N1): 0.83
+  afstand  2 (N2): 0.35
+  afstand  3 (N1): 0.77
+  afstand  3 (N2): 0.31
+  afstand  6 (N1): 0.64
+  afstand  6 (N2): 0.28
+  afstand 12 (N1): 0.50
+  afstand 12 (N2): 0.25
+=== F8b: Plantet edge (x=2) kun i 7x7 omkring (12,12): hvilken celle bliver repræsentant? ===
+  beståede celler: 441 i 1 sammenhængende gruppe(r)
+  gruppe 1: 441 celler, geometrisk midte (12.0,12.0), repræsentant (np.int64(12), np.int64(12)); plantet midte var (12,12); højeste t i gruppen: (np.int64(4), np.int64(10))

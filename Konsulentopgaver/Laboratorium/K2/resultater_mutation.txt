@@ -1,0 +1,5 @@
+Indsat fejl: bar stemplet med åbningstid      -> 3 af 19 tests fejler (FANGET)
+Indsat fejl: indgang ét minut for tidligt     -> 1 af 19 tests fejler (FANGET)
+Indsat fejl: target først ved samme minut     -> 1 af 19 tests fejler (FANGET)
+Indsat fejl: naiv t (ingen dag-klynger)       -> 1 af 19 tests fejler (FANGET)
+Uden indsatte fejl: 0 af 19 tests fejler

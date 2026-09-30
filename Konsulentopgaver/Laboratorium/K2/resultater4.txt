@@ -1,0 +1,6 @@
+F9a: 400 handler x 100 stop/target-kombinationer: afvigelser hurtig vs. langsom = 0
+     samme-minut-tilfælde (stop valgt): 16 af 40000 = 0.040%
+     tid: langsom 0.6 s, hurtig 0.02 s (27 x hurtigere)
+F9b: gab forbi stop (indgang 100, stop 95, minut 3 åbner 90): langsom -10 (stop), hurtig -10 -> forventet -10
+F9c: samme minut (indgang 95, stop 91, target 105; minut 4 har høj 120 og lav 80): langsom -4 (stop), hurtig -4, mærket samme-minut=True -> forventet -4 (stop)
+F9d: 20000 handler x 100 kombinationer på 1.0 s = 20,708 handler/s (NumPy, én kerne)

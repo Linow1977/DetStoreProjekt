@@ -1,0 +1,3 @@
+dage   150: tærskel med samme falske-rate som normal t>=4: t >= 4.99  (bygget på 95 overskridelser)
+dage   300: tærskel med samme falske-rate som normal t>=4: t >= 4.59  (bygget på 95 overskridelser)
+dage  1250: tærskel med samme falske-rate som normal t>=4: t >= 4.21  (bygget på 32 overskridelser)

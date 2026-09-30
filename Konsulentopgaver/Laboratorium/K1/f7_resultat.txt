@@ -1,0 +1,4 @@
+Forsøg 7: 464 falske med t >= 4 ud af 3,000,000 (0.0155%; normal siger 0,0032 %)
+  (a) består også stabilitets-kravet B5: 100% af de falske
+  (b) består også bootstrap-t (ingen af 1999 bootstrap-t over det observerede): 71% af de falske
+  (Til sammenligning: for normalfordelte dage ville næsten alle falske med t>=4 også bestå b.)

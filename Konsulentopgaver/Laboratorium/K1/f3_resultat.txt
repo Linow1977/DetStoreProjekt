@@ -1,0 +1,10 @@
+Forsøg 3: plateauer i REN STØJ (25x25-gitter, ingen edge)
+sigma nabo-korr. |   >=PL1   >=PL2   >=PL3   >=PL4   >=PL5   >=PL6   >=PL7 | celle med t>=4 og PL3 | t>=4.5 og PL3
+  0.0       0.00 |   0.00%   0.00%   0.00%   0.00%   0.00%   0.00%   0.00% |               0.000% |       0.000%
+  0.7       0.58 |   0.07%   0.01%   0.00%   0.00%   0.00%   0.00%   0.00% |               0.000% |       0.000%
+  1.0       0.78 |   3.02%   1.17%   0.00%   0.00%   0.00%   0.00%   0.00% |               0.000% |       0.000%
+  1.5       0.89 |  22.89%  16.42%   0.11%   0.11%   0.00%   0.00%   0.00% |               0.005% |       0.005%
+  2.0       0.94 |  34.80%  29.30%   1.38%   1.38%   0.03%   0.03%   0.00% |               0.175% |       0.010%
+
+Tal = andel af gitre, hvor mindst én celle når niveauet. Et gitter = 625 kandidater.
+Omregning: 1,8 mio. kandidater svarer til ca. 2.900 gitre.

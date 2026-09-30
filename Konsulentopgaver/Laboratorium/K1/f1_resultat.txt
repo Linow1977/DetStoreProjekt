@@ -1,0 +1,13 @@
+Forsøg 1: klumpning. Spredning af t under 'ingen edge' (skal være ca. 1,0)
+aktive dage sign./aktiv dag   rho |  naivt t dag-klynget t | oppustning |  andel |t|>3 naivt dag-klynget
+        30%              10   0.1 |     1.46          1.03 |       1.4x |               3.2%       0.20%
+        30%              10   0.3 |     2.01          1.01 |       2.0x |              13.3%       0.35%
+        30%              40   0.1 |     2.14          0.96 |       2.2x |              17.2%       0.10%
+        30%              40   0.3 |     3.59          1.00 |       3.6x |              39.8%       0.35%
+        30%              40   0.5 |     4.57          1.00 |       4.6x |              50.9%       0.20%
+        10%              40   0.3 |     3.64          1.02 |       3.6x |              41.0%       0.45%
+
+Tilfældige tidspunkter (panelets kontrol) vs. ægte klumpet signal, rho=0.3, 30% aktive dage, 40/dag:
+  Ægte klumpet signal (uden edge): naivt t spredning 3.51
+  Tilfældige tidspunkter:          naivt t spredning 2.10
+  Tærskel sat af tilfældige tidspunkter (1% falske): t >= 4.72; andel ægte-klumpede støjceller over den: 9.6% (burde være 1%)

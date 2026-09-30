@@ -1,0 +1,9 @@
+Del 1: gitter med ens t-tal i alle 625 celler
+  alle celler t=1.5: midtens plateau-niveau = PL0
+  alle celler t=2.0: midtens plateau-niveau = PL7
+  alle celler t=3.0: midtens plateau-niveau = PL7
+  alle celler t=4.5: midtens plateau-niveau = PL7
+Del 2: median overlap mellem fjerne celler
+  rigtigt filter (20 markeder): min 0.79, median 0.80, max 0.82
+  fejlramt gitter: 1.00
+  kontrol (>= 0,99 = ugyldigt, som B11): rigtige markeret ugyldige 0%, fejlramt markeret: True

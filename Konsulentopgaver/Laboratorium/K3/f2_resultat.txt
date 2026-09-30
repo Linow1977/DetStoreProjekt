@@ -1,0 +1,16 @@
+Test                                          Udfald
+T1 2025-række i pris_test                     afvist: Constraint Error: CHECK constraint failed on table bar_1min with expression CHECK((handelsdato BETWEEN CAST('2
+T1b buffer-række (2024-12-20) i pris_test     afvist: Constraint Error: CHECK constraint failed on table bar_1min with expression CHECK((handelsdato BETWEEN CAST('2
+T2 signalfil med én 2025-linje                afvist: job 2: 1 linje(r) efter 2024-12-13 - hele filen afvist
+T2 efterladt af job 2                         0 filer, 0 katalog-rækker
+T3 første åbning F0069|LANG                   åbnet (id 1); snapshot ægte/kontrol = (1, 1)
+T3 samme parti igen                           afvist: Constraint Error: Duplicate key "port: OOS, familie_noegle: F0069|LANG" violates unique constraint.
+T3 nabo-celle i samme familie (ny frys)       afvist: Constraint Error: Duplicate key "port: OOS, familie_noegle: F0069|LANG" violates unique constraint.
+T3 anden familie F0070|LANG                   åbnet (id 2) - som det skal
+T3c samme familie, anden stavemåde            ÅBNET (id 3) - BAGDØR! låsen holdt ikke
+T3d rettet: 'lang' med lille                  afvist: Constraint Error: CHECK constraint failed on table aabning_v2 with expression CHECK((retning IN ('LANG', 'KORT
+T3d rettet: ukendt filter 'F069'              afvist: Constraint Error: Violates foreign key constraint because key "fast_filter_id: F069" does not exist in the ref
+T3d rettet: samme familie igen                afvist: Constraint Error: Duplicate key "port: OOS, fast_filter_id: F0069, retning: LANG" violates unique constraint.
+T4 genstart uden godkender                    afvist: Constraint Error: CHECK constraint failed on table forsoeg with expression CHECK(((haendelse != 'GENSTART_GODK
+T4 genstart med godkender                     tilladt og logget
+T5 tælle-rækker før/efter nedbrud             2 / 2 (0 halve rækker tilbage)

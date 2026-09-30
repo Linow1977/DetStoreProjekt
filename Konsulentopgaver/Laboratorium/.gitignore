@@ -1,0 +1,3 @@
+# Opdigtede testdata og cache, som forsøgene selv laver igen
+*_ud/
+__pycache__/

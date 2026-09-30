@@ -1,0 +1,3 @@
+R = 0.0: falske grupper pr. 1,8 mio. = 5.2; ægte fundet: bredde 3: 83%, bredde 5: 96%
+R = 0.25: falske grupper pr. 1,8 mio. = 5.2; ægte fundet: bredde 3: 82%, bredde 5: 98%
+R = 0.5: falske grupper pr. 1,8 mio. = 5.2; ægte fundet: bredde 3: 83%, bredde 5: 97%

@@ -1,0 +1,3 @@
+filter 0 (plantet andel 1.0): ubetinget 60-min bevægelse fra tilfældige tidspunkter: +0.79 ticks (SE 0.18); samlet drift over 5 år: +25388 ticks
+filter 8 (plantet andel 0.35): ubetinget 60-min bevægelse fra tilfældige tidspunkter: +0.41 ticks (SE 0.19); samlet drift over 5 år: +12054 ticks
+filter 1 (plantet andel 0.0): ubetinget 60-min bevægelse fra tilfældige tidspunkter: +0.12 ticks (SE 0.14); samlet drift over 5 år: +1202 ticks

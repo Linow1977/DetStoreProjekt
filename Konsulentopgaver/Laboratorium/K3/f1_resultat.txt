@@ -1,0 +1,13 @@
+Opdigtede 5-min bars 2020-2024: 359,904
+Signal-linjer: 3,000,000
+
+Format                                         MB i alt bytes/linje MB pr. mio.
+CSV (som TradeStation)                            118.8        39.6        39.6
+Parquet snappy, sorteret n1,n2,starttid            22.5         7.5         7.5
+Parquet zstd, sorteret n1,n2,starttid              16.9         5.6         5.6
+Parquet snappy, sorteret starttid                  11.4         3.8         3.8
+Parquet zstd, sorteret starttid                     9.7         3.2         3.2
+DuckDB-tabel (kolonnevis database)                 13.1         4.4         4.4
+PostgreSQL (regnet, ikke målt)                    249.0        83.0        83.0
+
+DuckDB: dagsoptælling pr. kombination af 3,000,000 linjer: 0.98 s, 896,966 grupper

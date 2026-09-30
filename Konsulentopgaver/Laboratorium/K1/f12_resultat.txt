@@ -1,0 +1,4 @@
+Falske grupper pr. 1,8 mio. kandidater (T*=4): PL1: 15.1, PL3: 6.4, PL5: 0.0, PL7: 0.0
+Ægte edge, bredde 3 celler, top-t 5: fundet PL1 89%, PL3 83%, PL5 15%, PL7 1%
+Ægte edge, bredde 5 celler, top-t 5: fundet PL1 99%, PL3 98%, PL5 95%, PL7 52%
+Ægte edge, bredde 8 celler, top-t 5: fundet PL1 100%, PL3 100%, PL5 99%, PL7 98%

@@ -1,0 +1,23 @@
+F10: 12 opdigtede filtre lavet (21 s). Plantet: {0: 1.0, 4: 0.6, 8: 0.35}
+  filter  0 (plantet): t midte +8.0, T>=2.0,PL>=1: 527 celler/1 grp, T>=2.5,PL>=1: 526 celler/1 grp, T>=2.0,PL>=3: 437 celler/1 grp, T>=3.0,PL>=3: 434 celler/1 grp
+  filter  1 (støj)   : t midte +1.0, T>=2.0,PL>=1: 0 celler/0 grp, T>=2.5,PL>=1: 0 celler/0 grp, T>=2.0,PL>=3: 0 celler/0 grp, T>=3.0,PL>=3: 0 celler/0 grp
+  filter  2 (støj)   : t midte +1.8, T>=2.0,PL>=1: 0 celler/0 grp, T>=2.5,PL>=1: 0 celler/0 grp, T>=2.0,PL>=3: 0 celler/0 grp, T>=3.0,PL>=3: 0 celler/0 grp
+  filter  3 (støj)   : t midte +0.9, T>=2.0,PL>=1: 0 celler/0 grp, T>=2.5,PL>=1: 0 celler/0 grp, T>=2.0,PL>=3: 0 celler/0 grp, T>=3.0,PL>=3: 0 celler/0 grp
+  filter  4 (plantet): t midte +5.2, T>=2.0,PL>=1: 529 celler/1 grp, T>=2.5,PL>=1: 506 celler/1 grp, T>=2.0,PL>=3: 440 celler/1 grp, T>=3.0,PL>=3: 362 celler/3 grp
+  filter  5 (støj)   : t midte +0.8, T>=2.0,PL>=1: 0 celler/0 grp, T>=2.5,PL>=1: 0 celler/0 grp, T>=2.0,PL>=3: 0 celler/0 grp, T>=3.0,PL>=3: 0 celler/0 grp
+  filter  6 (støj)   : t midte -1.8, T>=2.0,PL>=1: 0 celler/0 grp, T>=2.5,PL>=1: 0 celler/0 grp, T>=2.0,PL>=3: 0 celler/0 grp, T>=3.0,PL>=3: 0 celler/0 grp
+  filter  7 (støj)   : t midte -0.3, T>=2.0,PL>=1: 0 celler/0 grp, T>=2.5,PL>=1: 0 celler/0 grp, T>=2.0,PL>=3: 0 celler/0 grp, T>=3.0,PL>=3: 0 celler/0 grp
+  filter  8 (plantet): t midte +3.0, T>=2.0,PL>=1: 214 celler/2 grp, T>=2.5,PL>=1: 170 celler/3 grp, T>=2.0,PL>=3: 104 celler/3 grp, T>=3.0,PL>=3: 47 celler/6 grp
+  filter  9 (støj)   : t midte +1.3, T>=2.0,PL>=1: 0 celler/0 grp, T>=2.5,PL>=1: 0 celler/0 grp, T>=2.0,PL>=3: 0 celler/0 grp, T>=3.0,PL>=3: 0 celler/0 grp
+  filter 10 (støj)   : t midte -1.3, T>=2.0,PL>=1: 0 celler/0 grp, T>=2.5,PL>=1: 0 celler/0 grp, T>=2.0,PL>=3: 0 celler/0 grp, T>=3.0,PL>=3: 0 celler/0 grp
+  filter 11 (støj)   : t midte +1.2, T>=2.0,PL>=1: 0 celler/0 grp, T>=2.5,PL>=1: 0 celler/0 grp, T>=2.0,PL>=3: 0 celler/0 grp, T>=3.0,PL>=3: 0 celler/0 grp
+
+  Lokkeduer: 20 runder x 12 filtre (785 s i alt)
+  T>=2.0, PL>=1, celler : ægte beståede 1270 (heraf fra støj-filtre   0) | SAND andel falske 0.00 | lokkedue-skøn 0.45 (lokkeduer pr. runde: middel 572.0, spredning 281.5, maks 996)
+  T>=2.0, PL>=1, grupper: ægte beståede    4 (heraf fra støj-filtre   0) | SAND andel falske 0.00 | lokkedue-skøn 2.08 (lokkeduer pr. runde: middel 8.3, spredning 4.0, maks 18)
+  T>=2.5, PL>=1, celler : ægte beståede 1202 (heraf fra støj-filtre   0) | SAND andel falske 0.00 | lokkedue-skøn 0.39 (lokkeduer pr. runde: middel 473.8, spredning 240.8, maks 812)
+  T>=2.5, PL>=1, grupper: ægte beståede    5 (heraf fra støj-filtre   0) | SAND andel falske 0.00 | lokkedue-skøn 2.74 (lokkeduer pr. runde: middel 13.7, spredning 5.6, maks 25)
+  T>=2.0, PL>=3, celler : ægte beståede  981 (heraf fra støj-filtre   0) | SAND andel falske 0.00 | lokkedue-skøn 0.34 (lokkeduer pr. runde: middel 332.1, spredning 225.7, maks 649)
+  T>=2.0, PL>=3, grupper: ægte beståede    5 (heraf fra støj-filtre   0) | SAND andel falske 0.00 | lokkedue-skøn 0.70 (lokkeduer pr. runde: middel 3.5, spredning 2.0, maks 7)
+  T>=3.0, PL>=3, celler : ægte beståede  843 (heraf fra støj-filtre   0) | SAND andel falske 0.00 | lokkedue-skøn 0.22 (lokkeduer pr. runde: middel 188.8, spredning 137.9, maks 414)
+  T>=3.0, PL>=3, grupper: ægte beståede   10 (heraf fra støj-filtre   0) | SAND andel falske 0.00 | lokkedue-skøn 0.87 (lokkeduer pr. runde: middel 8.7, spredning 5.3, maks 21)
