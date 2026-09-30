@@ -73,6 +73,44 @@ EasyLanguage-arbejdet er et åbent punkt, ikke en fast rolle. Ny kæde:
 TradingDB → RawSignal Maker → RSA → Code Creater → Edge-Finder/Cruncher →
 Incubator → Pharos. Se `Konsulentopgaver/Opgave_til_konsulentgruppen_v2_2026-09-29.docx`.
 
+### 2026-09-29 — Konsulentrapport v2 og Pharos-udkast færdige
+Tre konsulent-agenter (statistiker, pipeline-udvikler, data-arkitekt) og en
+overordnet agent skrev rapporten. Den ligger i
+`Konsulentopgaver/Rapport_konsulentgruppen_2026-09-29.docx`, Pharos-udkastet
+(inspireret af Andrea Ungers Titan) i `Pharos_udkast_2026-09-29.docx` og
+afprøvningskoden i `Konsulentopgaver/Laboratorium/`. Hovedfund: tre huller
+skal lukkes før den fulde kørsel (se RawSignal-Creature og punktet om
+superbrugeren nedenfor). Thomas' beslutninger er samlet i rapportens del 4.6
+og bilag A. Intet er besluttet endnu.
+
+### 2026-09-29 — Programmerne logger på TradingDB som superbrugeren `postgres`
+`Program/faelles.py` forbinder som `postgres`. En superbruger går uden om alle
+rettigheder, så låse på 2025-2026-data og engangs-porten til OOS kan ikke
+virke, før programmerne får egne, begrænsede roller. Skal rettes, før låsene
+bygges.
+
+### 2026-09-29 — Arbejdsmåde: uafhængig kontrol og hele VIDENSLOG
+En uafhængig agent, der ikke havde skrevet noget, fandt 43 fejl i en rapport,
+som tre konsulenter allerede havde angrebet hinandens dele af. Blandt dem var
+to regler, der brød Thomas' egne beslutninger. **Følge:** store leverancer
+skal altid gennem en frisk kontrol. Samtidig blev VIDENSLOG kun søgt i med
+nøgleord, ikke læst helt, og posten om, at Average og AvgTrueRange virker i
+løkken, blev overset. **Følge:** læs hele VIDENSLOG før en opgave, ikke kun
+søg i den.
+
+## RSA (RawSignal-Analyser)
+
+Andet led i kæden: analyserer signal-backtests for stabilitet. Metoden står i
+konsulentrapportens del 1 (statistik) og del 2 (byggeplan).
+
+### 2026-09-29 — Tæl i handelsdage, og mål tilfældighed med lokkeduer
+Signaler klumper sig, så t-tal regnet pr. signal blev 1,4-4,6 gange for store
+i forsøg; de skal regnes pr. handelsdag. Panelets "tilfældige tidspunkter"
+lod ca. ti gange for mange falske igennem. Lokkeduer, hvor hele
+signalserien flyttes 4-26 kalenderuger, gav et retvisende billede.
+`AntalBars` kendes først, når signalet slukker, og må aldrig bruges til at
+vælge signaler. Kun forsøg på opdigtede data, se `Konsulentopgaver/Laboratorium/K1`.
+
 ## TradingApp
 
 *(Ingen poster endnu.)*
@@ -132,6 +170,21 @@ Det nye filter 1 (AvgTrueRange, 625 kombinationer) gav forskellige
 signalrækker for alle 620 kombinationer, der kan tænde. Sammen med Average
 (gamle 266) er det to funktioner, der virker. MACD (gamle 069) er stadig den
 eneste målte, der er ramt.
+
+### 2026-09-29 — En ny barstørrelse sletter den forrige
+`Program/indlaes_csv.py` kører `delete` på hele `rawsignal.rawsignal<nr>`
+før indlæsning, og RunID indeholder ikke barstørrelsen. Kører samme filter
+på 12 barstørrelser, overlever kun den sidste. Skal rettes (job-nummer og
+barstørrelse på hver række) før den fulde kørsel.
+
+### 2026-09-29 — Regnefejlen får et gitter til at ligne et perfekt plateau
+Når en seriefunktion giver ens signaler i alle 625 celler, når plateau-trappen
+automatisk PL7. RSA skal derfor have en kontrol for "identiske celler", der
+markerer gitteret som ugyldigt, og den skal køres på alle filtre. 184 af 380
+filtre indeholder ingen af de kendte seriefunktioner; op til 196 kan være
+ramt. Det tal er et loft: Average og AvgTrueRange er målt og virker (posten
+ovenfor), så det reelle antal ramte er sandsynligvis lavere. Rapporten fra
+29. september bruger loftet.
 
 ## EdgeFinder
 
