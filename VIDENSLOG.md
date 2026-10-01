@@ -125,6 +125,20 @@ signalrækker for alle 620 kombinationer, der kan tænde. Sammen med Average
 (gamle 266) er det to funktioner, der virker. MACD (gamle 069) er stadig den
 eneste målte, der er ramt.
 
+## RawSignal-Analyse (RSA)
+
+Event Study-delen af pipelinen (efter RawSignal Creature). Detaljer i
+`RawSignal_Analyse/`.
+
+### 2026-10-01 — RSA-arbejdet fra 24.–29. sep findes ikke i repoet
+RSA-tabellerne (schema `rawsignal_analyse`), look-ahead-rettelsen,
+retningsreglen og periodeopdelingen ligger kun i TradingDB/den lokale
+session og i Claude Chat. Samlingen fra chat indeholdt forældede punkter
+(fx at et åbent signal ved slutningen "ignoreres" — repoet skriver det med
+`Afsluttet = 0`). **Følge:** sammenhold altid chat-samlinger med repoets
+beslutningslogs; seneste dato vinder. 50 kritiske spørgsmål til metoden:
+`RawSignal_Analyse/SPOERGSMAAL_EventStudy_RSA_2026-10-01.md`.
+
 ## EdgeFinder
 
 *(Ingen poster endnu.)*
