@@ -73,6 +73,24 @@ tilfælde." **Følge:** når "Filter" udelukkes, udelukkes RawSignal-filerne og
 programmet, der bygger dem, også. Er afgrænsningen uklar, så spørg, før der
 skrives, i stedet for at vælge en tolkning og nævne den bagefter.
 
+### 2026-10-01 — Spørgeskemaet er besvaret: de vigtigste svar
+Thomas har besvaret 300 spørgsmål (205 svar, 95 "Ved ikke endnu"). Det vigtigste:
+- Kun egne penge, indtil det er bevist, at det virker. Første rigtige handel:
+  forår 2027. Kun handler, der lukkes samme dag. Ingen fast afkast-mål.
+  Prioritet: lav risiko, så jævnt afkast, så højt afkast.
+- Data2 og Data3 bruges til at finde edge. Data1 bruges til at finpudse entry.
+  Kun minutdata. TradeStation 10. MultiCharts skal bruges til prop-firmaer.
+- Udvælgelse, portefølje, nøgletal og live-drift ligger hos Pharos. Kun Thomas
+  aktiverer strategier.
+- Alt ligger på én fysisk server (tre diske) uden kopi uden for huset. Brand
+  betyder, at alt er tabt. Det er et åbent hul.
+Se `SPORGESKEMA_DetStoreProjekt.md` (alle svar) og `SPORGESKEMA_aabne_punkter.md`.
+
+### 2026-10-01 — En udfyldningsside med lager virker til store spørgerunder
+300 spørgsmål blev besvaret på én dag via en side på claude.ai, hvor hvert svar
+gemmes af sig selv, og hvor Claude bagefter kan hente svarene direkte. **Følge:**
+brug samme metode næste gang, Thomas skal svare på mange spørgsmål.
+
 ## TradingApp
 
 *(Ingen poster endnu.)*
