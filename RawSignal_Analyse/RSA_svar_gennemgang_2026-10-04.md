@@ -125,3 +125,20 @@ de 7 ikke-målte seriefunktioner), 33 (farvegrænser).
 seriefunktioner. Average og AvgTrueRange er målt og virker, MACD er målt og
 ramt. Ikke målt: RSI, StandardDev, XAverage, DMIplus, DMIminus, ADX og
 ChaikinMoneyFlow.
+
+## 6. Anden opfølgning med Thomas (samme dag)
+
+- **17 (besluttet):** RSA skal bruge næste bars åbning, regnet ud fra Data2's
+  bar-længde, som tidligste pris efter et signal. Gælder alle RSA-tabeller.
+- **18 (besluttet):** Måletidspunkterne skal være samme tid for alle
+  bar-længder (fx minutter), ikke samme antal bars. De tre tider er ikke valgt.
+- **20:** Flere signalserier på én dag kan give flere handler på én dag.
+  Optælling pr. dag gælder kun for, hvor sikker målingen er, ikke for antal handler.
+- **Ny idé (Thomas):** "Signalet har været tændt i k bars → gå ind" testes i
+  Edge-Finder og lægges senere ind i Edge-Cruncher.
+- **11:** MACD og de 7 ikke-målte seriefunktioner (RSI, StandardDev,
+  XAverage, DMIplus, DMIminus, ADX, ChaikinMoneyFlow) skal undersøges. Thomas
+  foreslår at teste på ny testdata ("2007-2029"; formodentlig 2007-2018, til
+  bekræftelse), så hverken IN- eller OOS-årene bruges.
+- **Stadig åbent:** 28 (forklares igen), 29 (Thomas spørger: hvordan kan held
+  bestå OOS?), 40 (15 %-grænsen forklares nærmere), 33 (farvegrænser).
