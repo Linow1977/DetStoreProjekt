@@ -65,6 +65,18 @@ En anden var, at programmet hang, når en strategi fandtes i forvejen.
 **Følge:** hver vej gennem programmet skal afprøves mindst én gang, også
 fejl- og genstartsvejene.
 
+### 2026-10-04 — RSA-skemaet besvaret: de vigtigste beslutninger
+Thomas har besvaret de 60 RSA-spørgsmål (42 svar, 18 "Ved ikke endnu"):
+- Alt kørt indtil nu er test og slettes; der køres forfra på frisk data.
+- Periodekæde: RSA 5 år IN + 1 år OOS; Edge-Finder og Edge-Cruncher bruger
+  hver forrige trins IN + OOS som IN + ét nyt år OOS. OOS = 1 år.
+- Børsens tid overalt. 2025 og 2026 hentes og gemmes hver for sig, kun det
+  modul, der skal bruge dem, får adgang.
+- RSA leder kun efter retning og stabilitet; omkostninger først i Edge-Finder.
+  Afkast i dollars. Regime-opdeling droppet. Ingen kontrol for identiske celler.
+Åbne risici (periodekæden kræver 2027 som OOS, klumpning) og opfølgning:
+`RawSignal_Analyse/RSA_svar_gennemgang_2026-10-04.md`.
+
 ### 2026-10-04 — Tjek alle arbejdsgrene, ikke kun `main`
 Den første udgave af RSA-spørgsmålene byggede kun på `main` og overså
 konsulentrapporterne, laboratoriet og Thomas' skemasvar, som lå på grene, der

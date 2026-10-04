@@ -3,6 +3,10 @@
 Første udgave 1. oktober 2026. **Opdateret 4. oktober 2026**, så det passer til,
 hvor RSA-processen er nu.
 
+**Besvaret af Thomas 4. oktober 2026** via siden på claude.ai (42 svar, 18 "Ved ikke
+endnu"). Svarene er skrevet ind ordret. Gennemgangen af svarene står i
+`RSA_svar_gennemgang_2026-10-04.md`.
+
 Bygget på:
 - Thomas' samling fra Claude Chat (`EventStudy_RawSignal_samling_med_datoer.txt`, status 1. okt)
 - `main` i repoet (seneste commit 24. sep: RawSignal Creature)
@@ -57,27 +61,34 @@ Konsulentrapporterne, laboratoriet, VIDENSLOG-kategorien "RSA" og dine skemasvar
 på grene, som ingen ny session ser automatisk. Uden én fælles sandhed bygger den lokale
 session og cloud-sessionen på forskellige grundlag.
 
+**Svar (Thomas, 4. okt):** Ved ikke endnu
 **2. Hvad er status på serveren lige nu?**
 Position P0/P4 · Dato: 27. sep → 4. okt · Status: Åben
 De 9 tabeller i `rawsignal_analyse` og kørslerne af RawSignal123, 002 og 169 findes kun på
 serveren. Er der kørt eller bygget mere siden 29. sep? Skal der laves en kort statuslog fra
 den lokale session, der pushes til repoet?
 
+**Svar (Thomas, 4. okt):** når vi er ude af test fase slettes data og der køre fra ny med frisk data, den nu værende data køre på test data der ikke er relevant sener.
 **3. Er RawSignal123, 002 og 169 gamle eller nye filternumre?**
 Position P0/P4 · Dato: 24. sep (omnummerering) mod 24.–27. sep (kørsler) · Status: Åben
 Kørslerne lå samme dage som omnummereringen. "RawSignal002 (625 kombinationer)" ligner det
 nye filter 1 (AvgTrueRange, 625 kombinationer).
 
+**Svar (Thomas, 4. okt):** ikke relevant
 **4. Regelfilen: kun du godkender nye versioner, og alt køres forfra ved ændring?**
 Position P0/P4 · Dato: 29. sep (K2-14 punkt 9) · Status: Bekræft
 Rapporten foreslår, at alle grænser står i én regelfil med versionsnummer. Skal hver
 resultatrække i RSA stemples med regelfil-version, kode-version og RunID?
 
+**Svar (Thomas, 4. okt):** det må vi nok heler
 **5. Hvordan holdes styr på beslutninger, der blev taget efter at have set data?**
 Position P0/P4 · Dato: 24.→27. sep · Status: Åben
 Retningsreglen blev ændret, efter at RawSignal123's resultater på 2019-2023 var set, og den
 periode overlapper testperioden. Skal der føres en log over, hvilke metodevalg der er
 truffet efter at have set hvilke data, så de tælles med som forsøg?
+**Svar (Thomas, 4. okt):** RSA køre på år 5 år  in sample (IN) og 1 år out of sample (OOS)  
+Edge-Finder køre RAS (IN + OOS) som IN + 1 nyt år OOS.  
+Edge-Cruncher køre Edge-Finder (IN + OOS) som IN + 1 nyt år OOS.
 
 ## P1 — Prisdata
 
@@ -88,26 +99,31 @@ de to kilder bruger forskellig tidszone eller stempling, kigges der ind i fremti
 join, og dagsgrænsen "midnat til midnat" flytter sig. Rapporten sætter tidszone og session
 som en af dine fem første beslutninger.
 
+**Svar (Thomas, 4. okt):** alt tid køre på Exchanse tid hvor Futures kontrakterne handles
 **7. Rulleregel og justering: stemmer de 1-minuts priser med TradeStations kontinuerlige kontrakt?**
 Position P1 · Dato: 24.–25. sep og 1. okt (svar 62) · Status: Åben
 99,98 % ens tidspunkter siger intet om ens priser. Er OHLC tjekket omkring rulledatoerne,
 og hvad er de 0,02 %?
 
+**Svar (Thomas, 4. okt):** Ved ikke endnu
 **8. Er 2025 og 2026 låst, så programmerne ikke kan læse dem?**
 Position P1/P6 · Dato: 29. sep · Status: Bekræft
 Programmerne logger på som superbrugeren `postgres`, så ingen lås virker. Rapporten anbefaler
 egne roller pr. program. Er det besluttet, og ligger 2025-data i databasen endnu?
 
+**Svar (Thomas, 4. okt):** 2025 hentes separat og 2026 hentes Separat så de ligger hver deres  sted og der skal kun være adgang til det gældende modul der skal det (eksemple Edge-Finder modul)
 **9. Opvarmning pr. datastrøm: hvor tidligt skal kørslerne starte for de 52 filtre med Data3?**
 Position P1/P2 · Dato: 29. sep (kvalitetskontrollen F-3) · Status: Åben
 Max Bars Back = 1000 bars skal dækkes for både Data2 og den større Data3. Det kan flytte
 starten et eller flere år tilbage og skal måles i prøvekørslen.
 
+**Svar (Thomas, 4. okt):** tro vi har løst det spørgsmål ?
 **10. Hvordan håndteres negative og ekstreme priser i dataene?**
 Position P1/P4 · Dato: 24.–25. sep · Status: Ny
 Olie handlede til −37 $ den 20. april 2020. Med additiv bagudjustering kan ældre priser blive
 meget små eller negative, så procent-afkast mister mening. Skal den dag og rulledagene
 markeres eller udelukkes?
+**Svar (Thomas, 4. okt):** de skal naturligvis bruges
 
 ## P2 — RawSignal Maker
 
@@ -116,15 +132,18 @@ Position P2 · Dato: 29. sep (din første beslutning i rapportens 4.6) · Status
 MACD-sporet er droppet. Betyder det, at de 196 er droppet, eller kun udskudt? Rapporten
 anbefaler at køre de 184 sikre filtre først (184 × 12 = 2.208 kørsler).
 
+**Svar (Thomas, 4. okt):** Ved ikke endnu
 **12. Skal signalerne efterprøves i Python bar for bar mod en uafhængig beregning?**
 Position P2/P3 · Dato: 28. sep (åben tråd) · Status: Åben
 "Forskellige signalrækker" beviser ikke rigtige tal, for forkerte tal kan også være
 forskellige. Skal TA-Lib eller egen kode bruges som facit på en stikprøve?
 
+**Svar (Thomas, 4. okt):** ikke før der er bevist at det er nødvendigt
 **13. Fast filter-ID med fingeraftryk?**
 Position P2 · Dato: 29. sep (K3-18 punkt 7) · Status: Bekræft
 `filter_case_id` er et løbenummer, der allerede er flyttet én gang. Et fingeraftryk af
 formlen sikrer, at et resultat altid peger på præcis den formel, der lavede det.
+**Svar (Thomas, 4. okt):** ja det tror jeg
 
 ## P3 — Kørsel og indlæsning
 
@@ -133,16 +152,19 @@ Position P3 · Dato: 28.–29. sep · Status: Åben
 `indlaes_csv.py` sletter hele `rawsignal<nr>`-tabellen, og RunID indeholder hverken
 bar-længde eller marked. Kører samme filter på 12 bar-længder, overlever kun den sidste.
 
+**Svar (Thomas, 4. okt):** det er fikset
 **15. Er prøvekørslen lavet: 3-5 filtre × 12 bar-længder, inkl. RawSignal069?**
 Position P3 · Dato: 29. sep (K2-14 punkt 6) · Status: Åben
 Den giver de tal, der mangler for at planlægge: kørselstid pr. backtest, filstørrelse og
 opvarmning.
 
+**Svar (Thomas, 4. okt):** det er fikset
 **16. Hvem kører selve backtesten, der giver RSA sine signaler?**
 Position P3 · Dato: 27. sep mod 28. sep og 1. okt (svar 123) · Status: Modstrid
 Den 27. kørte EdgeFinder backtesten før RSA. Den 28. ligger Edge-Finder efter Code Creater.
 Den 1. okt svarede du, at workspace-indstillinger "ikke er Edge-Finders opgave". Hvilket
 program henter signalerne ud af TradeStation?
+**Svar (Thomas, 4. okt):** det er fikset
 
 ## P4 — RSA: målingen
 
@@ -152,39 +174,47 @@ Look-ahead-fejlen blev rettet i `mae_mfe`. Er samme regel brugt i `prisefter`,
 `fordeling_horisont` og `varighed_bevaegelse`, og findes der en automatisk test, der fanger
 det?
 
+**Svar (Thomas, 4. okt):** Ved ikke endnu
 **18. Hvilke højst 3 horisonter, og er de låst, før data ses?**
 Position P4 · Dato: 24. sep (3/5/10/15 bars) mod 29. sep (K1-P 2: højst 3) og 1. okt (svar 114: ved ikke) · Status: Åben
 Hver ekstra horisont er et ekstra forsøg. Skal horisonten måles i bars eller i minutter, så
 bar-længderne kan sammenlignes?
 
+**Svar (Thomas, 4. okt):** Ved ikke endnu
 **19. Tabellen `varighed_bevaegelse`: slettes den, eller mærkes den "kun beskrivende"?**
 Position P4 · Dato: 29. sep (afgjort: AntalBars må aldrig vælge signaler) · Status: Bekræft
 Varigheden kendes først, når signalet slukker. Tabellen må derfor aldrig indgå i dommen.
 
+**Svar (Thomas, 4. okt):** er den ikke retnings angivende
 **20. Klumpning: hører optælling pr. handelsdag til i RSA eller i Edge-Finder/CC?**
 Position P4 · Dato: 29. sep (rapporten: RSA) mod 1. okt (svar 120: Edge-Finder/CC) · Status: Modstrid
 Tæller RSA signaler i stedet for dage, bliver t-tallene 1,4-4,6 gange for store (forsøg f1).
 Så dømmer RSA på oppustede tal, uanset hvad Edge-Finder gør bagefter.
 
+**Svar (Thomas, 4. okt):** det kan være med til at angive signalet styrke i en given situation, men ellers er det kun signalet på et given tidspunkt der gælder
 **21. Omkostningsmargin: 2 × eller 3 × omkostningen, og allerede i RSA?**
 Position P4 · Dato: 29. sep (rapporten: 2 ×) mod 1. okt (svar 159: 3 ×, svar 128: Pharos) · Status: Modstrid
 Er grænsen 2 × eller 3 × omkostningen? Og skal den gælde allerede i RSA, eller først hos
 Pharos? Hvilken tick-værdi, kommission og slippage bruges for CL?
 
+**Svar (Thomas, 4. okt):** omkostnings faktor skal først bruges i Edge-Finder, RAS er retnings og stabilitet søgende
 **22. Overskud i forhold til samme klokkeslæt?**
 Position P4 · Dato: 24.–27. sep (ikke besluttet) og 29. sep (K1-P 15) · Status: Bekræft
 Forsøg f11: med morgen-opdrift i markedet gav rå tal 12 % falske med t > 2. Målt som overskud
 over det, der normalt sker på samme klokkeslæt, var det 1 %. Skal det være standard?
 
+**Svar (Thomas, 4. okt):** Ved ikke endnu
 **23. Minimum pr. celle: 150 handelsdage og 300 signaler?**
 Position P4/P5 · Dato: 27. sep (åben) og 29. sep (rapportens del 1, E) · Status: Bekræft
 RawSignal123 blev kaldt "Fail", før tærsklen var besluttet. Er den dom foreløbig?
 
+**Svar (Thomas, 4. okt):** kun test
 **24. Ekstreme dage: hvordan fanges et resultat, der bæres af få dage?**
 Position P4 · Dato: 1. okt (svar 161: år for år) og 29. sep (forsøg f6/f7) · Status: Åben
 Skæve dagsresultater kan få ren støj til at nå t ≥ 4 op til 115 gange oftere end forventet (ved mild skævhed 2-14 gange), og
 stabilitetskravet B5 fanger dem ikke. Rapporten foreslår lokkeduer med samme stop/target.
 Er år for år nok?
+**Svar (Thomas, 4. okt):** sammenlignes år for år for at se stabilitet over tid
 
 ## P4 — RSA: udgangspunktet
 
@@ -193,16 +223,19 @@ Position P4 · Dato: 11. aug (panelet) mod 29. sep (rapporten, forsøg f1/f10) �
 Tilfældige tidspunkter lod 9,6 % falske igennem i stedet for 1 %. Lokkeduer flytter hele
 signalserien 4-26 kalenderuger. Hvor mange runder (20-50)?
 
+**Svar (Thomas, 4. okt):** begge skal testes og evalueres over tid
 **26. Hvad skiller en stabil edge fra stabil tilfældighed?**
 Position P4/P5 · Dato: 27. sep (udgangspunkt ikke blokerende) og 29. sep (4.3 nr. 9) · Status: Åben
 Den nye værdi-stabilitetstest på de 8 naboer koster ingen ægte edges, men fjerner heller ingen
 falske. Hvis udgangspunktet ikke er blokerende, hvad stopper så et filter, der stabilt gør det
 samme som markedet?
 
+**Svar (Thomas, 4. okt):** Ved ikke endnu
 **27. Retningen: findes den på testdata og låses ved frys 1?**
 Position P4 · Dato: 27. sep (retningsregel) og 29. sep (familie = filter × retning) · Status: Bekræft
 Den 27. sep blev udgangspunktet både brugt til at finde retning og kaldt "ikke blokerende".
 Rapporten gør filter × retning til én familie. Gælder 4-5-år-reglen stadig?
+**Svar (Thomas, 4. okt):** ja
 
 ## P4 — RSA: statistik
 
@@ -211,24 +244,29 @@ Position P4 · Dato: 1. okt (svar 152) mod 28.–29. sep (rapporterne) · Status
 Antallet af forsøg bestemmer, hvor hårdt kravet skal være (t ≈ 4,65 ved millioner). En
 backtest med 625 kombinationer × 2 retninger × 3 horisonter er 3.750 forsøg, ikke ét.
 
+**Svar (Thomas, 4. okt):** ja
 **29. Grænse for falske fund (FDR) 10 %, og hvad betyder "under 5 % består"?**
 Position P4 · Dato: 29. sep (K1-P 3) og 1. okt (svar 134) · Status: Bekræft
 5 % af 1,8 mio. celler er 90.000. Er dine 5 % pr. filter, pr. celle eller pr. familie?
 
+**Svar (Thomas, 4. okt):** Ved ikke endnu
 **30. Hvad skal år for år bruges til, når det næsten ikke fanger falske?**
 Position P4 · Dato: 27. sep (4-5 af 5 år) og 29. sep (forsøg f9) · Status: Åben
 Falske med t ≥ 4 består stabilitetskravet B5 i 92 % af tilfældene. Det er t-kravet, der gør
 arbejdet. Er år for år en dom, eller kun en advarsel? Og bedste år højst 40 % eller 50 %?
 
+**Svar (Thomas, 4. okt):** tid vil sortere falske fra over tid
 **31. Regimer: er panelets krav om opdeling efter markedsregime bevidst droppet?**
 Position P4 · Dato: 11. aug (panelets punkt 2) mod 1. okt (svar 122: nej) · Status: Modstrid
 Volatilitets-opdelingen blev udskudt 24. sep, og du svarede nej til markedstyper. Er
 kalenderår nu det eneste regime-tjek?
 
+**Svar (Thomas, 4. okt):** ja
 **32. Accepterer du, at maskinen kun kan finde meget stærke edges på ét marked?**
 Position P4 · Dato: 28. sep (rapport v3) · Status: Ny
 Med 5 års data kan der ærligt kun findes edges med årlig Sharpe på ca. 2,3-2,5 pr. marked, men
 ca. 1,6 på 6 markeder. Skal flere markeder ind tidligt, eller accepteres grænsen?
+**Svar (Thomas, 4. okt):** for nu accepteres grænser
 
 ## P5 — Plateau og gate
 
@@ -237,34 +275,41 @@ Position P5 · Dato: 28. sep (åbent punkt) · Status: Åben
 Hvorfor tillader PL6 20 % røde felter, mens PL2 og PL4 kræver 0 %? Sættes grænserne efter
 at have set resultaterne, kan man ubevidst vælge dem, så det ønskede filter består.
 
+**Svar (Thomas, 4. okt):** fastsat grænse af mig, den angiver nabo stabilitet ja
 **34. Er PL2 som minimum meningsfuldt, når nabo-celler næsten er ens?**
 Position P5 · Dato: 28. sep og 29. sep (forsøg f3/f10/f12) · Status: Ny
 Rigtige filtre har en nabo-korrelation på ca. 0,93. Ved den korrelation når ren støj PL1 i ca.
 35 % af gitrene. Ægte smalle edges (3 celler) når sjældent PL5. Skal plateau-niveauet styre
 prioritering, mens t-kravet styrer dommen?
 
+**Svar (Thomas, 4. okt):** ja det tror jeg
 **35. Kontrol for identiske celler på alle filtre?**
 Position P5 · Dato: 29. sep (forsøg f13) · Status: Bekræft
 Et gitter ramt af regnefejlen når automatisk PL7. Ved overlap ≥ 0,99 erklæres gitteret
 ugyldigt.
 
+**Svar (Thomas, 4. okt):** nej, det holdes op med OOS, ubrugelighed/fejl viser sig senere
 **36. Hvad er plateau for filtre med kun N1, med decimaltal eller uden parametre (76 filtre)?**
 Position P5 · Dato: 28. sep · Status: Åben
 3×3 til 9×9 kræver to akser. RawSignal123 havde kun N1.
 
+**Svar (Thomas, 4. okt):** det bliver 3,5,7,9 naboer værdiger
 **37. Skal nabo-afstanden måles i procent i stedet for trin?**
 Position P5 · Dato: 11. aug / 28. sep · Status: Åben
 Et trin på 1 i en periode på 3 er en stor ændring, i en periode på 200 næsten ingen.
 
+**Svar (Thomas, 4. okt):** Ved ikke endnu
 **38. Kun plateauets midte går videre: bekræftet?**
 Position P5 · Dato: 28. sep og 29. sep (forsøg f8) · Status: Bekræft
 Midten holdt bedre i OOS end cellen med højest t (81 % mod 76 % ved bredde 5). Hvad hvis
 midten ligger på kanten af gitteret?
 
+**Svar (Thomas, 4. okt):** fantastisk spørgsmål
 **39. Endeligt dødt, også ved en bevist maskinfejl?**
 Position P5 · Dato: 17. sep og 28. sep (Det Runde Bord) og 29. sep (4.3 nr. 4) · Status: Åben
 Look-ahead-fejlen den 25. sep viser, at metoden kan fejle. Rapporten: kun med dit ja, kun på
 data efter 2026 og med ny embargo. Accepterer du den undtagelse?
+**Svar (Thomas, 4. okt):** Ved ikke endnu
 
 ## P6 — Periodeopdeling
 
@@ -273,27 +318,33 @@ Position P6 · Dato: 29. sep (beslutningsark 6) · Status: Bekræft
 z = 1,28 beholder ca. 80 % af de ægte edges og 26 % af de falske. Fast 20 % beholder ca. 55 % af
 de ægte og 6 % af de falske. Hvilken fejl er værst for dig: at miste ægte eller at beholde falske?
 
+**Svar (Thomas, 4. okt):** 10% falske er okay
 **41. OOS-længden: 1 år (2025) eller 1-2 år?**
 Position P6 · Dato: 29. sep (2025) mod 1. okt (svar 153/168: 1-2 år efter mindst 3-5 års test) · Status: Modstrid
 Ét års OOS er meget kort for en dagshandels-edge. Hvilken regel gælder?
 
+**Svar (Thomas, 4. okt):** 1år
 **42. Generalprøve: 2020-2023 → 2024 med 16 opsætninger skrevet ned på forhånd?**
 Position P6 · Dato: 29. sep (K1-P 5) · Status: Bekræft
 Den afprøver hele maskinen én gang, før det ægte prøveår bruges.
 
+**Svar (Thomas, 4. okt):** Ved ikke endnu
 **43. Skal RawSignal123 køres om på 2020-2024?**
 Position P6 · Dato: 24.–27. sep (2019-2023) mod 29. sep (testdata 2020-2024) · Status: Åben
 Ellers er den første dom ikke lavet på samme grundlag som de næste.
 
+**Svar (Thomas, 4. okt):** det var test, ny test perioder er lavet
 **44. Hvordan undgår du selv at se 2025-2026 i TradeStation-charts?**
 Position P6 · Dato: 29. sep (K3-18 punkt 17) · Status: Ny
 Rapporten: ingen grafer fra 2025-2026, før porten åbnes. Men et almindeligt chart i
 TradeStation viser alt til i dag. Hvordan låses det i praksis?
 
+**Svar (Thomas, 4. okt):** separat download og med hver sin pladsering
 **45. 2026-embargoen: fast slutdato, buffer og hvad med sene familier?**
 Position P6 · Dato: 29. sep · Status: Åben
 Året er ikke slut. Rapporten foreslår 1-2 ugers buffer mellem både 2024/2025 og 2025/2026, og at
 sene familier venter på data efter 2026. Erstatter 2026 de 6 måneders inkubation?
+**Svar (Thomas, 4. okt):** vi bruger den data der er, der er i beregnet
 
 ## P7 — Efter RSA
 
@@ -302,24 +353,29 @@ Position P7 · Dato: 28. sep og 29. sep (opgavens åbne punkt 7) · Status: Åbe
 Exit vælges kun på 2020-2024, fra et plateau af gode exits. 2026 bliver den eneste rene prøve
 af hele strategien. Er det accepteret?
 
+**Svar (Thomas, 4. okt):** den afgør Edge-Finder
 **47. Én position ad gangen og forsigtige fyldregler?**
 Position P7 · Dato: 29. sep (K2-14 punkt 1 og 4) · Status: Bekræft
 RSA måler alle signaler, men en strategi kan kun have én position. Det ændrer, hvilke signaler
 der reelt handles.
 
+**Svar (Thomas, 4. okt):** Ved ikke endnu
 **48. Fredags-reglen: tæller signaler lige før fredagslukket?**
 Position P4/P7 · Dato: 29. sep · Status: Åben
 En "10 bars"-måling fredag eftermiddag kan ende mandag, hvis den ikke stoppes ved lukning.
 
+**Svar (Thomas, 4. okt):** Edge-Finder finder svaret
 **49. Skal RSA-resultater genberegnes på MultiCharts-data før brug hos prop-firmaer?**
 Position P7 · Dato: 1. okt (svar 64: TS og MC giver ikke samme bars) · Status: Ny
 Når bars er forskellige, er signalerne også forskellige.
 
+**Svar (Thomas, 4. okt):** det skal testes
 **50. Skal RSA kalibreres på ægte CL-priser med en plantet edge?**
 Position P4/P5 · Dato: 29. sep (laboratoriet brugte kun opdigtede data) · Status: Ny
 Laboratoriet viser, at metoderne virker på opdigtede data. Et kunstigt filter med en kendt,
 lille edge plantet i rigtige CL-priser og et rent lokkedue-filter viser, at hele kæden finder
 det ene og afviser det andet på de rigtige data.
+**Svar (Thomas, 4. okt):** skal testes
 
 ---
 
@@ -332,59 +388,69 @@ pr. horisont, pr. år og for alle bars? t-tallet forudsætter en nogenlunde pæn
 Venstreskæve fordelinger narrer t op til 115 gange. Uden et kig på fordelingen ved man ikke,
 om t-testen er gyldig for CL.
 
+**Svar (Thomas, 4. okt):** Ved ikke endnu
 **52. Skal afkast måles i volatilitets-enheder i stedet for dollars?**
 Position P4 · Dato: 24.–25. sep (additiv justering) · Status: Ny
 CL's dagsudsving gik fra ca. 1 $ (2019) til over 10 $ (2020 og 2022). Et dollar-gennemsnit
 domineres af de urolige perioder. Afkast divideret med ATR eller realiseret volatilitet ved
 signalet gør årene sammenlignelige. Skal begge vises, og hvilken dømmes der på?
 
+**Svar (Thomas, 4. okt):** dollars
 **53. Hvilken metode giver standardfejlen, når horisonterne overlapper?**
 Position P4 · Dato: 29. sep (f1 og PF2) · Status: Ny
 Dags-klyngede standardfejl, Newey-West (en rettelse for afkast, der hænger sammen over tid)
 eller block bootstrap (genudtræk af hele blokke af dage)? Hvilken blokstørrelse? Valget
 ændrer t-tallet, så det skal stå i regelfilen.
 
+**Svar (Thomas, 4. okt):** Ved ikke endnu
 **54. Hvad er den kalibrerede tærskel T\* for CL efter lokkeduerne?**
 Position P4 · Dato: 28.–29. sep · Status: Ny
 Teorien siger t ≈ 4,65 ved millioner af forsøg. Men nabo-cellerne hænger sammen (korrelation
 ca. 0,93), så det effektive antal uafhængige forsøg er langt lavere. Skal T\* sættes empirisk
 fra lokkeduerne på de rigtige CL-data, og hvor mange lokkeduer skal der til for et stabilt tal?
 
+**Svar (Thomas, 4. okt):** Ved ikke endnu
 **55. Skal hele forfaldskurven vises (alpha decay)?**
 Position P4 · Dato: 10. aug (fagbegreber) og 29. sep (højst 3 horisonter) · Status: Ny
 Dommen sker på højst 3 låste horisonter. Men kurven af gennemsnitligt afkast fra 1 til 60 bars
 efter signalet viser, hvornår edgen topper og dør. Den kan være det bedste grundlag for
 tids-exit. Skal den vises som beskrivelse, uden at den indgår i dommen?
 
+**Svar (Thomas, 4. okt):** Ved ikke endnu
 **56. Skal kendte begivenheder markeres i dataene?**
 Position P4 · Dato: 1. okt (svar 71: andre data ved ikke) · Status: Ny
 CL har den ugentlige lagerrapport onsdag 10:30 New York-tid, rulledage og helligdage med kort
 handel. Klumper signalerne sig omkring dem, kan en "edge" bare være en kalendereffekt. Skal de
 dage markeres og vises som egne celler, selvom systemet kun bruger prisdata?
 
+**Svar (Thomas, 4. okt):** nej
 **57. Hvor ens er de 380 filtres signaler indbyrdes?**
 Position P4/P5 · Dato: 29. sep (tvilling-grænse 0,8) · Status: Ny
 Mange filtre bygger på de samme indikatorer og tænder på de samme tidspunkter. Overlap mellem
 filtrenes signaldage (Jaccard-tal) viser, hvor mange reelt forskellige familier der er. Måles
 tvilling-grænsen på signaltidspunkter eller på afkast?
 
+**Svar (Thomas, 4. okt):** Ved ikke endnu
 **58. Findes der en datakvalitetsrapport, før RSA kører?**
 Position P1 · Dato: 1. okt (svar 61, 66, 72, 75: ved ikke) · Status: Ny
 Antal manglende minutter pr. dag og pr. år, bars med nul volumen, prisspring og dubletter.
 Huller i 1-minuts data giver forkerte "pris efter"-tal, der ligner edge eller skjuler den.
 
+**Svar (Thomas, 4. okt):** tager det hvis det bliver aktuelt
 **59. Hvad er den mindste edge, RSA overhovedet kan opdage?**
 Position P4 · Dato: 28. sep (rapport v3) · Status: Ny
 En styrkeberegning (power): med ca. 1.250 handelsdage, CL's typiske udsving og t ≥ 4,65, hvor
 mange ticks pr. signal skal edgen mindst være? Er det tal større end realistiske edges, er det
 bedre at ændre designet (flere markeder, samle bar-længder) end at køre 2.208 backtests.
 
+**Svar (Thomas, 4. okt):** kigger vi på vis det bliver relevant
 **60. Skal plateauet være en statistisk model i stedet for farvetælling?**
 Position P5 · Dato: 28. sep (PL1-PL7) · Status: Ny
 I stedet for at dømme hver celle for sig og tælle grønne felter kan man estimere edgen med
 "shrinkage" (hvor hver celles tal trækkes mod gennemsnittet af naboerne og bar-længderne).
 Det giver ét tal med usikkerhed pr. område og bruger naboernes information direkte. Skal det
 afprøves i laboratoriet mod PL-trappen?
+**Svar (Thomas, 4. okt):** Ved ikke endnu
 
 ---
 

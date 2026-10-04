@@ -1,0 +1,94 @@
+# Gennemgang af Thomas' svar på RSA-skemaet (4. oktober 2026)
+
+Svarene står ordret i `SPOERGSMAAL_EventStudy_RSA_2026-10-01.md`. Her er de
+samlet: hvad der nu er besluttet, hvad der stadig er uklart, og hvor en
+dataanalytiker/kvant ser en risiko.
+
+Status: 42 svar, 18 "Ved ikke endnu".
+
+## 1. Beslutninger (som Thomas har svaret)
+
+| Emne | Beslutning | Spm. |
+|---|---|---|
+| Testdata nu | Alt, der er kørt indtil nu, er test. Når testfasen er slut, slettes det, og der køres forfra på frisk data. RawSignal123/002/169 er ikke relevante. | 2, 3, 43 |
+| Periodekæde | RSA: 5 år IN + 1 år OOS. Edge-Finder: RSA's IN + OOS bruges som IN + 1 nyt år OOS. Edge-Cruncher: Edge-Finders IN + OOS som IN + 1 nyt år OOS. | 5 |
+| OOS-længde | 1 år. | 41 |
+| Tid | Alt kører i børsens tid (exchange time), hvor kontrakten handles. | 6 |
+| Låste år | 2025 og 2026 hentes hver for sig, ligger hvert sit sted, og kun det modul, der skal bruge dem, får adgang. | 8, 44 |
+| Ekstreme priser | Bruges som de er (også −37 $ i april 2020). | 10 |
+| Omkostninger | Bruges først i Edge-Finder. RSA leder kun efter retning og stabilitet. | 21 |
+| Retning | Findes på testdata og låses ved frys 1. | 27 |
+| Regimer | Panelets krav om opdeling efter markedsregime er bevidst droppet. | 31 |
+| Grænse for edge-størrelse | Accepteres for nu (kun meget stærke edges på ét marked). | 32 |
+| Plateau-farver | Grænserne er fastsat af Thomas og angiver nabo-stabilitet. PL2 er stadig minimum. | 33, 34 |
+| Plateau for 1-akse-filtre | 3, 5, 7 eller 9 nabo-værdier. | 36 |
+| Identiske celler | Ingen særskilt kontrol. Fejl skal vise sig i OOS. | 35 |
+| Uafhængig Python-kontrol | Ikke før det er bevist nødvendigt. | 12 |
+| Fast filter-ID | Ja (formodentlig). | 13 |
+| Afkast-enhed | Dollars. | 52 |
+| Kendte begivenheder (EIA, rulledage) | Markeres ikke. | 56 |
+| Exit og fredags-regel | Afgøres af Edge-Finder. | 46, 48 |
+| Lokkeduer / tilfældige tidspunkter | Begge testes og evalueres over tid. | 25 |
+| Tolerance i OOS | "10 % falske er okay". | 40 |
+| Bar-længde-hullet, prøvekørsel, hvem kører backtest | "Det er fikset" (på serveren, ikke i repoet). | 14, 15, 16 |
+| Datakvalitetsrapport, mindste opdagelige edge | Tages, hvis det bliver aktuelt. | 58, 59 |
+| MultiCharts-data, plantet edge i CL | Skal testes. | 49, 50 |
+
+## 2. Svar, der skal afklares (opfølgning)
+
+| Spm. | Svar | Hvorfor uklart |
+|---|---|---|
+| 28 | "ja" | Spørgsmålet var enten/eller: "én backtest pr. workspace" eller 1,8-6 mio. celler. "ja" afgør det ikke. |
+| 20 | Klumpning "kan angive signalets styrke … ellers er det kun signalet på et givet tidspunkt, der gælder" | Spørgsmålet handlede om, hvor sikkert målingen er, ikke om signalets styrke (se risiko A). |
+| 19 | "er den ikke retningsangivende" | Varigheden kendes først, når signalet slukker. Den kan derfor ikke angive retning på det tidspunkt, hvor man skal handle. Skal den stadig bruges som beskrivelse? |
+| 38 | "fantastisk spørgsmål" | Ikke besvaret: går kun plateauets midte videre, og hvad hvis midten ligger på kanten? |
+| 23 | "kun test" | Er 150 dage / 300 signaler et testtal, der skal afprøves, eller er tærsklen droppet? |
+| 40 | "10 % falske er okay" | Det svarer til FDR 10 % (spm. 29, "ved ikke"). Men tolerancen i OOS (z = 1,28 / z = 1,0 / 20 %) er et andet tal. Skal vi vælge den OOS-regel, der i laboratoriet kommer tættest på 10 %? |
+| 33 | Grænserne er "fastsat af mig" | Tallene står ikke i repoet. De skal ind i regelfilen, før RSA kører for alvor. |
+| 4, 9, 13 | "det må vi nok heller", "tror vi har løst det", "ja det tror jeg" | Formodentlig ja, men skal bekræftes. |
+| 14-16 | "det er fikset" | Rettelserne er lavet på serveren. De bør lægges i repoet, så cloud-sessionen ser dem. |
+
+## 3. Risici set med en kvants øjne
+
+**A. Klumpning gør RSA's dom for optimistisk (spm. 20, 24, 30).**
+Når RSA tæller hvert signal som én måling, ser resultatet 1,4-4,6 gange mere
+sikkert ud, end det er (forsøg f1). Det handler ikke om signalets styrke, men
+om, hvor meget man kan stole på målingen. Svaret "tid vil sortere falske fra"
+(spm. 30) holder kun, hvis der er tid nok: hvert OOS-år kan kun bruges én
+gang, og hvis RSA lader mange falske igennem, bruger de OOS-året op og
+fylder Edge-Finder. Forslag: RSA tæller stadig signaler, men regner
+usikkerheden pr. handelsdag. Det koster én linje i beregningen og ændrer ikke
+signal-definitionen.
+
+**B. Periodekæden bruger et nyt år pr. trin (spm. 5).**
+RSA: IN 2020-2024, OOS 2025. Edge-Finder: IN 2020-2025, OOS 2026.
+Edge-Cruncher: IN 2020-2026, OOS 2027. Det betyder:
+- 2026 bliver OOS for Edge-Finder og kan ikke samtidig være embargo (beslutningen 29. sep).
+- Edge-Cruncher skal bruge 2027 som OOS. Det år er ikke slut før januar 2028,
+  så det passer ikke med første rigtige handel i foråret 2027.
+- Dagens dato er 4. okt 2026, så 2026 er heller ikke slut.
+Skal kæden afklares, før Edge-Finder bygges?
+
+**C. Dollars og år-for-år-sammenligning (spm. 52, 24).**
+CL svingede ca. 10 gange mere i 2020 og 2022 end i 2019. Når afkast måles i
+dollars, vil år-for-år-afvigelsen (5-20 %-båndene fra 27. sep) især måle,
+hvor uroligt året var, ikke om edgen er stabil. Dollars kan sagtens være
+dommen, men en vol-justeret kolonne ved siden af gør år-for-år-tallet
+meningsfuldt.
+
+**D. Ingen kontrol for identiske celler (spm. 35).**
+Et gitter ramt af regnefejlen når automatisk PL7 og får dermed højeste
+prioritet. Signalerne i det er rigtige for én indstilling, så det kan godt
+bestå OOS, men plateauet (robustheden) er falsk, og filteret går videre som
+"robust", uden at være det. Kontrollen er én beregning af overlap mellem
+fjerne celler og koster ingen OOS-data.
+
+## 4. Stadig åbent ("Ved ikke endnu")
+
+1, 7, 11, 17, 18, 22, 26, 29, 37, 39, 42, 47, 51, 53, 54, 55, 57, 60.
+
+De vigtigste blandt dem, før RSA kører for alvor:
+- **17:** entry tidligst minuttet efter signal-barens lukning i alle tabeller (look-ahead).
+- **18:** de højst 3 horisonter, låst før data ses.
+- **29:** FDR-grænsen (hænger sammen med "10 % falske er okay").
+- **11:** vejen for de op til 196 filtre med regnefejlen.
