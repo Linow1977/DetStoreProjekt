@@ -1,0 +1,512 @@
+<title>Event Study Spørgeskema</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=Source+Sans+3:wght@400;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: smal læsekolonne; fast topbjælke med fremdrift og filtre; afsnit som kapitler, spørgsmål som nummererede felter. */
+:root {
+  --bg: #f3f5f4;
+  --flade: #ffffff;
+  --tekst: #17201f;
+  --daempet: #5b6866;
+  --streg: #d6dddb;
+  --accent: #0f6b62;
+  --accent-svag: #e1efec;
+  --vedikke: #9a6a12;
+  --vedikke-svag: #f6ecd8;
+  --fejl: #a5322a;
+  --font-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --font-tekst: "Source Sans 3", "Segoe UI", Arial, sans-serif;
+  --font-tal: "JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1514; --flade: #172120; --tekst: #e6ecea; --daempet: #93a19e;
+    --streg: #2b3735; --accent: #5cc4b8; --accent-svag: #173a36;
+    --vedikke: #e0b45e; --vedikke-svag: #3a2e15; --fejl: #ef8a80;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f1514; --flade: #172120; --tekst: #e6ecea; --daempet: #93a19e;
+  --streg: #2b3735; --accent: #5cc4b8; --accent-svag: #173a36;
+  --vedikke: #e0b45e; --vedikke-svag: #3a2e15; --fejl: #ef8a80;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--tekst);
+  font-family: var(--font-tekst);
+  font-size: 17px;
+  line-height: 1.5;
+}
+.ramme { max-width: 760px; margin: 0 auto; padding-inline: 16px; padding-block: 0 64px; }
+
+/* Topbjælke */
+.top {
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 5;
+  background: var(--bg);
+  border-bottom: 1px solid var(--streg);
+}
+.top-indhold { max-width: 760px; margin: 0 auto; padding-inline: 16px; padding-block: 12px; display: grid; gap: 10px; }
+.top-linje { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.top h1 { font-family: var(--font-display); font-weight: 800; font-size: 1.15rem; margin: 0; letter-spacing: -0.01em; }
+.taeller { font-family: var(--font-tal); font-size: 0.85rem; color: var(--daempet); font-variant-numeric: tabular-nums; }
+.taeller b { color: var(--accent); font-weight: 500; }
+.bar { height: 6px; background: var(--streg); border-radius: 3px; overflow: hidden; display: flex; }
+.bar span { display: block; height: 100%; transition: width .3s; }
+.bar .b-svar { background: var(--accent); }
+.bar .b-vedikke { background: var(--vedikke); }
+.styring { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.styring select, .styring input[type=search] {
+  font: inherit; font-size: 0.95rem; color: var(--tekst); background: var(--flade);
+  border: 1px solid var(--streg); border-radius: 6px; padding: 6px 10px; min-width: 0;
+}
+.styring select { flex: 1 1 200px; }
+.styring input[type=search] { flex: 1 1 160px; }
+.filtre { display: flex; gap: 4px; flex-wrap: wrap; }
+.filtre button {
+  font: inherit; font-size: 0.85rem; cursor: pointer; padding: 5px 10px; border-radius: 999px;
+  border: 1px solid var(--streg); background: var(--flade); color: var(--daempet);
+}
+.filtre button[aria-pressed="true"] { background: var(--tekst); color: var(--bg); border-color: var(--tekst); }
+
+/* Indledning og status */
+.intro { padding-block: 28px 8px; display: grid; gap: 10px; color: var(--daempet); max-width: 65ch; }
+.intro p { margin: 0; }
+.besked { padding: 10px 14px; border-radius: 6px; font-size: 0.95rem; }
+.besked.info { background: var(--accent-svag); color: var(--tekst); }
+.besked.advarsel { background: var(--vedikke-svag); color: var(--tekst); }
+.handlinger { display: flex; gap: 8px; flex-wrap: wrap; }
+.knap {
+  font: inherit; font-size: 0.9rem; cursor: pointer; padding: 7px 14px; border-radius: 6px;
+  border: 1px solid var(--accent); background: transparent; color: var(--accent);
+}
+.knap:hover { background: var(--accent-svag); }
+
+/* Afsnit */
+.afsnit { padding-top: 36px; scroll-margin-top: 150px; }
+.afsnit-hoved { display: flex; align-items: baseline; gap: 12px; border-bottom: 2px solid var(--tekst); padding-bottom: 6px; margin-bottom: 4px; }
+.afsnit-nr { font-family: var(--font-tal); font-size: 0.85rem; color: var(--accent); }
+.afsnit h2 { font-family: var(--font-display); font-weight: 700; font-size: 1.35rem; margin: 0; text-wrap: balance; flex: 1; }
+.afsnit-tal { font-family: var(--font-tal); font-size: 0.8rem; color: var(--daempet); font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+/* Spørgsmål */
+.spg { display: grid; grid-template-columns: 3.2em 1fr; gap: 4px 12px; padding-block: 18px; border-bottom: 1px solid var(--streg); }
+.spg-nr { font-family: var(--font-tal); font-size: 0.9rem; color: var(--daempet); padding-top: 2px; font-variant-numeric: tabular-nums; position: relative; }
+.spg[data-status="svar"] .spg-nr { color: var(--accent); }
+.spg[data-status="vedikke"] .spg-nr { color: var(--vedikke); }
+.spg-krop { min-width: 0; display: grid; gap: 8px; }
+.spg-tekst { margin: 0; font-weight: 600; max-width: 65ch; }
+.spg-tekst code { font-family: var(--font-tal); font-size: 0.85em; background: var(--accent-svag); padding: 0 4px; border-radius: 3px; overflow-wrap: anywhere; }
+.spg-meta { margin: 0; font-family: var(--font-tal); font-size: 0.78rem; color: var(--accent); }
+.spg-hjaelp { margin: 0; color: var(--daempet); font-size: 0.95rem; max-width: 65ch; }
+.spg textarea {
+  width: 100%; min-height: 3.2em; resize: vertical; font: inherit; font-size: 1rem; line-height: 1.45;
+  color: var(--tekst); background: var(--flade); border: 1px solid var(--streg); border-radius: 6px; padding: 8px 10px;
+}
+.spg textarea:focus { outline: 2px solid var(--accent); outline-offset: 1px; border-color: transparent; }
+.spg[data-status="vedikke"] textarea { background: var(--vedikke-svag); }
+.spg-fod { display: flex; gap: 10px; align-items: center; justify-content: space-between; flex-wrap: wrap; }
+.vedikke-knap {
+  font: inherit; font-size: 0.85rem; cursor: pointer; padding: 4px 10px; border-radius: 999px;
+  border: 1px solid var(--vedikke); background: transparent; color: var(--vedikke);
+}
+.vedikke-knap[aria-pressed="true"] { background: var(--vedikke); color: var(--flade); }
+.gemt { font-size: 0.8rem; color: var(--daempet); font-family: var(--font-tal); }
+.gemt.fejl { color: var(--fejl); }
+.tom { padding: 40px 0; color: var(--daempet); text-align: center; }
+
+button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+@media (max-width: 480px) {
+  body { font-size: 16px; }
+  .spg { grid-template-columns: 1fr; }
+  .spg-nr { padding-top: 0; }
+}
+@media (prefers-reduced-motion: reduce) { .bar span { transition: none; } }
+</style>
+
+<header class="top">
+  <div class="top-indhold">
+    <div class="top-linje">
+      <h1>Event Study &amp; RSA · Spørgeskema</h1>
+      <span class="taeller" id="taeller"><b>0</b> af 50 besvaret</span>
+    </div>
+    <div class="bar" aria-hidden="true"><span class="b-svar" id="bar-svar" style="width:0"></span><span class="b-vedikke" id="bar-vedikke" style="width:0"></span></div>
+    <div class="styring">
+      <select id="hop" aria-label="Gå til afsnit"></select>
+      <input type="search" id="soeg" placeholder="Søg i spørgsmål" aria-label="Søg i spørgsmål">
+      <div class="filtre" role="group" aria-label="Vis">
+        <button type="button" data-filter="alle" aria-pressed="true">Alle</button>
+        <button type="button" data-filter="mangler" aria-pressed="false">Mangler svar</button>
+        <button type="button" data-filter="vedikke" aria-pressed="false">Ved ikke endnu</button>
+        <button type="button" data-filter="svar" aria-pressed="false">Besvaret</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="ramme">
+  <section class="intro">
+    <p>50 kritiske spørgsmål til Event Study og RawSignal-Analysen (RSA). De er sorteret efter, hvor de hører til i pipelinen (P0–P8), og hvert spørgsmål viser datoen for, hvornår emnet sidst blev besluttet. Lavet 1. oktober 2026 ud fra samlingen fra Claude Chat holdt op mod det, der ligger i repoet.</p>
+    <p>Pipelinen: P0 hele processen · P1 prisdata · P2 RawSignal Maker · P3 EdgeFinder · P4 RSA-målingen · P5 plateau og gate · P6 test/OOS/embargo · P7–P8 efter RSA.</p>
+    <p>Skriv dit svar i feltet. Det gemmes af sig selv, når du holder en kort pause. "Ved ikke endnu" er et godt svar, for det viser, hvor hullerne er. Du kan stoppe når som helst og fortsætte senere.</p>
+    <div class="besked info" id="status">Forbinder til lageret …</div>
+    <div class="handlinger">
+      <button type="button" class="knap" id="kopier">Kopiér alle svar som tekst</button>
+    </div>
+  </section>
+  <div id="liste"></div>
+</main>
+
+<script>
+// Spørgsmålene er indlejret her; svarene ligger i lageret (db), så Claude kan læse dem bagefter.
+const AFSNIT = [{"titel": "P0 — Hele processen og arbejdsmåden", "spg": [{"n": 1, "t": "Hvorfor ligger intet af RSA-arbejdet (24.–29. sep) i repoet?", "m": "Position P0/P4 · Dato: 18. sep (VIDENSLOG-reglen) mod 24.–29. sep", "h": "VIDENSLOG siger selv (18. sep), at sessionerne kun deler det, der lægges i git. I dag kan ingen anden session se RSA-koden, de 9 tabeller, look-ahead-rettelsen eller retningsreglen. Skal der være en fast regel om, at en beslutningslog pushes samme dag?"}, {"n": 2, "t": "Samlingen fra 1. okt indeholder forældede punkter — hvem rydder op?", "m": "Position P0 · Dato: 23. sep mod 24. sep", "h": "Samlingen siger (23. sep), at et signal der er tændt ved slutningen ignoreres. Repoet (24. sep) siger det modsatte: det skrives med `Afsluttet = 0`. Den seneste dato vinder — men samlingen er ikke rettet. Hvor mange andre punkter i samlingen er forældede?"}, {"n": 3, "t": "Modsigelsen om Data1/Data2 står stadig som \"åben\" — men den er løst i koden.", "m": "Position P0/P2 · Dato: 23. sep mod 24. sep", "h": "Koden stopper med en fejl (`RaiseRunTimeError`), hvis Data1 ikke har samme tidsramme som Data2. Er det den endelige beslutning? Så skal punktet lukkes i samlingen."}, {"n": 4, "t": "Filternumrene blev flyttet ét ned den 24. sep. Er RawSignal123, 002 og 169 gamle eller nye numre?", "m": "Position P0/P4 · Dato: 24. sep (omnummerering) mod 24.–27. sep (testkørsler)", "h": "Kørslerne lå samme dage som omnummereringen. Blev \"RawSignal123\" analyseret med det rigtige filter? Og \"RawSignal002 (625 kombinationer)\" ligner det nye filter 1 (AvgTrueRange, 625 kombinationer) — er det samme filter under to numre?"}, {"n": 5, "t": "Hvor mange beslutninger blev lavet om inden for 1–5 dage?", "m": "Position P0 · Dato: 22.→27.→28. sep", "h": "Pass/Fail lå i EdgeFinder (22. sep), flyttede til RSA (27. sep), og flowet blev tegnet om igen (28. sep). Retningsreglen holdt 2–3 dage. Er tempoet for højt i forhold til \"kvalitet over hastighed\" (23. sep)? Skal en metodebeslutning ligge et døgn, før den bygges?"}, {"n": 6, "t": "Hvad er \"version 1.0\" af RSA-metoden — og hvor står den?", "m": "Position P0/P4 · Dato: krav fra panelet (dato ukendt)", "h": "Panelet krævede to spor (produktion/udvikling) og regressionstest. Hvis metoden ændres i morgen, kan man så genskabe præcis det resultat, der dømte RawSignal123 \"Fail\"?"}, {"n": 7, "t": "Bliver hver resultatrække stemplet med metodeversion, datoperiode og RunID?", "m": "Position P4 · Dato: 24.–27. sep", "h": "Uden det kan man ikke se, om to resultater i tabellerne er regnet med samme regler."}, {"n": 8, "t": "Hvor meget er metoden blevet tilpasset efter at have set resultaterne på RawSignal123?", "m": "Position P0/P4 · Dato: 24.→27. sep", "h": "Retningsreglen blev ændret, efter man så 123's resultater på 2019–2023. Den periode overlapper den nye testperiode (2020–2024). Hver gang metoden rettes efter at have set data, er data ikke længere \"frisk\" for metoden. Hvordan holdes styr på det?"}]}, {"titel": "P1 — Prisdata", "spg": [{"n": 9, "t": "Prisdata er planlagt 2015–2024. Hvor er 2025 (OOS) og 2026 (embargo)?", "m": "Position P1/P6 · Dato: 24. sep mod 29. sep", "h": "Hvis OOS skal være 2025, skal 2025 findes i databasen — men hvordan sikres det, at den er låst, så ingen (heller ikke Claude) kan læse den før tid?"}, {"n": 10, "t": "Bliver Crude Oil rullet på samme dag i jeres 1-minuts data som i TradeStations kontinuerlige kontrakt?", "m": "Position P1 · Dato: 24.–25. sep", "h": "99,98 % ens tidspunkter siger intet om ens priser. Er det også tjekket, at OHLC stemmer, især omkring rulle-datoerne? Hvad skete der med de 0,02 %?"}, {"n": 11, "t": "Additiv back-justering: hvad gør den ved procent-tal og ved \"op/ned\"-tællinger?", "m": "Position P1/P4 · Dato: 24.–25. sep", "h": "Dollartal er sammenlignelige, men en bevægelse på 1 $ betyder meget mere ved olie til 20 $ (2020) end ved 120 $ (2022). Bliver resultater i perioder med lav pris undervægtet eller overvægtet? Skal der også måles i \"antal gange normal udsving\" (ATR)?"}, {"n": 12, "t": "Hvilken tidszone og hvilken bar-stempling (åbning eller lukning) bruger prisdata vs. TradeStation?", "m": "Position P1/P4 · Dato: 24.–25. sep", "h": "TradeStation stempler en bar med dens slut-tid. Hvis prisdata stempler med start-tid, er der et minuts kig ind i fremtiden ved hver eneste join."}, {"n": 13, "t": "\"Dag = midnat til midnat\" — men Crude Oil-dagen starter kl. 17 Chicago-tid dagen før.", "m": "Position P6/P7 · Dato: 29. sep", "h": "Med midnat deles én handelsdag i to. Er det bevidst? Gælder det også fredags-lukningen?"}]}, {"titel": "P2 — RawSignal Maker", "spg": [{"n": 14, "t": "Hvad sker der med filtre, der bruger funktioner ramt af hukommelsesfejlen (fx MACD), før de når RSA?", "m": "Position P2→P4 · Dato: 18. og 24. sep (stadig ikke besluttet)", "h": "Giver filteret forkerte signaler, vil RSA dømme det på forkerte data — og et dødt filter er \"endeligt dødt\" (17. sep). Skal de blokeres, før de når RSA?"}, {"n": 15, "t": "Skal signalerne efterprøves uafhængigt i Python mod prisdata (mindst for nogle filtre)?", "m": "Position P2/P3 · Dato: 22. sep (kun compilering verificeres)", "h": "I dag tjekkes kun, at koden compilerer. Ingen tjekker, at signalerne er rigtige. En stikprøve-genberegning i Python ville fange både hukommelsesfejl og tidszonefejl."}, {"n": 16, "t": "36 filtre har et ikke-udregnet Max Bars Back (antaget 1000). Hvad hvis det er for lidt?", "m": "Position P2 · Dato: 24. sep", "h": "Så starter signalerne for sent eller er forkerte i starten. Er opvarmningsperioden (2015–2019) lang nok til at dække det, og bliver de første signaler skåret fra?"}]}, {"titel": "P3 — EdgeFinder (kørslen)", "spg": [{"n": 17, "t": "Hvilken rækkefølge gælder: EdgeFinder før RSA (27. sep) eller RSA → Code Creater → EdgeFinder (28. sep)?", "m": "Position P3 · Dato: 27. sep mod 28. sep", "h": "Den 27. kører EdgeFinder backtesten, før RSA dømmer. Den 28. står EdgeFinder efter Code Creater. Hvem laver så backtesten, der giver RSA sine signaler?"}, {"n": 18, "t": "Hvad er en \"Filter journal\"-status, og hvem må ændre den?", "m": "Position P3 · Dato: 11. aug / dato ukendt", "h": "Status-felt (waiting/running/failed) til parallelle maskiner er nævnt, men ikke bygget. Hvad sker der, hvis en maskine går ned midt i en kørsel — bliver filteret hængende i \"running\"?"}, {"n": 19, "t": "12 bar-størrelser (5–60 min) × 380 filtre × op til 625 kombinationer: hvor lang tid tager én fuld runde?", "m": "Position P3 · Dato: 28. sep og 26. sep", "h": "Er det regnet ud, før man vælger mellem \"ét filter ad gangen\" og \"alle filtre pr. tidsgraf\"?"}]}, {"titel": "P4 — RSA: signalet og målingen", "spg": [{"n": 20, "t": "Varigheds-buckets bruger noget, man først kender bagefter. Er det ikke look-ahead?", "m": "Position P4 · Dato: 24. sep og 27. sep (`varighed_bevaegelse`)", "h": "Når signalet tænder, ved man ikke, om det bliver tændt i 3 eller 31 bars. Hvis \"31+ bars virker bedst\", kan man ikke handle på det. Hvordan bruges varigheden, uden at fremtiden lækker ind? (Look-ahead skal tjekkes ved HVER ny beregning — 27. sep.)"}, {"n": 21, "t": "\"Pris efter X bars\": måles fra signalbarens lukning eller fra næste bars åbning?", "m": "Position P4 · Dato: 24. sep", "h": "Look-ahead-fejlen blev rettet i `mae_mfe` (25. sep). Er samme regel brugt i `prisefter` og `fordeling_horisont`? I virkeligheden kan man tidligst handle på næste bar."}, {"n": 22, "t": "Er horisonten \"3, 5, 10, 15 bars\" i Data2-bars eller i minutter?", "m": "Position P4 · Dato: 24. sep", "h": "10 bars på 5 min = 50 min; 10 bars på 60 min = 10 timer. Skal man sammenligne bar-størrelser, skal horisonten måske måles i tid — eller begge."}, {"n": 23, "t": "Hvad sker der, når horisonten krydser en pause, natten eller weekenden?", "m": "Position P4/P7 · Dato: 29. sep (fredags-reglen)", "h": "En \"10 bars\"-måling fredag eftermiddag kan ende mandag. Det er ikke den samme handel, som reglen \"alt lukkes fredag\" tillader."}, {"n": 24, "t": "Hvad tæller som én observation? (står stadig åbent)", "m": "Position P4 · Dato: sep", "h": "147.900 signaler på 25 N1-værdier lyder af meget — men nabo-N1'er tænder ofte på næsten de samme tidspunkter. Hvor mange uafhængige observationer er der reelt? Det afgør, om \"50–100.000 er rigeligt\" (29. sep) er sandt."}, {"n": 25, "t": "Signaler tæt på hinanden overlapper i deres \"pris efter\"-vindue. Er det taget med i usikkerheden?", "m": "Position P4 · Dato: 24. sep", "h": "To signaler med 2 bars mellemrum og 15 bars horisont måler næsten den samme prisbevægelse. Så ser resultatet mere sikkert ud, end det er."}, {"n": 26, "t": "Bruttotal (før omkostninger): hvor stor skal en edge pr. signal være for at overleve slippage og kommission?", "m": "Position P4 · Dato: 24. sep", "h": "Er en fordel på få cent pr. signal overhovedet interessant? Skal en minimumsgrænse (fx 1–2 ticks efter omkostninger) ind i RSA, så filtre uden chance ikke bruger tid længere fremme?"}, {"n": 27, "t": "Måles kun gennemsnit og \"% op\" — eller også median, spredning og haler?", "m": "Position P4 · Dato: 24. sep", "h": "Et gennemsnit kan drives af få ekstreme dage (fx olie under 0 $ i april 2020). Er 2020 blevet tjekket for netop det?"}, {"n": 28, "t": "\"Information Coefficient\" blev nævnt 10. aug som fagbegreb. Bruges det?", "m": "Position P4 · Dato: 10. aug", "h": "Det er en standardmåling i professionelle event studies. Hvorfor er den ikke med?"}]}, {"titel": "P4 — RSA: udgangspunktet (\"alle bars\")", "spg": [{"n": 29, "t": "\"Stabilitet uanset hvad der måles\" (29. sep) — en stabil nul-edge er også stabil. Hvad skiller en stabil edge fra stabil tilfældighed?", "m": "Position P4/P5 · Dato: 29. sep mod 27. sep", "h": "Hvis udgangspunktet ikke er blokerende (27. sep), kan et filter, der stabilt gør præcis det samme som markedet, i princippet bestå plateau-testen."}, {"n": 30, "t": "Retningsreglen bruger udgangspunktet til at afgøre edge — men udgangspunktet er \"ikke blokerende\". Hvordan hænger det sammen?", "m": "Position P4 · Dato: begge 27. sep", "h": "\"Ingen edge → gem info og gå videre\" lyder blokerende. Hvilken af de to regler gælder?"}, {"n": 31, "t": "Skal udgangspunktet matches på klokkeslæt (og ugedag, volatilitet)?", "m": "Position P4 · Dato: 24.–27. sep (ikke besluttet)", "h": "Signaler tænder måske oftest ved åbningen, hvor markedet bevæger sig mest. Så sammenlignes de med en \"gennemsnitsbar\", der slet ikke ligner. Det kan både skjule og opfinde en edge."}, {"n": 32, "t": "Er udgangspunktet regnet på samme bar-størrelse, samme sessioner og samme periode som signalerne?", "m": "Position P4 · Dato: 24.–25. sep", "h": "Ellers sammenlignes æbler med pærer."}]}, {"titel": "P4 — RSA: retning og statistik", "spg": [{"n": 33, "t": "\"4–5 år ud af 5 over udgangspunktet\" — sandsynligheden for det ved ren tilfældighed er ca. 19 % pr. test. Er det skarpt nok?", "m": "Position P4 · Dato: 27. sep", "h": "Med 380 filtre × hundredvis af kombinationer vil tusindvis bestå ved held. Skal der også kræves en minimumsstørrelse på forskellen og et sikkerhedsniveau (z-score/t-test) pr. år?"}, {"n": 34, "t": "Multiple testing-korrektion (~400 kombinationer pr. filter) er stadig åben. Hvornår skal den på?", "m": "Position P4 · Dato: dato ukendt; 27. sep (advarslen)", "h": "Reelt er tallet langt større: kombinationer × bar-størrelser × horisonter × retning × varighed. Er det samlede antal tests talt op? Uden det ved man ikke, hvor mange \"gode\" resultater der kun er held."}, {"n": 35, "t": "\"Den der finder edges må aldrig være den der dømmer dem\" (17. sep) — men RSA både finder retningen og dømmer. Er princippet brudt?", "m": "Position P4/P5 · Dato: 17. sep mod 27.–28. sep", "h": ""}, {"n": 36, "t": "Er retningen den samme på alle horisonter (3, 5, 10, 15)? Hvis ikke, hvilken vinder?", "m": "Position P4 · Dato: 27. sep", "h": "Et filter kan være Long på 3 bars og Short på 15. At vælge den bedste horisont bagefter er endnu en skjult test."}, {"n": 37, "t": "\"Regime\" er i dag = kalenderår. Er et kalenderår et regime?", "m": "Position P4 · Dato: 11. aug (panelets punkt 2) mod 24. sep (volatilitet udskudt)", "h": "Panelet krævede opdeling efter markedsregime. 2020 indeholdt både krak, negativ pris og genopretning. Hvornår kommer volatilitets-opdelingen, og skal den være på plads, før den første rigtige gate-dom falder?"}, {"n": 38, "t": "Minimum antal signaler pr. celle er ikke besluttet — men RawSignal123 er allerede kaldt \"Fail\".", "m": "Position P4/P5 · Dato: 27. sep", "h": "Er dommen over 123 foreløbig? Og skal der en regel om, at intet filter dømmes \"endeligt dødt\", før gaten er færdigdefineret?"}]}, {"titel": "P5 — Plateau, gate og scoring", "spg": [{"n": 39, "t": "Hvordan virker 3×3 / 5×5 / 7×7 / 9×9-plateauet for filtre med kun N1, med decimaltal eller uden parametre?", "m": "Position P5 · Dato: 28. sep", "h": "RawSignal123 havde kun N1 (en linje, ikke et felt). Mange af de 380 filtre har slet ingen parametre. Hvad er \"plateau\" for dem?"}, {"n": 40, "t": "Er et plateau ægte, eller kommer det bare af, at nabo-parametre tænder på de samme tidspunkter?", "m": "Position P5 · Dato: 24. og 28. sep", "h": "N1 = 12 og N1 = 13 deler måske 90 % af signalerne. Så skal resultaterne ligne hinanden — og plateauet beviser intet. Skal overlappet mellem naboers signaler måles og vises?"}, {"n": 41, "t": "Er \"nabo\" lige langt væk for alle filtre?", "m": "Position P5 · Dato: 11. aug / 28. sep", "h": "Et trin på 1 i en periode på 3 er en stor ændring; et trin på 1 i en periode på 200 er næsten ingenting. Skal nabo-afstanden være i procent i stedet for trin?"}, {"n": 42, "t": "Procent-afvigelse på 5/10/15/20 % — procent af hvad?", "m": "Position P5 · Dato: 27. sep (ikke besluttet)", "h": "Er gennemsnittet tæt på 0, bliver procenter vilde (0,01 → 0,02 = 100 % afvigelse). Er z-score eller forskel målt i usikkerheder ikke mere robust? (Står som åbent 27. sep.)"}, {"n": 43, "t": "Hvor sættes grænserne for grøn/grå/rød — og bliver de låst, før man ser 002 og 169?", "m": "Position P5 · Dato: 28. sep", "h": "Sættes grænserne efter at have set resultaterne, kan man (ubevidst) vælge dem, så det filter man håber på, består."}, {"n": 44, "t": "\"Kun centeret sendes videre\" — hvad hvis centeret ligger på kanten af det testede område?", "m": "Position P5 · Dato: 28. sep", "h": "Så ved man ikke, om plateauet fortsætter uden for gitteret. Skal det udløse en udvidet test?"}, {"n": 45, "t": "\"Endeligt dødt\" (17. sep) — gælder det også, hvis RSA-metoden senere viser sig at have haft en fejl?", "m": "Position P5 · Dato: 17. sep og 25. sep (look-ahead-fejlen)", "h": "Look-ahead-fejlen viser, at metoden kan have fejl. Skal en metodefejl give ret til genkørsel af alle filtre, der er dømt på den gamle version?"}]}, {"titel": "P6 — Periodeopdeling", "spg": [{"n": 46, "t": "Testdata er nu 2020–2024, men RawSignal123 blev kørt på 2019–2023. Skal 123 køres om?", "m": "Position P6 · Dato: 24.–27. sep mod 29. sep", "h": "Ellers er den første \"dom\" ikke lavet på samme grundlag som alle de næste."}, {"n": 47, "t": "Én OOS-periode (2025, ét år) brugt én gang — hvad sker der, når hundredvis af filtre testes mod den samme OOS?", "m": "Position P6 · Dato: 29. sep", "h": "Så bliver OOS i praksis endnu en udvælgelse, og \"brugt én gang\" holder kun pr. filter, ikke for systemet. Og 10–20 % tilladt afvigelse på ét år er stort set støj. Hvordan beskyttes OOS?"}, {"n": 48, "t": "2026-embargoen: i dag er det 1. okt 2026 — året er ikke slut. Hvornår er embargoen \"færdig\", og hvordan er den teknisk låst?", "m": "Position P6 · Dato: 29. sep og aug (\"teknisk utilgængelig\")", "h": "Den lokale session har fuld adgang til TradingDB. Hvad forhindrer den i at læse 2026-data? Og afløser den de tidligere 6 måneders embargo (åbent 29. sep)?"}]}, {"titel": "P7–P8 — Efter RSA", "spg": [{"n": 49, "t": "Code Creater er rykket frem lige efter RSA (28. sep), men hvilken exit den bruger er ikke besluttet. Kan man skrive kode uden exit?", "m": "Position P7 · Dato: 28. sep", "h": "Og RSA har kun målt \"pris efter faste horisonter\" — er der en plan for, hvordan den bedste horisont oversættes til en exit, uden at det bliver endnu en optimering på testdata?"}, {"n": 50, "t": "Alt testes kun på Crude Oil (28. sep). Hvornår bevises det, at RSA virker på et marked, hvor svaret er kendt?", "m": "Position P0/P4/P8 · Dato: 28. sep og 10. aug (cross-market)", "h": "RawSignal123 viste, at RSA kan sige \"Fail\". Men den er aldrig vist at sige \"Pass\" til noget, der ved at have en edge. Skal der laves et kunstigt testfilter med en indbygget edge (og et rent tilfældigt filter), så man ved, at metoden finder det ene og afviser det andet?  ---"}]}];
+
+const tilstand = {
+  svar: {},          // "q001" -> { tekst, vedIkke }
+  filter: "alle",
+  soeg: "",
+  db: null,
+  kanSkrive: true,
+};
+
+// Felt-id for et spørgsmål: fast bredde, så dokumenterne sorteres i rækkefølge.
+function noegle(nr) {
+  return "q" + String(nr).padStart(3, "0");
+}
+
+function status(nr) {
+  const s = tilstand.svar[noegle(nr)];
+  if (!s) return "mangler";
+  if (s.vedIkke) return "vedikke";
+  if (s.tekst && s.tekst.trim() !== "") return "svar";
+  return "mangler";
+}
+
+// Spørgsmålsteksten kan indeholde `kode`; den vises som <code> uden at bruge innerHTML.
+function fyldTekst(el, tekst) {
+  const dele = tekst.split("`");
+  dele.forEach((del, i) => {
+    if (i % 2 === 1) {
+      const c = document.createElement("code");
+      c.textContent = del;
+      el.appendChild(c);
+    } else {
+      el.appendChild(document.createTextNode(del));
+    }
+  });
+}
+
+// ---------- Opbygning af siden ----------
+const liste = document.getElementById("liste");
+const felter = {}; // nr -> { boks, textarea, knap, gemt }
+
+function bygSide() {
+  const hop = document.getElementById("hop");
+  AFSNIT.forEach((afsnit, i) => {
+    const afsnitNr = i + 1;
+    const opt = document.createElement("option");
+    opt.value = "afsnit-" + afsnitNr;
+    opt.textContent = afsnitNr + ". " + afsnit.titel;
+    hop.appendChild(opt);
+
+    const sek = document.createElement("section");
+    sek.className = "afsnit";
+    sek.id = "afsnit-" + afsnitNr;
+    const hoved = document.createElement("div");
+    hoved.className = "afsnit-hoved";
+    const nrEl = document.createElement("span");
+    nrEl.className = "afsnit-nr";
+    nrEl.textContent = String(afsnitNr).padStart(2, "0");
+    const h2 = document.createElement("h2");
+    h2.textContent = afsnit.titel;
+    const tal = document.createElement("span");
+    tal.className = "afsnit-tal";
+    hoved.append(nrEl, h2, tal);
+    sek.appendChild(hoved);
+    afsnit.talEl = tal;
+    afsnit.sektion = sek;
+
+    afsnit.spg.forEach((q) => sek.appendChild(bygSpoergsmaal(q)));
+    liste.appendChild(sek);
+  });
+  const tom = document.createElement("p");
+  tom.className = "tom";
+  tom.id = "tom";
+  tom.hidden = true;
+  tom.textContent = "Ingen spørgsmål passer til det valgte filter.";
+  liste.appendChild(tom);
+}
+
+function bygSpoergsmaal(q) {
+  const boks = document.createElement("article");
+  boks.className = "spg";
+  boks.id = "spg-" + q.n;
+  boks.dataset.status = "mangler";
+
+  const nr = document.createElement("div");
+  nr.className = "spg-nr";
+  nr.textContent = q.n;
+
+  const krop = document.createElement("div");
+  krop.className = "spg-krop";
+  const tekst = document.createElement("label");
+  tekst.className = "spg-tekst";
+  tekst.htmlFor = noegle(q.n);
+  fyldTekst(tekst, q.t);
+  // Position i pipelinen og dato vises over spørgsmålet; forklaringen (hvorfor det er vigtigt) under.
+  const meta = document.createElement("p");
+  meta.className = "spg-meta";
+  meta.textContent = q.m;
+  const hjaelp = document.createElement("p");
+  hjaelp.className = "spg-hjaelp";
+  fyldTekst(hjaelp, q.h);
+
+  const ta = document.createElement("textarea");
+  ta.id = noegle(q.n);
+  ta.rows = 2;
+  ta.placeholder = "Dit svar …";
+  ta.addEventListener("input", () => {
+    venteSkrivning(q.n);
+    opdaterStatus(q.n);
+  });
+  ta.addEventListener("blur", () => gemNu(q.n));
+
+  const fod = document.createElement("div");
+  fod.className = "spg-fod";
+  const knap = document.createElement("button");
+  knap.type = "button";
+  knap.className = "vedikke-knap";
+  knap.textContent = "Ved ikke endnu";
+  knap.setAttribute("aria-pressed", "false");
+  knap.addEventListener("click", () => {
+    const nu = knap.getAttribute("aria-pressed") !== "true";
+    knap.setAttribute("aria-pressed", String(nu));
+    opdaterStatus(q.n);
+    gemNu(q.n);
+  });
+  const gemt = document.createElement("span");
+  gemt.className = "gemt";
+  gemt.setAttribute("aria-live", "polite");
+  fod.append(knap, gemt);
+
+  krop.append(meta, tekst, hjaelp, ta, fod);
+  boks.append(nr, krop);
+  felter[q.n] = { boks, textarea: ta, knap, gemt, tekst: q.t };
+  return boks;
+}
+
+// ---------- Status, tællere og filtre ----------
+function laesFelt(nr) {
+  const f = felter[nr];
+  return { tekst: f.textarea.value, vedIkke: f.knap.getAttribute("aria-pressed") === "true" };
+}
+
+function opdaterStatus(nr) {
+  tilstand.svar[noegle(nr)] = laesFelt(nr);
+  felter[nr].boks.dataset.status = status(nr);
+  opdaterTaellere();
+}
+
+function opdaterTaellere() {
+  let svar = 0, vedIkke = 0;
+  AFSNIT.forEach((afsnit) => {
+    let a = 0;
+    afsnit.spg.forEach((q) => {
+      const s = status(q.n);
+      if (s === "svar") { svar++; a++; }
+      if (s === "vedikke") { vedIkke++; a++; }
+    });
+    afsnit.talEl.textContent = a + "/" + afsnit.spg.length;
+  });
+  const i_alt = AFSNIT.reduce((sum, a) => sum + a.spg.length, 0);
+  const taeller = document.getElementById("taeller");
+  taeller.innerHTML = "";
+  const b = document.createElement("b");
+  b.textContent = svar;
+  taeller.append(b, " besvaret · " + vedIkke + " ved ikke · " + (i_alt - svar - vedIkke) + " mangler");
+  document.getElementById("bar-svar").style.width = (svar / i_alt * 100) + "%";
+  document.getElementById("bar-vedikke").style.width = (vedIkke / i_alt * 100) + "%";
+}
+
+function anvendFilter() {
+  const soeg = tilstand.soeg.trim().toLowerCase();
+  let synlige = 0;
+  AFSNIT.forEach((afsnit) => {
+    let iAfsnit = 0;
+    afsnit.spg.forEach((q) => {
+      const f = felter[q.n];
+      const passerFilter = tilstand.filter === "alle" || status(q.n) === tilstand.filter;
+      const passerSoeg = soeg === "" || (q.t + " " + q.m + " " + q.h).toLowerCase().includes(soeg) || f.textarea.value.toLowerCase().includes(soeg);
+      const vis = passerFilter && passerSoeg;
+      f.boks.hidden = !vis;
+      if (vis) iAfsnit++;
+    });
+    afsnit.sektion.hidden = iAfsnit === 0;
+    synlige += iAfsnit;
+  });
+  document.getElementById("tom").hidden = synlige > 0;
+}
+
+document.querySelectorAll(".filtre button").forEach((knap) => {
+  knap.addEventListener("click", () => {
+    tilstand.filter = knap.dataset.filter;
+    document.querySelectorAll(".filtre button").forEach((k) => k.setAttribute("aria-pressed", String(k === knap)));
+    anvendFilter();
+  });
+});
+document.getElementById("soeg").addEventListener("input", (e) => {
+  tilstand.soeg = e.target.value;
+  anvendFilter();
+});
+document.getElementById("hop").addEventListener("change", (e) => {
+  const maal = document.getElementById(e.target.value);
+  if (maal && !maal.hidden) maal.scrollIntoView({ behavior: "smooth", block: "start" });
+});
+
+// ---------- Gemning ----------
+// Hvert spørgsmål er ét dokument i samlingen "svar". Der skrives kun ét ad gangen pr.
+// dokument, og først når man holder en pause, så hvert tastetryk ikke bliver en skrivning.
+const ventetimere = {};
+const igang = {};
+const senestGemt = {};
+
+function venteSkrivning(nr) {
+  clearTimeout(ventetimere[nr]);
+  felter[nr].gemt.textContent = "";
+  ventetimere[nr] = setTimeout(() => gemNu(nr), 900);
+}
+
+async function gemNu(nr) {
+  clearTimeout(ventetimere[nr]);
+  const data = laesFelt(nr);
+  const sig = JSON.stringify(data);
+  if (senestGemt[nr] === sig) return;
+  if (igang[nr]) { ventetimere[nr] = setTimeout(() => gemNu(nr), 400); return; }
+
+  if (!tilstand.db || !tilstand.kanSkrive) {
+    gemLokalt();
+    felter[nr].gemt.textContent = "Gemt i denne browser";
+    senestGemt[nr] = sig;
+    return;
+  }
+  igang[nr] = true;
+  const gemt = felter[nr].gemt;
+  gemt.classList.remove("fejl");
+  gemt.textContent = "Gemmer …";
+  try {
+    await tilstand.db.collection("svar").doc(noegle(nr)).set({
+      nr: nr,
+      spoergsmaal: felter[nr].tekst,
+      svar: data.tekst,
+      vedIkke: data.vedIkke,
+      opdateret: new Date().toISOString(),
+    });
+    senestGemt[nr] = sig;
+    gemt.textContent = "Gemt";
+  } catch (e) {
+    gemt.classList.add("fejl");
+    if (e && e.code === "invalid_argument") {
+      tilstand.kanSkrive = false;
+      gemt.textContent = "Du kan kun læse svarene her";
+    } else if (e && e.code === "quota_exceeded") {
+      gemt.textContent = "Lageret er fuldt. Svaret er ikke gemt";
+    } else {
+      gemt.textContent = "Ikke gemt. Prøv igen om lidt";
+    }
+    gemLokalt();
+  } finally {
+    igang[nr] = false;
+  }
+}
+
+// Reservekopi i browseren, hvis lageret ikke kan nås.
+function gemLokalt() {
+  try { localStorage.setItem("rsa-spoergeskema-svar", JSON.stringify(tilstand.svar)); } catch (e) { /* ingen lokal lagring */ }
+}
+function hentLokalt() {
+  try { return JSON.parse(localStorage.getItem("rsa-spoergeskema-svar") || "{}"); } catch (e) { return {}; }
+}
+
+function visSvar(nr, data) {
+  const f = felter[nr];
+  if (!f) return;
+  // Overskriv aldrig det felt, man er ved at skrive i.
+  if (document.activeElement !== f.textarea) f.textarea.value = data.tekst || "";
+  f.knap.setAttribute("aria-pressed", String(!!data.vedIkke));
+  tilstand.svar[noegle(nr)] = { tekst: f.textarea.value, vedIkke: !!data.vedIkke };
+  f.boks.dataset.status = status(nr);
+}
+
+// ---------- Kopiér alle svar ----------
+document.getElementById("kopier").addEventListener("click", async () => {
+  const linjer = [];
+  AFSNIT.forEach((afsnit, i) => {
+    linjer.push("## " + (i + 1) + ". " + afsnit.titel, "");
+    afsnit.spg.forEach((q) => {
+      const s = tilstand.svar[noegle(q.n)] || {};
+      const svar = s.vedIkke ? "Ved ikke endnu" + (s.tekst ? " — " + s.tekst : "") : (s.tekst || "");
+      linjer.push(q.n + ". " + q.t, "Svar: " + svar, "");
+    });
+  });
+  const tekst = linjer.join("\n");
+  const knap = document.getElementById("kopier");
+  try {
+    await navigator.clipboard.writeText(tekst);
+    knap.textContent = "Kopieret";
+  } catch (e) {
+    knap.textContent = "Kunne ikke kopiere";
+  }
+  setTimeout(() => { knap.textContent = "Kopiér alle svar som tekst"; }, 2000);
+});
+
+// ---------- Start ----------
+bygSide();
+opdaterTaellere();
+
+(async function forbind() {
+  const statusEl = document.getElementById("status");
+  const db = window.claude ? await window.claude.use("db") : null;
+  if (!db) {
+    const lokalt = hentLokalt();
+    Object.keys(lokalt).forEach((k) => visSvar(parseInt(k.slice(1), 10), lokalt[k]));
+    opdaterTaellere();
+    statusEl.className = "besked advarsel";
+    statusEl.textContent = "Lageret kan ikke nås i denne visning. Svar gemmes kun i denne browser, og Claude kan ikke læse dem. Åbn siden i claude.ai, logget ind, for at gemme rigtigt.";
+    return;
+  }
+  tilstand.db = db;
+  const user = window.claude ? await window.claude.use("user") : null;
+  if (user && user.can && (await user.can("data.write")) === false) {
+    tilstand.kanSkrive = false;
+  }
+  statusEl.className = "besked info";
+  statusEl.textContent = tilstand.kanSkrive
+    ? "Forbundet. Svarene gemmes, så Claude kan læse dem bagefter."
+    : "Du kan læse svarene, men ikke ændre dem.";
+  if (!tilstand.kanSkrive) {
+    Object.values(felter).forEach((f) => { f.textarea.readOnly = true; f.knap.disabled = true; });
+  }
+
+  db.collection("svar").onSnapshot((snap) => {
+    snap.docs.forEach((d) => {
+      const data = d.data();
+      if (!data) return;
+      const nr = data.nr;
+      visSvar(nr, { tekst: data.svar, vedIkke: data.vedIkke });
+      senestGemt[nr] = JSON.stringify({ tekst: data.svar || "", vedIkke: !!data.vedIkke });
+    });
+    opdaterTaellere();
+    if (tilstand.filter !== "alle") anvendFilter();
+  }, () => {
+    statusEl.className = "besked advarsel";
+    statusEl.textContent = "Forbindelsen til lageret blev afbrudt. Genindlæs siden, før du skriver videre.";
+  });
+})();
+</script>
+
