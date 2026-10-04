@@ -10,7 +10,7 @@ Status: 42 svar, 18 "Ved ikke endnu".
 
 | Emne | Beslutning | Spm. |
 |---|---|---|
-| Testdata nu | Alt, der er kørt indtil nu, er test. Når testfasen er slut, slettes det, og der køres forfra på frisk data. RawSignal123/002/169 er ikke relevante. | 2, 3, 43 |
+| Testdata nu | Alt, der er kørt indtil nu, er test. Når testfasen er slut, slettes det, og der køres forfra på frisk data. Testfasen er ikke færdig (rettet af Thomas, se afsnit 5). | 2, 3, 43 |
 | Periodekæde | RSA: 5 år IN + 1 år OOS. Edge-Finder: RSA's IN + OOS bruges som IN + 1 nyt år OOS. Edge-Cruncher: Edge-Finders IN + OOS som IN + 1 nyt år OOS. | 5 |
 | OOS-længde | 1 år. | 41 |
 | Tid | Alt kører i børsens tid (exchange time), hvor kontrakten handles. | 6 |
@@ -92,3 +92,36 @@ De vigtigste blandt dem, før RSA kører for alvor:
 - **18:** de højst 3 horisonter, låst før data ses.
 - **29:** FDR-grænsen (hænger sammen med "10 % falske er okay").
 - **11:** vejen for de op til 196 filtre med regnefejlen.
+
+## 5. Opfølgning med Thomas (samme dag)
+
+**Rettelser og nye beslutninger:**
+- Testen er **ikke** færdig. Testdata slettes først, når testfasen er slut.
+- **Periodekæden (erstatter 2020-2024 / 2025 / 2026-embargo fra 29. sep):**
+
+  | Trin | IN | OOS |
+  |---|---|---|
+  | RSA | 2019-2023 | 2024 |
+  | Edge-Finder | 2019-2024 | 2025 |
+  | Edge-Cruncher | 2019-2025 | 2026 |
+
+  Hvert OOS-år skal være låst for alle trin før det. 2026 er først komplet i
+  januar 2027.
+- **38:** Kun plateauets midte går videre. Ligger midten på kanten af gitteret,
+  tages den også med. Skal programmeres.
+- **40:** Tolerancen i OOS sættes til 15 % (fast grænse, ikke z-værdi;
+  til bekræftelse). Laboratoriet (f2) gav for fast 10 % / 20 % at ca. 45-55 %
+  af ægte edges blev smidt ud, så 15 % ligger midt imellem.
+- **33:** Farvegrænserne i PL1-PL7 er ikke defineret endnu.
+- **20:** Der skal tælles dage med signal. En dag med mange signaler kan
+  senere bruges til at finde en bedre statistisk indgang.
+- **52:** Der laves en kolonne for udsving (volatilitet) ved siden af dollars.
+- **35:** Ingen kontrol for ens felter. Det, der sendes videre med fejl, fejler senere.
+
+**Stadig åbent:** 28 (forklares igen), 17, 18 og 29 (uddybes), 11 (plan for
+de 7 ikke-målte seriefunktioner), 33 (farvegrænser).
+
+**Fakta om 11:** Programmets liste (`Program/formel.py`) har 10
+seriefunktioner. Average og AvgTrueRange er målt og virker, MACD er målt og
+ramt. Ikke målt: RSI, StandardDev, XAverage, DMIplus, DMIminus, ADX og
+ChaikinMoneyFlow.

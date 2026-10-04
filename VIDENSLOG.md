@@ -77,6 +77,13 @@ Thomas har besvaret de 60 RSA-spørgsmål (42 svar, 18 "Ved ikke endnu"):
 Åbne risici (periodekæden kræver 2027 som OOS, klumpning) og opfølgning:
 `RawSignal_Analyse/RSA_svar_gennemgang_2026-10-04.md`.
 
+### 2026-10-04 — Ny periodekæde: hvert trin får sit eget OOS-år
+Thomas har besluttet (erstatter 2020-2024 / 2025 / 2026-embargo fra 29. sep):
+RSA IN 2019-2023, OOS 2024 · Edge-Finder IN 2019-2024, OOS 2025 ·
+Edge-Cruncher IN 2019-2025, OOS 2026. OOS-tolerance 15 %. Kun plateauets midte
+går videre, også når den ligger på kanten. RSA tæller dage med signal.
+Testfasen er ikke færdig. Se `RawSignal_Analyse/RSA_svar_gennemgang_2026-10-04.md`.
+
 ### 2026-10-04 — Tjek alle arbejdsgrene, ikke kun `main`
 Den første udgave af RSA-spørgsmålene byggede kun på `main` og overså
 konsulentrapporterne, laboratoriet og Thomas' skemasvar, som lå på grene, der
