@@ -65,6 +65,13 @@ En anden var, at programmet hang, når en strategi fandtes i forvejen.
 **Følge:** hver vej gennem programmet skal afprøves mindst én gang, også
 fejl- og genstartsvejene.
 
+### 2026-10-04 — Tjek alle arbejdsgrene, ikke kun `main`
+Den første udgave af RSA-spørgsmålene byggede kun på `main` og overså
+konsulentrapporterne, laboratoriet og Thomas' skemasvar, som lå på grene, der
+ikke var flettet ind. Flere spørgsmål var derfor allerede besvaret. **Følge:**
+kør `git fetch` og se `git branch -r` + VIDENSLOG på hver gren, før en
+status- eller spørgeopgave starter.
+
 ## TradingApp
 
 *(Ingen poster endnu.)*
@@ -136,8 +143,15 @@ retningsreglen og periodeopdelingen ligger kun i TradingDB/den lokale
 session og i Claude Chat. Samlingen fra chat indeholdt forældede punkter
 (fx at et åbent signal ved slutningen "ignoreres" — repoet skriver det med
 `Afsluttet = 0`). **Følge:** sammenhold altid chat-samlinger med repoets
-beslutningslogs; seneste dato vinder. 50 kritiske spørgsmål til metoden:
+beslutningslogs; seneste dato vinder. Kritiske spørgsmål til metoden:
 `RawSignal_Analyse/SPOERGSMAAL_EventStudy_RSA_2026-10-01.md`.
+
+### 2026-10-04 — Modstrid mellem konsulentrapporten og Thomas' skemasvar
+Ved opdateringen af RSA-spørgsmålene (nu 60) viste der sig fire modstride, som
+ændrer selve dommen i RSA: klumpning pr. handelsdag i RSA (rapporten) eller i
+Edge-Finder/CC (svar 120); omkostningsmargin 2 × (rapporten) eller 3 × (svar
+159); antal forsøg "én backtest pr. workspace" (svar 152) eller 1,8-6 mio.
+celler; OOS 1 år (2025) eller 1-2 år (svar 153/168). Skal afgøres af Thomas.
 
 ## EdgeFinder
 
