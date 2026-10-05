@@ -10,6 +10,10 @@ Er andre filer uenige med dette dokument, følg dette dokument.
 > `filter_case` (alle numre én ned) og svarene på de åbne punkter i afsnit 6.
 > Programmet ligger i `Program/`.
 
+> **5. oktober 2026:** `filter_case` er bygget op på ny ud fra de originale EdgeFinder-filer
+> og har nu 312 filtre med nye numre. Filternumre i dette dokument fra før den dato er gamle
+> numre. `BESLUTNINGSLOG_2026-10-05.md` gælder foran dette dokument, hvor de er uenige.
+
 ---
 
 ## 1. Opgaven i fire trin
@@ -51,7 +55,7 @@ Alt andet i dette dokument er detaljer om trin 2. Det fortæller, hvad de to fil
 - De 8 filtre skal tilsammen dække: ingen parametre, kun N1, kun N2, begge parametre, decimaltal,
   `DataFilter_B`, med seriefunktion og uden seriefunktion. Foreslå de 8 ud fra `Filter_Case`. Simpleste
   først. Thomas godkender listen.
-- Programmet køres ikke på alle 381 filtre, før alle 8 er godkendt.
+- Programmet køres ikke på alle 312 filtre, før alle 8 er godkendt.
 
 ## 3. Tabellerne (trin 4)
 
@@ -137,8 +141,13 @@ Indbyggede funktioner som MACD og DMI husker deres forrige værdi, og hukommelse
 ikke til parameterværdien. Kaldes samme linje i en løkke med mange parametre, deler alle kombinationer
 hukommelse, og tallene bliver forkerte uden fejlmelding.
 
-- RawSignal069 (MACD) er målt: alle 625 kombinationer gav de samme 4.918 signaler.
-- RawSignal266 (Average) er målt: forskellige signaler for hver N1. Virker altså sandsynligvis.
+Målt indtil nu (nye numre fra 5. oktober 2026, gamle i parentes):
+
+- 78 MACD (gamle RawSignal069): ramt. Alle 625 kombinationer gav de samme 4.918 signaler.
+- 50 DMI (gamle 30): ramt.
+- 24 Average (gamle RawSignal266): forskellige signaler for hver N1. Virker altså sandsynligvis.
+- 1 AvgTrueRange (gamle 1): virker.
+- 175 CloseD (gamle 123): virker.
 - Andre filtre er ikke målt. Antag intet.
 - Verify beviser ikke, at en fil virker. Det viser kun, at den kan kompileres.
 - Programmet skal bygge filtre med og uden seriefunktion på samme måde. Hvilken vej de filtre skal
