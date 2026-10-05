@@ -142,3 +142,16 @@ ChaikinMoneyFlow.
   bekræftelse), så hverken IN- eller OOS-årene bruges.
 - **Stadig åbent:** 28 (forklares igen), 29 (Thomas spørger: hvordan kan held
   bestå OOS?), 40 (15 %-grænsen forklares nærmere), 33 (farvegrænser).
+
+## 7. Tredje opfølgning (5. oktober)
+
+- **"Gå ind, når signalet har været tændt i k bars"** er en selvstændig test
+  for sig.
+- **Måletidspunkter (18):** Alle tider skal testes, ikke kun 3. Hver tid tæller
+  som ekstra forsøg (hænger sammen med 28).
+- **11:** Testperioden for regnefejlen er **2007-2009** (ikke 2007-2018).
+  Alle 8 funktioner (MACD + de 7 ikke-målte) testes på "40-40-80"
+  (formodentlig Data1 = 40, Data2 = 40, Data3 = 80 minutter; til bekræftelse).
+  Claude skal ikke skrive opgaven.
+- **40:** Thomas har bedt om forklaring af reglen "efter hvor meget året normalt
+  svinger" (konsulentrapporten del 1, D.2) før valget mellem den og 15 %.
