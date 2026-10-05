@@ -4,6 +4,10 @@
 > filternumre, automation med tastetryk). `BESLUTNINGSLOG_2026-09-24.md` gælder foran dette
 > dokument, hvor de er uenige.
 
+> **5. oktober 2026:** `filter_case` er bygget op på ny ud fra de originale EdgeFinder-filer
+> og har nu 312 filtre med nye numre. Filternumre i dette dokument fra før den dato er gamle
+> numre. `BESLUTNINGSLOG_2026-10-05.md` gælder foran dette dokument, hvor de er uenige.
+
 Kort hukommelse for arbejdet med signal-eksport fra TradeStation.
 Skrevet så den kan læses uden forhåndskendskab til koden.
 
@@ -18,7 +22,7 @@ TradeStation skal kun levere de rå events.
 
 ## Kilden: TradingDB
 
-De 381 filtre, der skal laves, ligger i en Postgres-database (`TradingDB`),
+De 312 filtre, der skal laves, ligger i en Postgres-database (`TradingDB`),
 tabellen `filter_case`. Den er kun tilgængelig fra en anden, lokal Claude
 Code-session med direkte adgang til serveren — ikke fra denne session.
 
@@ -26,7 +30,7 @@ Relevante kolonner:
 
 | Kolonne | Betydning |
 |---|---|
-| `filter_case_id` | Unikt løbenummer, 1-381. Bruges som RawSignal-nummer. |
+| `filter_case_id` | Unikt løbenummer, 1-312. Bruges som RawSignal-nummer. |
 | `filter1_n1_start/end/step` | Fra/Til/Step for N1. Kan være tom (parameter ikke brugt). |
 | `filter1_n2_start/end/step` | Fra/Til/Step for N2. Kan være tom. |
 | `gammel_case` | Internt gruppenummer fra et ældre system. Ikke relevant for noget her. |
@@ -88,7 +92,7 @@ en ny RawSignal-fil.
    én bar med 625 forskellige længder, deler de hukommelsen, og resultatet
    kan blive forkert.
 
-   **Beslutning (gælder alle 381 filtre):** vi accepterer denne risiko for at
+   **Beslutning (gælder alle filtre):** vi accepterer denne risiko for at
    komme videre, i stedet for at håndregne hver funktion selv. Det betyder,
    at tal fra filtre med parametre bør kontrolleres, før de bruges til
    noget vigtigt. Advarslen skal stå skrevet i hver enkelt .EL-fils hoved,
@@ -112,7 +116,7 @@ en ny RawSignal-fil.
 
 5. **Max Bars Back skal sættes højt nok** til den længste beregning i koden.
    Med mange forskellige filtre og parameterområder er det upraktisk at
-   regne det ud for hver af de 381 i hånden. Brug **"Auto Detect"** i
+   regne det ud for hver af de 312 i hånden. Brug **"Auto Detect"** i
    `Format Strategies → Properties for All`, hvis TradeStation tilbyder det —
    det er endnu ikke bekræftet, at det virker pålideligt her, så et filter
    der ikke vil verificere, bør tjekkes manuelt for netop dette.

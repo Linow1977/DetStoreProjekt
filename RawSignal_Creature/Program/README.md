@@ -13,7 +13,32 @@ Beslutningerne bag står i repoet `DetStoreProjekt/RawSignal_Creature`
 python rawsignal_creature.py          # næste filter, der ikke er færdigt
 python rawsignal_creature.py 265      # et bestemt filter
 python indlaes_csv.py 265             # læs CSV ind i TradingDB efter backtesten
+python rs_ts_cyklus.py RawSignal002 CL 1   # kør backtesten i TradeStation, se nedenfor
+python rs_ts_kaede.py --vent RawSignal002 CL 1 2 3   # flere timeframes efter hinanden
 ```
+
+### Backtest i TradeStation: `rs_ts_cyklus.py`
+
+Kører én hel cyklus for én strategi på ét instrument og én timeframe:
+åbn workspace → indsæt strategi → vent på beregningen → luk workspace (uden at
+gemme) → indlæs CSV i `rawsignal.<strategi>` (én tabel pr. filter; kolonnerne
+instrument_id og timeframe_id viser, hvor linjen hører til). Hvert trin skrives i
+`rawsignal.tidslog`, og gennemsnittet pr. filter/instrument/timeframe i
+`rawsignal.rs_tf_runtime`. Instrumentet skal stå i `public.rs_instrumenter`,
+timeframen i `public.timeframes`. Workspace-navnet bygges som
+`CL-5-5-10-2007-09 Test` (foreløbig regel) eller gives som 4. argument.
+
+TradeStation styres via kommandolinjen (Ctrl+C, `.O`, `.IST`, `.C`). Det
+kræver et aktivt skrivebord: forlad serveren med
+`Forlad_server_uden_at_stoppe.bat` på skrivebordet, ikke ved at lukke eller
+minimere fjernskrivebordet.
+
+`rs_ts_kaede.py` kører flere timeframes efter hinanden. Fejler en cyklus,
+lukkes workspacet, og kæden springer videre. Går TradeStation ned (både
+ORPlat og orchart kontrolleres, også mens der ventes på beregningen),
+stopper kæden helt, og en halv CSV-fil indlæses aldrig. Med `--vent` starter
+kæden først, når sessionen er flyttet med `.bat`-filen, plus 1 minut:
+skærmskiftet midt i en beregning fik TradeStation til at gå ned 02-10-2026.
 
 For hvert filter laves to filer:
 
@@ -40,6 +65,8 @@ For hvert filter laves to filer:
 | `tde\verify-one.ps1` | Opretter én fil i TDE, indsætter koden, kører Verify, lukker |
 | `tde\tsdev-lib.ps1` | Læser Output-panelet i TDE |
 | `indlaes_csv.py` | Læser en CSV-fil ind i `rawsignal.rawsignal<nr>` |
+| `rs_ts_cyklus.py` | Kører backtesten i TradeStation og tager tid på hvert trin |
+| `rs_ts_kaede.py` | Kører rs_ts_cyklus på flere timeframes efter hinanden |
 | `log\rawsignal_creature.log` | Alt, programmet har gjort |
 
 ## Regler, koden bygger på
@@ -66,7 +93,7 @@ For hvert filter laves to filer:
 
 - Seriefunktioner (MACD m.fl.) i en løkke kan give forkerte tal uden fejl.
   Filens hoved viser, om filteret er målt.
-- Max Bars Back kan ikke regnes helt ud for 36 filtre (CCI, ChaikinMoneyFlow,
+- Max Bars Back kan ikke regnes helt ud for 27 filtre (CCI, ChaikinMoneyFlow,
   CountIf, PercentR, Pivot-funktionerne m.fl.). De bygges med 1000 som antagelse.
-  Højeste behov blandt dem, der kan regnes ud, er 609 bars (filter 68, MACD).
+  Højeste behov blandt dem, der kan regnes ud, er 609 bars (filter 73, MACD).
 - Programmet kører ét filter ad gangen.

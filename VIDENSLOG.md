@@ -125,6 +125,14 @@ signalrækker for alle 620 kombinationer, der kan tænde. Sammen med Average
 (gamle 266) er det to funktioner, der virker. MACD (gamle 069) er stadig den
 eneste målte, der er ramt.
 
+### 2026-10-05 — filter_case bygget op på ny ud fra EdgeFinder-filerne; alle numre nye
+`filter_case` passede ikke med de originale EdgeFinder-filer: numrene var forskudt, 68 dubletter,
+og nogle formler afveg (fx `<` i stedet for `>`, manglende parentes, `Open[1]` i stedet for `Close[1]`).
+Tabellen er bygget op på ny: 312 filtre, sorteret efter EdgeFinder-filnummer, én parameter hedder
+altid N1, Long/Short forskellige giver to filtre. Alt gammelt testdata er slettet. **Følge:** gamle
+filternumre i ældre dokumenter kan ikke regnes om. Sammenlign altid på formlen, ikke på nummeret.
+Se `RawSignal_Creature/BESLUTNINGSLOG_2026-10-05.md`.
+
 ## EdgeFinder
 
 *(Ingen poster endnu.)*

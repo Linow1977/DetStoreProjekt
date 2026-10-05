@@ -20,11 +20,15 @@ from formel import ARRAY_STOERRELSE, ByggeFejl, analyser, tal_tekst, udskift
 
 # Målt status for hukommelsesproblemet. Filtre, der ikke står her, er
 # ikke målt. Teksten må kun oplyse status, aldrig forudsige et resultat.
-# Numrene er efter omnummereringen 24-09-2026 (filter 1 "True;" slettet,
-# alle andre rykket én ned). Målingerne blev lavet under de gamle numre.
+# Numrene er efter nulstillingen 05-10-2026 (filter_case genopbygget fra
+# EdgeFinder_Files, 312 filtre). Målingerne blev lavet under de gamle numre,
+# som står i parentes. Se BESLUTNINGSLOG_2026-10-05.md.
 MAALT_STATUS = {
-    68: "Målt og ramt (som gamle RawSignal069): alle 625 kombinationer gav de samme 4.918 signaler.",
-    265: "Målt og virker sandsynligvis (som gamle RawSignal266): hver N1 gav forskellige signaler.",
+    1: "Målt og virker (gamle nr. 1): 620 kombinationer, alle med forskellige signaler.",
+    24: "Målt og virker sandsynligvis (gamle nr. 265 / RawSignal266): hver N1 gav forskellige signaler.",
+    50: "Målt og ramt (gamle nr. 30): DMI, samme slags fejl som MACD.",
+    78: "Målt og ramt (gamle nr. 68 / RawSignal069): alle 625 kombinationer gav de samme 4.918 signaler.",
+    175: "Målt og virker (gamle nr. 123): alle 25 N1 gav forskellige signaler.",
 }
 
 
@@ -286,6 +290,8 @@ def byg_kontrol(a):
          "//",
          "// Plot1 sætter en prik på den bar, hvor filteret tænder (skiftet fra falsk",
          "// til sand). Det svarer til kolonnen Starttid i strategiens CSV-fil.",
+         "// Plot2 sætter en prik (anden farve) på hver af de følgende bars, hvor",
+         "// filteret stadig er tændt. Start + følgende prikker = AntalBars.",
          "//"]
     hoved_faelles(a, L)
     hoved_genereret(L)
@@ -324,10 +330,12 @@ def byg_kontrol(a):
           "\t\tVis_Taendt = 0;",
           "",
           "",
-          "//----- Tegning: kun hvor filteret tænder -----//",
+          "//----- Tegning: startbaren og de følgende tændte bars -----//",
           "",
           "\tIf Vis_Taendt = 1 and Vis_Forrige = 0 Then",
-          "\t\tPlot1( Low of data(DataFilter_A), \"Start\" );",
+          "\t\tPlot1( Low of data(DataFilter_A), \"Start\", Green )",
+          "\tElse If Vis_Taendt = 1 Then",
+          "\t\tPlot2( Low of data(DataFilter_A), \"Taendt\", Yellow );",
           "",
           "\t// Opdateres efter plottet, så den altid er forrige bars status.",
           "\tVis_Forrige = Vis_Taendt;",

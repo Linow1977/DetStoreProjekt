@@ -1,5 +1,9 @@
 # Arbejdsbeskrivelse: Generér 381 RawSignal .EL-filer fra TradingDB
 
+> **5. oktober 2026:** `filter_case` er bygget op på ny ud fra de originale EdgeFinder-filer
+> og har nu 312 filtre med nye numre. Filternumre i dette dokument fra før den dato er gamle
+> numre. `BESLUTNINGSLOG_2026-10-05.md` gælder foran dette dokument, hvor de er uenige.
+
 Denne beskrivelse er skrevet til at blive givet som prompt til den Claude
 Code-session, der har direkte adgang til `TradingDB` (Postgres) og til
 TradeStations filsystem. Læs `NOTER.md` i samme mappe først — den forklarer

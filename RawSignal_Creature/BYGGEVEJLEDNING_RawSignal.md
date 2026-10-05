@@ -4,6 +4,10 @@
 > filternumre, automation med tastetryk). `BESLUTNINGSLOG_2026-09-24.md` gælder foran dette
 > dokument, hvor de er uenige.
 
+> **5. oktober 2026:** `filter_case` er bygget op på ny ud fra de originale EdgeFinder-filer
+> og har nu 312 filtre med nye numre. Filternumre i dette dokument fra før den dato er gamle
+> numre. `BESLUTNINGSLOG_2026-10-05.md` gælder foran dette dokument, hvor de er uenige.
+
 Skrevet 23. september 2026, efter at have bygget og afprøvet filer for seks
 forskellige filtertyper i TradeStation.
 
@@ -45,18 +49,21 @@ værdier. Andre har tomme N1-kolonner og bruger kun N2.
 
 Formlens tekst er facit. Søg efter `Filter1_N1` og `Filter1_N2` i teksten.
 
-Målt på alle 381 rækker fordeler det sig sådan:
+Målt på alle 312 rækker (5. oktober 2026) fordeler det sig sådan:
 
 | Formlen bruger | Antal filtre |
 |---|---|
-| Både N1 og N2 | 128 |
-| Kun N1 | 114 |
-| Kun N2 | 62 |
-| Ingen parametre | 77 |
+| Både N1 og N2 | 104 |
+| Kun N1 | 139 |
+| Kun N2 | 0 |
+| Ingen parametre | 69 |
+
+Kun N2 forekommer ikke længere: bruger en formel kun én parameter, hedder
+den altid `Filter1_N1` (besluttet 5. oktober 2026).
 
 Derudover:
 
-- **52 filtre bruger `DataFilter_B`** — en anden datastrøm. Ingen bruger
+- **44 filtre bruger `DataFilter_B`** — en anden datastrøm. Ingen bruger
   `DataFilter_C`.
 - **8 filtre har decimaltal** i N2 (skridt på 0,25). Resten er hele tal.
 - **Ingen** filtre bruger mere end to parametre.
@@ -350,7 +357,7 @@ Filtre uden seriefunktion. De bruger kun almindelige kursreferencer som
 `Open`, `Close`, `High`, `Low`, `OpenD`, `CloseD`, `TrueRange`, `AbsValue`.
 Dem gælder problemet ikke for, og deres parametersøgning er gyldig.
 
-185 af de 381 filtre indeholder ingen af de kendte seriefunktioner.
+179 af de 312 filtre indeholder ingen af de kendte seriefunktioner.
 
 ### Kendte veje videre — ikke besluttet
 
