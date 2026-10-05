@@ -155,3 +155,7 @@ ChaikinMoneyFlow.
   Claude skal ikke skrive opgaven.
 - **40:** Thomas har bedt om forklaring af reglen "efter hvor meget året normalt
   svinger" (konsulentrapporten del 1, D.2) før valget mellem den og 15 %.
+- **40-40-80 bekræftet:** Data1 = 40, Data2 = 40, Data3 = 80 minutter.
+- **40 (OOS-tolerance):** Thomas spurgte, hvad en fast grænse på 40 % giver.
+  Laboratoriets forsøg 2 er kørt igen med 15/30/40/50 %, se
+  `Laboratorium/f2_resultat_2026-10-05.txt`. Ikke besluttet endnu.
