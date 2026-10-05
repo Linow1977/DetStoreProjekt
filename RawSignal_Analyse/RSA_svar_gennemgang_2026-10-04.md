@@ -159,3 +159,8 @@ ChaikinMoneyFlow.
 - **40 (OOS-tolerance):** Thomas spurgte, hvad en fast grænse på 40 % giver.
   Laboratoriets forsøg 2 er kørt igen med 15/30/40/50 %, se
   `Laboratorium/f2_resultat_2026-10-05.txt`. Ikke besluttet endnu.
+- **40 (besluttet 5. okt):** OOS-tolerancen er en **fast grænse på 40 %**
+  (erstatter 15 %). Et filter består prøveåret, hvis resultatet er mindst
+  60 % af resultatet i IN-perioden. Begrundelse: i forsøg 2b smider 40 % ca.
+  21 % af de ægte ud og lukker ca. 13 % af de falske igennem; de falske kan
+  fanges i de næste prøveår (2025, 2026), mens en kasseret ægte edge er tabt.
