@@ -13,6 +13,8 @@
 # filnavn i anførselstegn.
 
 from datetime import datetime
+from decimal import Decimal
+from itertools import product
 
 import max_bars_back
 from faelles import CSV_MAPPE
@@ -23,12 +25,15 @@ from formel import ARRAY_STOERRELSE, ByggeFejl, analyser, tal_tekst, udskift
 # Numrene er efter nulstillingen 05-10-2026 (filter_case genopbygget fra
 # EdgeFinder_Files, 312 filtre). Målingerne blev lavet under de gamle numre,
 # som står i parentes. Se BESLUTNINGSLOG_2026-10-05.md.
+# 06-10-2026: filter 67-72 (CoefTimeFrame) slettet, 73 og op rykket 6 ned.
+# Filtre med XAverage, RSI, MACD, DMI og ADX skrives ud pr. kombination
+# (formel.UDFOLD_FUNKTIONER) og får ikke denne advarsel.
 MAALT_STATUS = {
     1: "Målt og virker (gamle nr. 1): 620 kombinationer, alle med forskellige signaler.",
+    14: "Målt og virker (05-10-2026, CL 60-60-120): StandardDev/Average gav forskellige signaler; ens kun hvor 0.25*N2 giver samme længde.",
     24: "Målt og virker sandsynligvis (gamle nr. 265 / RawSignal266): hver N1 gav forskellige signaler.",
-    50: "Målt og ramt (gamle nr. 30): DMI, samme slags fejl som MACD.",
-    78: "Målt og ramt (gamle nr. 68 / RawSignal069): alle 625 kombinationer gav de samme 4.918 signaler.",
-    175: "Målt og virker (gamle nr. 123): alle 25 N1 gav forskellige signaler.",
+    83: "Målt og virker (05-10-2026, CL 60-60-120, gamle nr. 89): alle 25 N1 gav forskellige signaler.",
+    169: "Målt og virker (gamle nr. 123): alle 25 N1 gav forskellige signaler.",
 }
 
 
@@ -60,6 +65,31 @@ def hoved_genereret(linjer):
 
 # ---------------------------------------------------------------- strategi
 
+def parameter_trin(x):
+    """Alle (plads, værdi) for én parameter fra Fra til Til. Uden decimaler
+    er værdien også pladsen; med decimaler tælles pladsen 1, 2, 3 ..."""
+    start, slut, step = (Decimal(str(x[k])) for k in ("start", "slut", "step"))
+    trin = []
+    v, plads = start, 1
+    while v <= slut:
+        trin.append((plads if x["decimal"] else int(v), tal_tekst(v)))
+        v += step
+        plads += 1
+    return trin
+
+
+def udfoldede_linjer(a):
+    """Én kodelinje pr. kombination med faste tal i stedet for N1/N2.
+    Hver linje får sin egen hukommelse til seriefunktionerne."""
+    p = a["parametre"]
+    linjer = []
+    for kombi in product(*(parameter_trin(x) for x in p)):
+        formel = udskift(a["formel"], {"Filter1_" + x["navn"]: v for x, (_, v) in zip(p, kombi)})
+        plads = "[" + ",".join(str(i) for i, _ in kombi) + "]"
+        linjer.append(f"\tIf {formel} Then Filter1{plads} = 1 Else Filter1{plads} = 0;")
+    return linjer
+
+
 def byg_strategi(a):
     """Strategien RawSignal<nr>. Returnerer (tekst, formlen som den står i koden)."""
     navn = a["navn"]
@@ -80,7 +110,18 @@ def byg_strategi(a):
 
     # Advarslen hører kun til, hvor problemet kan opstå: en seriefunktion
     # kaldt i en løkke med skiftende parametre.
-    if a["seriefunktioner"] and p:
+    if a["udfold"]:
+        L += ["//", "//",
+              "// SERIEFUNKTIONER - SKREVET UD PR. KOMBINATION",
+              "//",
+              f"// Formlen bruger: {', '.join(a['udfold'])}. De husker deres forrige værdi,",
+              "// og hukommelsen hører til kodelinjen. I en løkke ville alle kombinationer",
+              "// dele hukommelse og give forkerte tal (målt 05-10-2026). Derfor står",
+              "// formlen her på én linje pr. kombination med faste tal, så hver",
+              "// kombination har sin egen hukommelse - som ved en almindelig backtest.",
+              "// N1/N2-felterne under Inputs styrer kun, hvilke kombinationer der",
+              "// skrives i CSV-filen. Udfoldningen dækker kun Fra-Til fra filter_case."]
+    elif a["seriefunktioner"] and p:
         status = MAALT_STATUS.get(a["id"], "Ikke målt.")
         L += ["//", "//",
               "// KENDT PROBLEM - LÆS DETTE, FØR TALLENE BRUGES",
@@ -199,13 +240,17 @@ def byg_strategi(a):
                    f"\t     + \"{afsluttet}\" );"]
         return linjer
 
-    krop = ["// Selve filteret - formlen fra databasen, uændret",
-            f"If {formel_kode} Then",
-            f"\tFilter1{idx} = 1",
-            "Else",
-            f"\tFilter1{idx} = 0;",
-            "",
-            "// TÆNDER",
+    if a["udfold"]:
+        krop = ["// Selve filteret er regnet ovenfor - én linje pr. kombination",
+                ""]
+    else:
+        krop = ["// Selve filteret - formlen fra databasen, uændret",
+                f"If {formel_kode} Then",
+                f"\tFilter1{idx} = 1",
+                "Else",
+                f"\tFilter1{idx} = 0;",
+                ""]
+    krop += ["// TÆNDER",
             f"If Filter1{idx} = 1 and Filter1_Forrige{idx} = 0 Then",
             "\tBegin",
             f"\tStartTekst{idx} = BarTekst;",
@@ -230,6 +275,12 @@ def byg_strategi(a):
     krop += ["\tEnd;",
              "",
              f"Filter1_Forrige{idx} = Filter1{idx};"]
+
+    if a["udfold"]:
+        L.append("//----- Filteret regnes for hver kombination på sin egen linje -----//")
+        L.append("")
+        L += udfoldede_linjer(a)
+        L += ["", ""]
 
     if not p:
         L.append("//----- Filter og signal-registrering -----//")

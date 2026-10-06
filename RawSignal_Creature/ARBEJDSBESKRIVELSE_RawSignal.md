@@ -4,6 +4,11 @@
 > og har nu 312 filtre med nye numre. Filternumre i dette dokument fra før den dato er gamle
 > numre. `BESLUTNINGSLOG_2026-10-05.md` gælder foran dette dokument, hvor de er uenige.
 
+> **6. oktober 2026:** `filter_case` har nu 445 filtre (139 Alpha-filtre tilføjet, de 6
+> CoefTimeFrame-filtre slettet, alle numre fra 73 rykket 6 ned). Seriefunktions-fejlen er løst:
+> filtre med XAverage, RSI, MACD, DMI og ADX skrives ud pr. kombination.
+> `BESLUTNINGSLOG_2026-10-06.md` gælder foran dette dokument, hvor de er uenige.
+
 Denne beskrivelse er skrevet til at blive givet som prompt til den Claude
 Code-session, der har direkte adgang til `TradingDB` (Postgres) og til
 TradeStations filsystem. Læs `NOTER.md` i samme mappe først — den forklarer

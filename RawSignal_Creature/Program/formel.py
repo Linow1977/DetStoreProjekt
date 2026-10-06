@@ -24,6 +24,12 @@ SERIEFUNKTIONER = [
     "DMIminus", "ADX", "ChaikinMoneyFlow", "AvgTrueRange",
 ]
 
+# Seriefunktioner, der er målt som ramt (05-10-2026: XAverage, RSI, MACD,
+# DMI) eller er uafklarede (ADX). Bruger formlen en af dem, skrives filteret
+# ud på én kodelinje pr. kombination med faste tal, så hver linje får sin
+# egen hukommelse i TradeStation - som ved en almindelig backtest.
+UDFOLD_FUNKTIONER = ["XAverage", "RSI", "MACD", "DMIplus", "DMIminus", "ADX"]
+
 
 class ByggeFejl(Exception):
     """Filteret kan ikke bygges sikkert. Programmet stopper hellere end at gætte."""
@@ -104,6 +110,8 @@ def analyser(raekke):
 
     fundne = [f for f in SERIEFUNKTIONER
               if re.search(r"\b" + f + r"\s*\(", formel, re.IGNORECASE)]
+    udfold = [f for f in UDFOLD_FUNKTIONER
+              if re.search(r"\b" + f + r"\s*\(", formel, re.IGNORECASE)]
 
     return {
         "id": fid,
@@ -114,4 +122,6 @@ def analyser(raekke):
         "parametre": parametre,
         "bruger_b": bruger(formel, "DataFilter_B"),
         "seriefunktioner": fundne,
+        # Kun med parametre: uden parametre er der ingen løkke.
+        "udfold": udfold if parametre else [],
     }

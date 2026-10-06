@@ -14,6 +14,11 @@ Er andre filer uenige med dette dokument, følg dette dokument.
 > og har nu 312 filtre med nye numre. Filternumre i dette dokument fra før den dato er gamle
 > numre. `BESLUTNINGSLOG_2026-10-05.md` gælder foran dette dokument, hvor de er uenige.
 
+> **6. oktober 2026:** `filter_case` har nu 445 filtre (139 Alpha-filtre tilføjet, de 6
+> CoefTimeFrame-filtre slettet, alle numre fra 73 rykket 6 ned). Seriefunktions-fejlen er løst:
+> filtre med XAverage, RSI, MACD, DMI og ADX skrives ud pr. kombination.
+> `BESLUTNINGSLOG_2026-10-06.md` gælder foran dette dokument, hvor de er uenige.
+
 ---
 
 ## 1. Opgaven i fire trin
@@ -135,7 +140,10 @@ Komma som skilletegn. Punktum som decimaltegn. Windows-linjeskift er fint.
   `DataFilter_B`).
 - Max Bars Back skal dække den længste beregning ved de valgte værdier.
 
-### 4.4 Kendt problem: hukommelsen i seriefunktioner (ikke løst i dag)
+### 4.4 Kendt problem: hukommelsen i seriefunktioner (løst 5.–6. oktober 2026)
+
+> **Løst:** filtre med XAverage, RSI, MACD, DMI og ADX skrives ud på én kodelinje pr.
+> kombination. Se `BESLUTNINGSLOG_2026-10-06.md`. Teksten herunder er historik.
 
 Indbyggede funktioner som MACD og DMI husker deres forrige værdi, og hukommelsen hører til kodelinjen,
 ikke til parameterværdien. Kaldes samme linje i en løkke med mange parametre, deler alle kombinationer
