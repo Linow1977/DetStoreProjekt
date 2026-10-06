@@ -18,6 +18,7 @@
 # TradeStation skal være startet og må ikke have et workspace åbent.
 # Fjernskrivebordet må ikke være minimeret.
 
+import csv
 import ctypes
 import ctypes.wintypes as w
 import os
@@ -27,11 +28,13 @@ import time
 from datetime import datetime
 
 from faelles import CSV_MAPPE, forbind, log
+from indlaes_csv import KOLONNER
 
 u = ctypes.windll.user32
 k = ctypes.windll.kernel32
 
-STILLE_SEK = 120        # CSV-filen regnes for færdig, når den ikke er ændret så længe
+STILLE_SEK = 60         # CSV-filen regnes for færdig, når den ikke er ændret så længe
+                        # (målt 06-10-2026: længste pause under beregning 8,6 sek)
 # Foreløbig navneregel for workspaces i TradeStation (ændres senere)
 WORKSPACE_NAVN = "{symbol}-{d1}-{d2}-{d3}-2007-09 Test"
 MAX_BEREGNING_SEK = 6 * 3600
@@ -286,9 +289,14 @@ def indlaes(db, sti, tabel, instrument_id, timeframe_id):
         c.execute("""create temp table ny (
                          runid text, n1 numeric, n2 numeric, starttid timestamp,
                          antalbars integer, afsluttet smallint) on commit drop""")
+        # Kolonnerne læses fra overskriften: filtre med kun N1 har ingen N2-kolonne.
         with open(sti, encoding="utf-8-sig", newline="") as f:
-            c.copy_expert("copy ny (runid, n1, n2, starttid, antalbars, afsluttet) "
-                          "from stdin with (format csv, header true)", f)
+            overskrift = next(csv.reader(f), None)
+        if not overskrift or any(k not in KOLONNER for k in overskrift):
+            raise ValueError(f"CSV-filen har en ukendt overskrift: {overskrift}")
+        csv_kolonner = ", ".join(KOLONNER[k] for k in overskrift)
+        with open(sti, encoding="utf-8-sig", newline="") as f:
+            c.copy_expert(f"copy ny ({csv_kolonner}) from stdin with (format csv, header true)", f)
         c.execute(f"""insert into {tabel} (runid, n1, n2, starttid, antalbars, afsluttet,
                                            instrument_id, timeframe_id)
                       select runid, n1, n2, starttid, antalbars, afsluttet, %s, %s from ny""",
@@ -302,7 +310,8 @@ def indlaes(db, sti, tabel, instrument_id, timeframe_id):
 
 def opdater_runtime(db, strategi, workspace, instrument_id, timeframe_id, tabel):
     """Gennemsnit af alle hele cyklusser i tidslog for samme filter og workspace.
-    Kombinationer = antal N1/N2-kombinationer med mindst ét signal."""
+    Kombinationer = antal N1/N2-kombinationer med mindst ét signal.
+    Giver filteret 0 signaler, sættes tiden pr. kombination til 0 (ikke division med 0)."""
     with db.cursor() as c:
         c.execute(f"select count(distinct (n1, n2)) from {tabel} "
                   f"where instrument_id = %s and timeframe_id = %s", (instrument_id, timeframe_id))
@@ -314,7 +323,7 @@ def opdater_runtime(db, strategi, workspace, instrument_id, timeframe_id, tabel)
             select %(f)s, %(i)s, %(t)s, %(k)s,
                    make_interval(secs => round(extract(epoch from avg(slut - start) filter (where trin = 'beregning')))),
                    make_interval(secs => round(extract(epoch from avg(slut - start) filter (where trin = 'cyklus')))),
-                   make_interval(secs => round(extract(epoch from avg(slut - start) filter (where trin = 'beregning')) / %(k)s, 3)),
+                   coalesce(make_interval(secs => round(extract(epoch from avg(slut - start) filter (where trin = 'beregning')) / nullif(%(k)s, 0), 3)), interval '0'),
                    date_trunc('second', now()::timestamp),
                    'Gennemsnit af ' || count(*) filter (where trin = 'cyklus') || ' hele cyklusser i tidslog.'
             from rawsignal.tidslog

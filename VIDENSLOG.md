@@ -65,6 +65,19 @@ En anden var, at programmet hang, når en strategi fandtes i forvejen.
 **Følge:** hver vej gennem programmet skal afprøves mindst én gang, også
 fejl- og genstartsvejene.
 
+### 2026-10-06 — "Rent bord" = alt sat tilbage til udgangspunktet
+Thomas' udtryk for, at RawSignal-data er ryddet, så der kan testes igen fra en
+kendt start: ingen signaltabeller, tomme log-tabeller, ingen filtre markeret
+færdige, tomme FilterFolder-mapper og ingen strategier i TradeStation.
+`filter_case`, sikkerhedskopier, analyse-udgangspunktet og prisdata bliver
+stående. Se `RawSignal_Creature/BESLUTNINGSLOG_2026-10-06.md`.
+
+### 2026-10-06 — Mål i stedet for at antage, også når en ændring virker lille
+Ventetiden 120 → 60 sek, seriefunktions-fejlen og løsningen blev alle afgjort
+ved måling (pauser i CSV-filen, sammenligning med en uafhængig beregning fra
+prisdata), ikke ved vurdering. Målingen af løsningen afslørede samtidig, at
+den gamle løkke kun regnede rigtigt for den første kombination.
+
 ## TradingApp
 
 *(Ingen poster endnu.)*
@@ -132,6 +145,25 @@ Tabellen er bygget op på ny: 312 filtre, sorteret efter EdgeFinder-filnummer, �
 altid N1, Long/Short forskellige giver to filtre. Alt gammelt testdata er slettet. **Følge:** gamle
 filternumre i ældre dokumenter kan ikke regnes om. Sammenlign altid på formlen, ikke på nummeret.
 Se `RawSignal_Creature/BESLUTNINGSLOG_2026-10-05.md`.
+
+### 2026-10-05 — Seriefunktions-fejlen løst: én kodelinje pr. kombination
+Filtrene virker i en almindelig backtest, fordi hver kombination dér er sin egen
+kørsel. I RawSignal-løkken deler alle kombinationer én hukommelse pr. kodelinje.
+Målt ramt: XAverage, RSI, MACD, DMI (ADX uafklaret). Løsning: formlen skrives ud
+på én linje pr. kombination med faste tal (`formel.UDFOLD_FUNKTIONER`). Bevist
+100 % mod en uafhængig beregning fra prisdata; den gamle løkke ramte 0–16 %.
+Se `RawSignal_Creature/BESLUTNINGSLOG_2026-10-06.md`.
+
+### 2026-10-06 — CSV-filen skrives løbende: 60 sek stilhed er nok
+Den længste pause mellem to skrivninger midt i en beregning var 8,6 sek, også i
+en 77 minutters DMI-kørsel på 5-5-10. `STILLE_SEK` er sat fra 120 til 60 sek
+og sparer ca. 1 min pr. cyklus.
+
+### 2026-10-06 — filter_case: 445 filtre efter Alpha og oprydning
+139 formel-typer fra Thomas' ældste filtre (`C:\Alpha_FIlter.txt`) er tilføjet
+som 307–445. De 6 CoefTimeFrame-filtre er slettet (funktionen findes ikke), og
+alle numre fra 73 er rykket 6 ned. Formler, der aldrig kan være sande (fx
+`Close > Highest(Close, N)` uden `[1]`), fandtes også i originalerne og er rettet.
 
 ## EdgeFinder
 

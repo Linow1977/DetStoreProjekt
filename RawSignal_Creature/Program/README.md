@@ -89,11 +89,33 @@ For hvert filter laves to filer:
 - Er der ikke kontakt til TDE, lukkes den og åbnes igen, og filteret
   verificeres forfra (højst én gang).
 
+- Seriefunktioner, der husker deres forrige værdi og er målt som ramt i en
+  løkke (XAverage, RSI, MACD, DMIplus/DMIminus) eller uafklarede (ADX), står
+  i `formel.UDFOLD_FUNKTIONER`. Bruger formlen en af dem, skrives filteret ud
+  på én kodelinje pr. kombination med faste tal, så hver kombination får sin
+  egen hukommelse - som ved en almindelig backtest. Løkken læser så kun
+  resultatet. Bevist 05-10-2026: XAverage og MACD gav 100 % samme signaler som
+  en uafhængig beregning fra prisdata (den gamle løkke: 0-16 %).
+- `rs_ts_cyklus.py` læser CSV-filens overskrift, så filtre med kun N1 (ingen
+  N2-kolonne) kan indlæses. Giver et filter 0 signaler, skrives tiden pr.
+  kombination som 0.
+- Beregningen regnes for færdig, når CSV-filen har stået stille i
+  `STILLE_SEK` = 60 sek. Målt 06-10-2026 på de tungeste filtre (DMI, ADX,
+  StandardDev, CCI, XAverage; op til 77 min på 5-5-10): længste pause mellem
+  to skrivninger var 8,6 sek.
+
 ## Kendte begrænsninger
 
-- Seriefunktioner (MACD m.fl.) i en løkke kan give forkerte tal uden fejl.
-  Filens hoved viser, om filteret er målt.
-- Max Bars Back kan ikke regnes helt ud for 27 filtre (CCI, ChaikinMoneyFlow,
+- Seriefunktioner, der ikke står i `UDFOLD_FUNKTIONER` (fx Average,
+  StandardDev, AvgTrueRange, ChaikinMoneyFlow), kører stadig i løkken. De er
+  målt og virker. Filens hoved viser status.
+- Udfoldningen dækker kun Fra-Til fra `filter_case`. Ændres N1/N2-felterne
+  under Inputs, skrives kun de kombinationer, der er udfoldet.
+- Arrays har 25 pladser pr. parameter (`formel.ARRAY_STOERRELSE`). Uden
+  decimaler er værdien også pladsen, så Til må højst være 25.
+- Max Bars Back kan ikke regnes helt ud for alle filtre (CCI, ChaikinMoneyFlow,
   CountIf, PercentR, Pivot-funktionerne m.fl.). De bygges med 1000 som antagelse.
-  Højeste behov blandt dem, der kan regnes ud, er 609 bars (filter 73, MACD).
 - Programmet kører ét filter ad gangen.
+- Efter genstart af TradeStation åbner Ctrl+C ikke kommandolinjen, før den er
+  åbnet én gang i hånden. Fjernskrivebordet må ikke være minimeret under
+  backtesten (brug `Forlad_server_uden_at_stoppe.bat`).

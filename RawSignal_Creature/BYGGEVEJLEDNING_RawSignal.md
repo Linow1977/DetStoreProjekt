@@ -8,6 +8,11 @@
 > og har nu 312 filtre med nye numre. Filternumre i dette dokument fra før den dato er gamle
 > numre. `BESLUTNINGSLOG_2026-10-05.md` gælder foran dette dokument, hvor de er uenige.
 
+> **6. oktober 2026:** `filter_case` har nu 445 filtre (139 Alpha-filtre tilføjet, de 6
+> CoefTimeFrame-filtre slettet, alle numre fra 73 rykket 6 ned). Seriefunktions-fejlen er løst:
+> filtre med XAverage, RSI, MACD, DMI og ADX skrives ud pr. kombination.
+> `BESLUTNINGSLOG_2026-10-06.md` gælder foran dette dokument, hvor de er uenige.
+
 Skrevet 23. september 2026, efter at have bygget og afprøvet filer for seks
 forskellige filtertyper i TradeStation.
 
@@ -308,6 +313,14 @@ filter, der ikke vil køre, bør tjekkes manuelt for netop dette.
 ---
 
 ## 7. Det alvorlige problem: seriefunktioner i en løkke
+
+> **LØST 5.–6. oktober 2026.** Bruger formlen XAverage, RSI, MACD, DMIplus, DMIminus
+> eller ADX (`formel.UDFOLD_FUNKTIONER`), skriver programmet formlen ud på én kodelinje
+> pr. kombination med faste tal (`If <formel med N1=1> Then Filter1[1] = 1 Else ...`).
+> Løkken læser kun `Filter1[]`. Hver linje har sin egen hukommelse, som ved en
+> almindelig backtest. Bevist 100 % mod en uafhængig beregning fra prisdata.
+> Average, StandardDev, AvgTrueRange, ChaikinMoneyFlow, CCI m.fl. er målt og virker i
+> løkken. Se `BESLUTNINGSLOG_2026-10-06.md`. Resten af afsnittet er historik.
 
 ### Hvad der sker
 

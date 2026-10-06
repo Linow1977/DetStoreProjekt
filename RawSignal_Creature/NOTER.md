@@ -8,6 +8,11 @@
 > og har nu 312 filtre med nye numre. Filternumre i dette dokument fra før den dato er gamle
 > numre. `BESLUTNINGSLOG_2026-10-05.md` gælder foran dette dokument, hvor de er uenige.
 
+> **6. oktober 2026:** `filter_case` har nu 445 filtre (139 Alpha-filtre tilføjet, de 6
+> CoefTimeFrame-filtre slettet, alle numre fra 73 rykket 6 ned). Seriefunktions-fejlen er løst:
+> filtre med XAverage, RSI, MACD, DMI og ADX skrives ud pr. kombination.
+> `BESLUTNINGSLOG_2026-10-06.md` gælder foran dette dokument, hvor de er uenige.
+
 Kort hukommelse for arbejdet med signal-eksport fra TradeStation.
 Skrevet så den kan læses uden forhåndskendskab til koden.
 
@@ -91,6 +96,11 @@ en ny RawSignal-fil.
    til kodelinjen, ikke til parameterværdien. Kaldes samme linje 625 gange på
    én bar med 625 forskellige længder, deler de hukommelsen, og resultatet
    kan blive forkert.
+
+   **LØST 5.–6. oktober 2026:** filtre med XAverage, RSI, MACD, DMI og ADX skrives
+   nu ud på én kodelinje pr. kombination med faste tal, så hver kombination har
+   sin egen hukommelse. Bevist 100 % mod prisdata. Se `BESLUTNINGSLOG_2026-10-06.md`.
+   Teksten herunder er historik.
 
    **Beslutning (gælder alle filtre):** vi accepterer denne risiko for at
    komme videre, i stedet for at håndregne hver funktion selv. Det betyder,
