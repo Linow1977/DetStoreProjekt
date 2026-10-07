@@ -4,6 +4,7 @@
 # tde\verify-one.ps1. Her findes, åbnes og genstartes TDE, og scriptet kaldes.
 
 import ctypes
+import ctypes.wintypes
 import json
 import os
 import subprocess
@@ -15,10 +16,17 @@ TSDEV = r"C:\Program Files (x86)\TradeStation 10.0\Program\TSDev.exe"
 VERIFY_SCRIPT = os.path.join(PROGRAM_MAPPE, "tde", "verify-one.ps1")
 # TDE er et 32-bit program, og verify-scriptet skal køre som 32-bit.
 POWERSHELL_32 = r"C:\Windows\SysWOW64\WindowsPowerShell\v1.0\powershell.exe"
+# TDE genstartes efter så mange filtre (se genstart_efter_mange).
+GENSTART_EFTER = 100
+TAELLER_FIL = os.path.join(PROGRAM_MAPPE, "log", "tde_taeller.txt")
 
 WM_CLOSE = 0x0010
 BM_CLICK = 0x00F5
 IDNO = 7
+SPI_GETWORKAREA = 0x0030
+SW_RESTORE = 9
+SWP_NOZORDER = 0x0004
+SWP_NOACTIVATE = 0x0010
 
 
 def find():
@@ -42,6 +50,11 @@ def find_eller_aabn():
     if tde is not None:
         return tde
     log("TDE kører ikke - åbner den.")
+    # Er TDE gået ned, står TradeStations nedbrudsrapport fremme. Den lukkes
+    # (svarer til "Don't Send"), så den ikke bliver stående på skærmen.
+    if subprocess.run(["taskkill", "/IM", "TSCrashReport.exe", "/F"],
+                      capture_output=True).returncode == 0:
+        log("Nedbrudsrapport fra TDE fundet og lukket.")
     # Startes fra sin egen mappe - ellers holder TDE programmappen låst,
     # så længe den kører.
     subprocess.Popen([TSDEV], cwd=os.path.dirname(TSDEV))
@@ -54,8 +67,21 @@ def find_eller_aabn():
         stabil = stabil + 1 if (tde is not None and tde == forrige) else 0
         forrige = tde
         if stabil >= 5:
+            _nederst_til_hoejre(tde[0])
             return tde
     return None
+
+
+def _nederst_til_hoejre(vindue):
+    """Lægger TDE i nederste højre fjerdedel af skærmen (ønsket af Thomas)."""
+    user32 = ctypes.windll.user32
+    flade = ctypes.wintypes.RECT()  # skærmen uden proceslinjen
+    user32.SystemParametersInfoW(SPI_GETWORKAREA, 0, ctypes.byref(flade), 0)
+    bredde = (flade.right - flade.left) // 2
+    hoejde = (flade.bottom - flade.top) // 2
+    user32.ShowWindow(vindue, SW_RESTORE)  # ophæver evt. fuld skærm
+    user32.SetWindowPos(vindue, 0, flade.right - bredde, flade.bottom - hoejde,
+                        bredde, hoejde, SWP_NOZORDER | SWP_NOACTIVATE)
 
 
 def _svar_nej_til_gem(pid):
@@ -87,12 +113,12 @@ def _svar_nej_til_gem(pid):
             log("TDE spurgte om at gemme - svarede Nej.")
 
 
-def genstart(tde):
+def genstart(tde, aarsag="Ingen kontakt til TDE"):
     """Lukker TDE og åbner den igen. Bruges, når der ikke er kontakt til TDE.
     TDE bedes først om at lukke pænt, og spørger den om at gemme, svares der
     Nej. Er den ikke lukket efter 30 sekunder, lukkes den med magt."""
     vindue, pid = tde
-    log("Ingen kontakt til TDE - lukker og åbner den igen.")
+    log(f"{aarsag} - lukker og åbner den igen.")
     ctypes.windll.user32.PostMessageW(vindue, WM_CLOSE, 0, 0)
     for _ in range(30):
         time.sleep(1)
@@ -104,6 +130,32 @@ def genstart(tde):
         subprocess.run(["taskkill", "/PID", str(pid), "/F"], capture_output=True)
         time.sleep(3)
     return find_eller_aabn()
+
+
+def genstart_efter_mange(tde):
+    """TDE bliver langsommere for hvert filter og går til sidst ned (målt
+    06-10: 16 sek ved filter 1, 42 sek ved filter 400). Derfor genstartes TDE,
+    når den har verificeret GENSTART_EFTER filtre. Tællingen gemmes i en fil
+    sammen med TDE's proces-id, så den starter forfra, når TDE er ny."""
+    try:
+        with open(TAELLER_FIL) as f:
+            gemt_pid, antal = f.read().split()
+        antal = int(antal) if int(gemt_pid) == tde[1] else 0
+    except (OSError, ValueError):
+        antal = 0
+    if antal >= GENSTART_EFTER:
+        tde = genstart(tde, f"TDE har verificeret {antal} filtre")
+        if tde is None:
+            return None
+        # Lige efter start kan TDE skifte vindue. Der ventes og findes igen.
+        time.sleep(10)
+        tde = find_eller_aabn()
+        if tde is None:
+            return None
+        antal = 0
+    with open(TAELLER_FIL, "w") as f:
+        f.write(f"{tde[1]} {antal + 1}")
+    return tde
 
 
 def verificer(tde, sti, filtype):

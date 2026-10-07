@@ -41,6 +41,8 @@ def verificer_begge(a, sti_s, sti_k):
     (resultat, note), eller None, hvis TDE ikke kunne åbnes.
     """
     forbindelse = tde_styring.find_eller_aabn()
+    if forbindelse is not None:
+        forbindelse = tde_styring.genstart_efter_mange(forbindelse)
     if forbindelse is None:
         return None
     for forsoeg in (1, 2):
