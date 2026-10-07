@@ -171,3 +171,6 @@ ChaikinMoneyFlow.
   180 minutter efter indgang (9 tider), ens for alle bar-længder.
 - **23:** Minimum pr. celle er ikke besluttet. Det findes ved test.
 - **28, 29, t-tal og 33:** Thomas har bedt om nærmere forklaring.
+- **t-krav, 29 og 33 (7. okt):** Afgøres i testfasen. For 33 testes
+  farvetabellen (grøn t ≥ 2 og samme retning, grå 0-2, rød modsat retning)
+  og kravene pr. PL-niveau. 28 er stadig ubesvaret.

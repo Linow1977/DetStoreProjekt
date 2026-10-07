@@ -74,14 +74,19 @@ Edge-Finder / Edge-Cruncher → Incubator → Pharos.
 Regnefejlen i seriefunktioner: MACD og RSI, StandardDev, XAverage, DMIplus,
 DMIminus, ADX, ChaikinMoneyFlow testes på 2007-2009 med workspace 40-40-80.
 
+## Afgøres i testfasen (besluttet 7. okt)
+
+| Nr. | Emne | Udgangspunkt for testen |
+|---|---|---|
+| — | t-krav for at bestå | Fastsættes efter testkørsler |
+| 29 | Andel held blandt det godkendte (FDR) | Måles med lokkeduer; grænsen vælges ved test |
+| 33 | Farver og plateau-niveauer | Grøn: samme retning som midten og t ≥ 2. Grå: samme retning, t mellem 0 og 2. Rød: modsat retning. Krav pr. PL-niveau afgøres ved test |
+| 23 | Minimum pr. celle | Findes ved test |
+
 ## Stadig åbent
 
 | Nr. | Spørgsmål |
 |---|---|
-| 28 | Tælles alle resultater, så kravet strammes, jo mere der testes? |
-| 29 | Hvor stor en del af det godkendte må være held (FDR)? |
-| — | Hvor højt t-tallet skal være for at bestå (afhænger af 28 og 29) |
-| 33 | Farvegrænserne grøn/grå/rød i PL1-PL7 |
-| 23 | Minimum pr. celle: ikke besluttet, findes ved test |
+| 28 | Tælles alle testede celler automatisk, så t-kravet strammes, jo mere der testes? |
 | 22 | Overskud i forhold til samme klokkeslæt |
 | 42 | Generalprøve før OOS |
