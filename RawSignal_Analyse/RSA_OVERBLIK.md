@@ -1,4 +1,4 @@
-# RSA — overblik over hvad der testes (status 5. oktober 2026)
+# RSA — overblik over hvad der testes (status 7. oktober 2026)
 
 Samlet ud fra Thomas' beslutninger i chat-samlingen (aug-sep), konsulentrapporten
 (29. sep) og svarene på RSA-skemaet (4.-5. okt). Detaljer og kilder:
@@ -27,7 +27,7 @@ Edge-Finder / Edge-Cruncher → Incubator → Pharos.
 | Måling | Regel |
 |---|---|
 | Indgang | Åbningen af næste Data2-bar efter signal-baren (aldrig signal-barens egen pris) |
-| Pris efter | Målt efter faste tider, samme tid for alle bar-længder. Alle tider testes |
+| Pris efter | 30, 45, 60, 75, 90, 105, 120, 150 og 180 minutter efter indgang, samme tider for alle bar-længder |
 | Enhed | Dollars + en kolonne for udsving (volatilitet) |
 | Antal | Signaler i alt og antal dage med signal |
 | Usikkerhed | Regnes pr. dag med signal (dagens signaler samles til ét tal) |
@@ -78,11 +78,10 @@ DMIminus, ADX, ChaikinMoneyFlow testes på 2007-2009 med workspace 40-40-80.
 
 | Nr. | Spørgsmål |
 |---|---|
-| 18 | Hvilke tider "pris efter" måles på |
 | 28 | Tælles alle resultater, så kravet strammes, jo mere der testes? |
 | 29 | Hvor stor en del af det godkendte må være held (FDR)? |
 | — | Hvor højt t-tallet skal være for at bestå (afhænger af 28 og 29) |
 | 33 | Farvegrænserne grøn/grå/rød i PL1-PL7 |
-| 23 | Minimum pr. celle (150 dage / 300 signaler er kun et testtal) |
+| 23 | Minimum pr. celle: ikke besluttet, findes ved test |
 | 22 | Overskud i forhold til samme klokkeslæt |
 | 42 | Generalprøve før OOS |

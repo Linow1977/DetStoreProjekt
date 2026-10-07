@@ -164,3 +164,10 @@ ChaikinMoneyFlow.
   60 % af resultatet i IN-perioden. Begrundelse: i forsøg 2b smider 40 % ca.
   21 % af de ægte ud og lukker ca. 13 % af de falske igennem; de falske kan
   fanges i de næste prøveår (2025, 2026), mens en kasseret ægte edge er tabt.
+
+## 8. Fjerde opfølgning (7. oktober)
+
+- **18 (besluttet):** "Pris efter" måles 30, 45, 60, 75, 90, 105, 120, 150 og
+  180 minutter efter indgang (9 tider), ens for alle bar-længder.
+- **23:** Minimum pr. celle er ikke besluttet. Det findes ved test.
+- **28, 29, t-tal og 33:** Thomas har bedt om nærmere forklaring.
