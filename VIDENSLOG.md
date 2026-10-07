@@ -78,6 +78,11 @@ ved måling (pauser i CSV-filen, sammenligning med en uafhængig beregning fra
 prisdata), ikke ved vurdering. Målingen af løsningen afslørede samtidig, at
 den gamle løkke kun regnede rigtigt for den første kombination.
 
+### 2026-10-07 — En fejl må ikke kunne smitte videre i en kørsel
+Ved en testkørsel af 16 backtests fejlede den første, og workspacet blev stående
+åbent, så de 15 næste stoppede med det samme. Brug altid den kæde, der rydder op
+efter en fejl (`rs_ts_kaede.py`), og test ét filter alene, før mange køres.
+
 ## TradingApp
 
 *(Ingen poster endnu.)*
@@ -164,6 +169,24 @@ og sparer ca. 1 min pr. cyklus.
 som 307–445. De 6 CoefTimeFrame-filtre er slettet (funktionen findes ikke), og
 alle numre fra 73 er rykket 6 ned. Formler, der aldrig kan være sande (fx
 `Close > Highest(Close, N)` uden `[1]`), fandtes også i originalerne og er rettet.
+
+### 2026-10-07 — Verify-advarslen om seriefunktioner er ikke et tegn på fejl
+24 filtre fra alle grupper med advarslen (D- og Session-funktioner, Highest,
+CountIf, CCI, Pivot, Bollinger, seriefunktion i seriefunktion m.fl.) er
+backtestet og målt: ingen er ramt. Omskrivningen af MACD/DMI/ADX/XAverage
+virker. Mål ved at sammenligne signalrækken pr. kombination – ens signaler ved
+høje parametre kan være naturligt (fx ingen dage med så stort udsving).
+Se `RawSignal_Creature/BESLUTNINGSLOG_2026-10-07.md`.
+
+### 2026-10-07 — TDE bliver langsommere for hvert filter og går til sidst ned
+16 sek pr. filter ved filter 1, 42 sek ved filter 400, hvor TDE gik ned.
+Genstart giver 16 sek igen. Programmet genstarter nu TDE for hver 100 filtre.
+EasyLanguage: `of data(...)` må ikke stå efter MinList/MaxList/AbsValue (sæt det
+ved hver pris), og TSI kræver 3 tal: `TSI(Close, længde1, længde2)`.
+
+### 2026-10-07 — filter_case: 447 filtre, nye TSI som 373–374
+To TSI-filtre med grænse 1.4 er lagt ind ved siden af de andre TSI; alle numre
+fra 373 er rykket 2 op. Alpha-filtrene er nu 307–447.
 
 ## EdgeFinder
 

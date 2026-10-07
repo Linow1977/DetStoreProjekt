@@ -19,6 +19,11 @@ Er andre filer uenige med dette dokument, følg dette dokument.
 > filtre med XAverage, RSI, MACD, DMI og ADX skrives ud pr. kombination.
 > `BESLUTNINGSLOG_2026-10-06.md` gælder foran dette dokument, hvor de er uenige.
 
+> **7. oktober 2026:** `filter_case` har nu 447 filtre. To nye TSI-filtre (grænse 1.4) er
+> lagt ind som 373–374, og alle tidligere numre fra 373 er rykket 2 op (373 → 375 … 445 → 447).
+> Filter 359, 360, 371 og 372 er rettet. 24 grupper af seriefunktioner er målt: ingen er ramt.
+> `BESLUTNINGSLOG_2026-10-07.md` gælder foran dette dokument, hvor de er uenige.
+
 ---
 
 ## 1. Opgaven i fire trin

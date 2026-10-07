@@ -5,6 +5,10 @@ lokale Claude Code-session på DataServer. **Er andre dokumenter uenige med
 denne log, gælder denne log.** Det gælder også `BESLUTNINGSLOG_2026-10-05.md`,
 hvad angår filternumre.
 
+> **7. oktober 2026:** Filternumre fra 373 og op i denne log er rykket 2 op
+> (fx Alpha 418–421 → 420–423, 428–429 → 430–431; Alpha-filtrene er nu 307–447).
+> Se `BESLUTNINGSLOG_2026-10-07.md`.
+
 ## Resultat
 
 - **Seriefunktions-fejlen er løst.** Filtre med XAverage, RSI, MACD, DMI og ADX

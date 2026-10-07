@@ -28,7 +28,34 @@ from formel import ARRAY_STOERRELSE, ByggeFejl, analyser, tal_tekst, udskift
 # 06-10-2026: filter 67-72 (CoefTimeFrame) slettet, 73 og op rykket 6 ned.
 # Filtre med XAverage, RSI, MACD, DMI og ADX skrives ud pr. kombination
 # (formel.UDFOLD_FUNKTIONER) og får ikke denne advarsel.
+# 07-10-2026: 24 filtre målt (CL 60-60-120 2007-09), ingen ramt. Numrene er
+# efter omnummereringen 07-10 (373 og op rykket 2 op). Se BESLUTNINGSLOG_2026-10-07.md.
+MAALT_07_10 = "Målt og virker (07-10-2026, CL 60-60-120): "
 MAALT_STATUS = {
+    50: MAALT_07_10 + "DMI (udfoldet), alle 625 kombinationer forskellige.",
+    52: MAALT_07_10 + "ADX (udfoldet), 405 af 440 kombinationer med signaler forskellige.",
+    58: MAALT_07_10 + "XAverage (udfoldet), alle 620 kombinationer forskellige.",
+    60: MAALT_07_10 + "CCI, alle 625 kombinationer forskellige.",
+    85: MAALT_07_10 + "Average(ChaikinMoneyFlow), alle 625 forskellige. Meget tung: 2 t 43 min.",
+    87: MAALT_07_10 + "CountIf(RSI), alle 125 kombinationer forskellige.",
+    93: MAALT_07_10 + "PercentR, alle 25 kombinationer forskellige.",
+    137: MAALT_07_10 + "Highest, 607 af 625 kombinationer forskellige.",
+    138: MAALT_07_10 + "Lowest, alle 606 kombinationer med signaler forskellige.",
+    189: MAALT_07_10 + "PivotHigh/LowVSBar, jævnt faldende antal signaler med N1.",
+    191: MAALT_07_10 + "PivotLowVS, stiger med N1 og flader ud fra N1 = 8 (naturligt).",
+    282: MAALT_07_10 + "Open/CloseSession. Tænder aldrig: CL åbnede aldrig over 1 % under forrige lukkekurs.",
+    286: MAALT_07_10 + "High/LowSession, jævnt faldende antal signaler med N1.",
+    313: MAALT_07_10 + "XAverage(...)[1] (udfoldet), alle 25 kombinationer forskellige.",
+    318: MAALT_07_10 + "CountIf, halveres for hvert trin i N1 (naturligt).",
+    332: MAALT_07_10 + "LowD, alle 25 kombinationer forskellige.",
+    333: MAALT_07_10 + "HighD, alle 25 kombinationer forskellige.",
+    334: MAALT_07_10 + "HighestBar/LowestBar, 576 af 600 kombinationer forskellige.",
+    363: MAALT_07_10 + "Momentum, alle 25 kombinationer forskellige.",
+    369: MAALT_07_10 + "MACD (udfoldet), alle 600 kombinationer forskellige.",
+    377: MAALT_07_10 + "RSI(CloseD), 548 af 589 kombinationer forskellige.",
+    379: MAALT_07_10 + "RateOfChange, alle 25 kombinationer forskellige.",
+    381: MAALT_07_10 + "BollingerBand, 193 af 223 kombinationer med signaler forskellige.",
+    434: MAALT_07_10 + "OpenD, alle 25 kombinationer forskellige.",
     1: "Målt og virker (gamle nr. 1): 620 kombinationer, alle med forskellige signaler.",
     14: "Målt og virker (05-10-2026, CL 60-60-120): StandardDev/Average gav forskellige signaler; ens kun hvor 0.25*N2 giver samme længde.",
     24: "Målt og virker sandsynligvis (gamle nr. 265 / RawSignal266): hver N1 gav forskellige signaler.",

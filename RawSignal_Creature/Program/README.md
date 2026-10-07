@@ -116,6 +116,14 @@ For hvert filter laves to filer:
 - Max Bars Back kan ikke regnes helt ud for alle filtre (CCI, ChaikinMoneyFlow,
   CountIf, PercentR, Pivot-funktionerne m.fl.). De bygges med 1000 som antagelse.
 - Programmet kører ét filter ad gangen.
+- TDE bliver langsommere for hvert filter (målt 06-10: 16 sek ved filter 1,
+  42 sek ved filter 400) og gik ned ved filter 400. Genstart hjælper, så
+  programmet genstarter TDE for hver 100 filtre (`GENSTART_EFTER` i
+  `tde_styring.py`, tælles i `log\tde_taeller.txt`).
+  Står TradeStations nedbrudsrapport fremme, når TDE åbnes igen, lukkes den
+  automatisk (svarer til "Don't Send").
+- Når programmet åbner TDE, lægges vinduet i nederste højre fjerdedel af
+  skærmen.
 - Efter genstart af TradeStation åbner Ctrl+C ikke kommandolinjen, før den er
   åbnet én gang i hånden. Fjernskrivebordet må ikke være minimeret under
   backtesten (brug `Forlad_server_uden_at_stoppe.bat`).
