@@ -85,6 +85,15 @@ efter forsøg 2b, `RawSignal_Analyse/Laboratorium/`; erstatter 15 %). Kun platea
 går videre, også når den ligger på kanten. RSA tæller dage med signal.
 Testfasen er ikke færdig. Se `RawSignal_Analyse/RSA_svar_gennemgang_2026-10-04.md`.
 
+### 2026-10-07 — Overdragelse til den lokale session: RSA-status
+Samlet status for RSA står i `RawSignal_Analyse/RSA_OVERBLIK.md`: måletider
+30-180 min, indgang på næste Data2-bars åbning, OOS-tolerance 40 %, og hvad
+der afgøres i testfasen (t-krav, FDR, plateau-farver, minimum pr. celle,
+28/22/42). Næste skridt på serveren: træk 4 testfiltre med SQL'en i
+`RawSignal_Analyse/RSA_testfiltre_udtraekning.md`. Udelukkelsen af
+seriefunktioner i SQL'en mangler Thomas' ja. Ligger på grenen
+`claude/event-study-rawsignal-analyse-a8n5yk` (ikke flettet ind i `main`).
+
 ### 2026-10-04 — Tjek alle arbejdsgrene, ikke kun `main`
 Den første udgave af RSA-spørgsmålene byggede kun på `main` og overså
 konsulentrapporterne, laboratoriet og Thomas' skemasvar, som lå på grene, der
