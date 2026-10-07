@@ -82,11 +82,12 @@ DMIminus, ADX, ChaikinMoneyFlow testes på 2007-2009 med workspace 40-40-80.
 | 29 | Andel held blandt det godkendte (FDR) | Måles med lokkeduer; grænsen vælges ved test |
 | 33 | Farver og plateau-niveauer | Grøn: samme retning som midten og t ≥ 2. Grå: samme retning, t mellem 0 og 2. Rød: modsat retning. Krav pr. PL-niveau afgøres ved test |
 | 23 | Minimum pr. celle | Findes ved test |
+| 28 | Tælles alle testede celler automatisk, så t-kravet strammes? | Afgøres ved test |
+| 22 | Overskud i forhold til samme klokkeslæt | Afgøres ved test |
+| 42 | Generalprøve før OOS | Afgøres ved test |
 
-## Stadig åbent
+## Testfiltre
 
-| Nr. | Spørgsmål |
-|---|---|
-| 28 | Tælles alle testede celler automatisk, så t-kravet strammes, jo mere der testes? |
-| 22 | Overskud i forhold til samme klokkeslæt |
-| 42 | Generalprøve før OOS |
+Fire tilfældige filtre (2 med kun N1, 2 med N1 og N2) trækkes fra `filter_case`
+af den lokale session. Se `RSA_testfiltre_udtraekning.md`.
+
