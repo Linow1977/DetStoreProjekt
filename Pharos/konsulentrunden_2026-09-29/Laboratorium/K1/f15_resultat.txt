@@ -1,0 +1,8 @@
+Falsk alarm: strategi leverer præcis som lovet (60 måneders månedlige tjek)
+  grænse 2.33: andel der på et tidspunkt rammes: 7.2%
+  grænse 3.0: andel der på et tidspunkt rammes: 1.3%
+Død edge (gennemsnit 0 fra frysedatoen): andel opdaget inden 60 mdr. og median-måned
+  forventet Sharpe 0.5: grænse 2.33: 26% (median måned 23); grænse 3.0: 8% (median måned 30)
+  forventet Sharpe 1.0: grænse 2.33: 62% (median måned 25); grænse 3.0: 34% (median måned 34)
+  forventet Sharpe 2.0: grænse 2.33: 99% (median måned 13); grænse 3.0: 95% (median måned 22)
+  forventet Sharpe 3.0: grænse 2.33: 100% (median måned 7); grænse 3.0: 100% (median måned 11)

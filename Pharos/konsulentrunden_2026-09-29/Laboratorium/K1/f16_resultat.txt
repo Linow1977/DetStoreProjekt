@@ -1,0 +1,6 @@
+Verden A: konstant edge (ingen momentum i strategierne)
+                           1/N: middel/md 0.150, Sharpe/år 3.34, største nedtur 0.31
+     Momentum (Titan-lignende): middel/md 0.150, Sharpe/år 1.92, største nedtur 0.95
+Verden B: edge tænder/slukker i lange perioder (momentum findes)
+                           1/N: middel/md 0.150, Sharpe/år 3.31, største nedtur 0.32
+     Momentum (Titan-lignende): middel/md 0.177, Sharpe/år 2.22, største nedtur 0.88

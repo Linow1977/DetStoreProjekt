@@ -96,6 +96,14 @@ cloud-miljøet. Undersøgelser derfra bygger kun på søgeuddrag — skal noget
 tjekkes præcist, må det gøres lokalt eller ud fra materiale, Thomas lægger i
 projektet. Spørg også om ukendte navne (Pharos, RSA) i stedet for at gætte.
 
+### 2026-10-12 — Arbejdsmåde: søg på alle grene, ikke kun `main`
+Pharos, RSA og Titan blev først søgt i `main`, hvor der intet var. Et helt
+Pharos-udkast, Thomas' svar om Pharos og RSA-overblikket lå på grene, der
+aldrig er flettet ind. Derfor blev Titan undersøgt forfra, selv om meget
+allerede fandtes. **Følge:** før et emne undersøges, søg på alle grene
+(`git fetch` af alle, derefter `git grep` på hver gren). Flere vigtige grene
+venter stadig på at blive flettet ind i `main`.
+
 ## TradingApp
 
 *(Ingen poster endnu.)*
@@ -212,8 +220,8 @@ fra 373 er rykket 2 op. Alpha-filtrene er nu 307–447.
 ## Pharos
 
 Overvågningsprogram for strategier i inkubation (dvale) og live-strategier.
-Bygger på Andrea Ungers Titan. Fuld rapport:
-`Pharos/reports/Andrea Ungers Titan program.md`.
+Bygger på Andrea Ungers Titan. Start altid i `Pharos/OVERBLIK.md`, der samler
+udkast, Thomas' svar, laboratoriet og Titan-rapporten.
 
 ### 2026-10-12 — Titan: inkubation er en tilstand, der afgøres hver måned
 Titan tager daglig P&L for alle strategier og laver én gang om måneden en
@@ -224,3 +232,11 @@ bedre end den lange. Titan sender ikke ordrer; daglige alarmer ligger i et
 separat værktøj. **For Pharos:** status pr. strategi med historik, daglig P&L
 i PostgreSQL for alle strategier, regler låst på forhånd, og månedlig
 udvælgelse holdt adskilt fra alarmer.
+
+### 2026-10-12 — Pharos-udkastet fra 29-09 samlet i Pharos-mappen
+Konsulentrundens Pharos-udkast, laboratoriet og prototypen (8/8 tests bestået
+igen) lå kun på grenen `claude/dreamy-lamport-eztlk0` og er kopieret til
+`Pharos/konsulentrunden_2026-09-29/`. Udkastet afviger bevidst fra Titan:
+samme risiko til alle i stedet for momentum, indtil en test på egne
+papirhandler viser andet. Intet er besluttet. Titan-undersøgelsen retter to
+ting i udkastet (se `Pharos/OVERBLIK.md`).
