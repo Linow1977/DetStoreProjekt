@@ -91,6 +91,24 @@ Den bekræfter udkastets billede af Titan og retter to ting i det:
 - "1 % pr. handel" kommer kun fra en tredjepart. Unger selv oplyser ingen
   procent; en elev nævner 2 % daglig risiko.
 
+## Alternativer til Titan (12-10-2026)
+
+`reports/Alternativer til Titan for futures.md` og noterne i
+`research_notes/Alternativer til Titan for futures/`. Kort:
+
+- Intet købeprogram gør det samme som Titan til futures med TradeStation eller
+  MultiCharts. Der findes kun delløsninger (MultiWalk Trader, MultiCharts
+  Portfolio Trader, QuantAnalyzer, Portfolio Analyst, Adaptrade MSA).
+- Den daglige vagt skal sættes sammen af lag: platformens alarmer, et eksternt
+  "jeg lever"-signal (hjerteslag) og mæglerens egne tabsgrænser.
+- Forskningen støtter udkastets "samme risiko til alle" frem for momentum.
+- Udfordrer udkastet på tre punkter: papir-tal fra TradeStations SIM-konto
+  kan være for flotte; udkastet mangler hjerteslag, mæglergrænser og en skrevet
+  nødstop-plan; flere strategier på samme marked i samme konto giver let
+  forkerte positioner.
+- Researchernes vurdering: byg den smalle kerne selv og lån regnestykkerne fra
+  gratis biblioteker (fx ffn, Riskfolio-Lib, arch).
+
 ## Hvad der ikke findes endnu
 
 - Ingen kode til Pharos ud over prototypen på opdigtede data.

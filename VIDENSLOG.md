@@ -240,3 +240,13 @@ igen) lå kun på grenen `claude/dreamy-lamport-eztlk0` og er kopieret til
 samme risiko til alle i stedet for momentum, indtil en test på egne
 papirhandler viser andet. Intet er besluttet. Titan-undersøgelsen retter to
 ting i udkastet (se `Pharos/OVERBLIK.md`).
+
+### 2026-10-12 — Intet købeprogram erstatter Titan til futures
+Grundig undersøgelse af alternativer: kun delløsninger findes (MultiWalk
+Trader, MultiCharts Portfolio Trader, QuantAnalyzer, Portfolio Analyst, MSA),
+og alle læser kun filer, man selv gemmer. **Følge:** byg Pharos' kerne selv,
+lån regnestykker fra gratis biblioteker. Tre nye opmærksomhedspunkter:
+papir-P&L fra TradeStations SIM kan være for flot (vigtigt, fordi
+momentum-testen senere hviler på den), den daglige vagt kræver et eksternt
+hjerteslag og mæglerens tabsgrænser, og én strategi pr. marked pr. konto
+anbefales i TradeStation. Se `Pharos/reports/Alternativer til Titan for futures.md`.
