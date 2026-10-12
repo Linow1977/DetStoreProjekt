@@ -213,7 +213,7 @@ fra 373 er rykket 2 op. Alpha-filtrene er nu 307–447.
 
 Overvågningsprogram for strategier i inkubation (dvale) og live-strategier.
 Bygger på Andrea Ungers Titan. Fuld rapport:
-`RawSignal_Creature/reports/Andrea Ungers Titan program.md`.
+`Pharos/reports/Andrea Ungers Titan program.md`.
 
 ### 2026-10-12 — Titan: inkubation er en tilstand, der afgøres hver måned
 Titan tager daglig P&L for alle strategier og laver én gang om måneden en
