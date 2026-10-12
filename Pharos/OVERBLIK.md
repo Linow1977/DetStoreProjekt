@@ -107,7 +107,8 @@ Den bekræfter udkastets billede af Titan og retter to ting i det:
   nødstop-plan; flere strategier på samme marked i samme konto giver let
   forkerte positioner.
 - Researchernes vurdering: byg den smalle kerne selv og lån regnestykkerne fra
-  gratis biblioteker (fx ffn, Riskfolio-Lib, arch).
+  gratis biblioteker (fx ffn, Riskfolio-Lib, arch). Listen over byggeklodser
+  står i `BYGGEKLODSER.md`.
 
 ## Hvad der ikke findes endnu
 
