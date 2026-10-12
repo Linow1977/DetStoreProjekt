@@ -76,3 +76,12 @@ Hvis man vil starte i Ungers ånd, kunne opskriften være: aktivér en strategi,
 Titans egentlige styrke er ikke programmet, men en måde at tænke på. En strategi bliver aldrig "færdig" eller "død". Den er enten i form eller ude af form, og den bliver målt hver dag, uanset om den handler med rigtige penge eller ej. Titans svage punkter er de huller, Pharos kan lukke. Der er ingen nødbremse midt i måneden, ingen offentlig sammenligning af live og backtest, og ingen sammenhæng mellem den månedlige udvælgelse og de daglige alarmer. Ungers egne tal viser også, at filtre køber mindre tab for mindre overskud. Pharos bør derfor vise, hvad hver regel koster, og ikke bare følge reglen.
 
 Når Pharos skal bygges, er det vigtigste at få datamodellen rigtig fra start: én daglig række med gevinst og tab pr. strategi, uanset status, og en logbog over hvert statusskift. Er det på plads, kan reglerne ændres senere uden at miste historikken. De præcise Titan-tal står i Ungers kurser og bøger, som ikke kunne læses herfra. Bliver det aktuelt at købe adgang, er det dér, de manglende detaljer skal tjekkes.
+
+## Tilføjelse 12-10-2026: Titans rigtige skærmbilleder
+
+Efter rapporten blev skrevet, delte Thomas skærmbilleder af Titan fra Ungers YouTube-kanal. De ligger i `Pharos/titan_skaermbilleder/` med en beskrivelse i `BESKRIVELSE.md`. De retter to ting i rapporten ovenfor:
+
+- **Skærmene er ikke længere ukendte.** Titan har fire faner (Settings, Backtest, Strategy manager, Backtest comparison) og otte familier af filtre, bl.a. lang/kort periode, standardafvigelse, top-test og rangering efter nettogevinst med et loft pr. kategori. Der er også et korrelationsfilter med grænsen 0,75.
+- **Titan har stop midt i perioden.** Afsnittet om, at der ikke findes en offentlig regel for at stoppe en strategi midt i måneden, holder ikke helt. Indstillingerne har fanerne "Intra-period stop", "MaxDD suspension" og "Degrade". Hvordan de virker, ses ikke på billederne.
+
+Billederne viser også, at indstillingerne i praksis afviger fra de offentlige tal (lang periode 9 og kort periode 2 i stedet for 12–18 og 3–6), og at Titans backtest af sin egen regel i det viste eksempel (2018–2021) gav *mere* overskud filtreret end ufiltreret. Den periode er sandsynligvis også den, indstillingerne blev valgt på, så resultatet skal læses med forsigtighed.

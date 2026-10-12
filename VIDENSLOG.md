@@ -250,3 +250,11 @@ papir-P&L fra TradeStations SIM kan være for flot (vigtigt, fordi
 momentum-testen senere hviler på den), den daglige vagt kræver et eksternt
 hjerteslag og mæglerens tabsgrænser, og én strategi pr. marked pr. konto
 anbefales i TradeStation. Se `Pharos/reports/Alternativer til Titan for futures.md`.
+
+### 2026-10-12 — Titans skærmbilleder: flere regler end de offentlige
+Thomas delte billeder af Titan fra Ungers YouTube (`Pharos/titan_skaermbilleder/`).
+Titan har otte filterfamilier, rangering, korrelationsfilter (0,75) og stop
+midt i perioden (Intra-period stop, MaxDD suspension) — det, der står i
+artiklerne, er kun en lille del. Indstillingerne i videoen (9/2) afviger fra de
+offentlige (12–18/3–6). **Følge:** Thomas' egne kilder (video, kursusmateriale)
+kan give mere end webundersøgelser, som her var blokeret; spørg efter dem tidligt.

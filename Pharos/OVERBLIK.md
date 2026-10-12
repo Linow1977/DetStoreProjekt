@@ -110,6 +110,14 @@ Den bekræfter udkastets billede af Titan og retter to ting i det:
   gratis biblioteker (fx ffn, Riskfolio-Lib, arch). Listen over byggeklodser
   står i `BYGGEKLODSER.md`.
 
+## Titans skærmbilleder (12-10-2026)
+
+`titan_skaermbilleder/` — otte billeder fra Ungers YouTube, delt af Thomas,
+med beskrivelse i `BESKRIVELSE.md`. Viser Titans fire faner, otte
+filterfamilier, korrelationsfilter (0,75), stop midt i perioden og
+"filtreret mod ufiltreret"-test. Retter Titan-rapporten på to punkter (se
+rapportens tilføjelse sidst).
+
 ## Hvad der ikke findes endnu
 
 - Ingen kode til Pharos ud over prototypen på opdigtede data.
