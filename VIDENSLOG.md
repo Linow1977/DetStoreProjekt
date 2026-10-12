@@ -83,6 +83,19 @@ Ved en testkørsel af 16 backtests fejlede den første, og workspacet blev ståe
 åbent, så de 15 næste stoppede med det samme. Brug altid den kæde, der rydder op
 efter en fejl (`rs_ts_kaede.py`), og test ét filter alene, før mange køres.
 
+### 2026-10-12 — Tanke om ét program (UI) omkring hele processen (FriSnak, åben tråd)
+Thomas vil på sigt have et samlet program med skærmbillede omkring hele
+pipelinen, så den kan køre uden Claude. Foreløbig tanke: delt i to — RSA +
+EDGE (fabrikken, kører i omgange) og Pharos (vagten, altid tændt). Motor og
+skærm holdes adskilt, så processen kører videre, selv om skærmen lukker.
+Ikke besluttet; intet bygget.
+
+### 2026-10-12 — Cloud-sessionen kan ikke åbne Unger Academys sider
+ungeracademy.com, ungermethod.com og substack.com blev afvist af netværket i
+cloud-miljøet. Undersøgelser derfra bygger kun på søgeuddrag — skal noget
+tjekkes præcist, må det gøres lokalt eller ud fra materiale, Thomas lægger i
+projektet. Spørg også om ukendte navne (Pharos, RSA) i stedet for at gætte.
+
 ## TradingApp
 
 *(Ingen poster endnu.)*
@@ -195,3 +208,19 @@ fra 373 er rykket 2 op. Alpha-filtrene er nu 307–447.
 ## EdgeCruncher
 
 *(Ingen poster endnu.)*
+
+## Pharos
+
+Overvågningsprogram for strategier i inkubation (dvale) og live-strategier.
+Bygger på Andrea Ungers Titan. Fuld rapport:
+`RawSignal_Creature/reports/Andrea Ungers Titan program.md`.
+
+### 2026-10-12 — Titan: inkubation er en tilstand, der afgøres hver måned
+Titan tager daglig P&L for alle strategier og laver én gang om måneden en
+liste over, hvilke der må handle live, og med hvor mange kontrakter. Resten
+"bliver i inkubation" og kan komme tilbage. Offentlig kerneregel: gennemsnitligt
+månedsresultat over 12–18 og 3–6 måneder skal begge være positive, og den korte
+bedre end den lange. Titan sender ikke ordrer; daglige alarmer ligger i et
+separat værktøj. **For Pharos:** status pr. strategi med historik, daglig P&L
+i PostgreSQL for alle strategier, regler låst på forhånd, og månedlig
+udvælgelse holdt adskilt fra alarmer.
