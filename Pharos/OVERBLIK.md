@@ -168,8 +168,10 @@ taber på samme tid, så porteføljens nedtur bliver større end summen af de
 enkeltes. Det hænger sammen med udkastets loft pr. klynge af ens strategier
 (20 %) og Titans korrelationsfilter (0,75).
 
-**Åbent:** Hvem sætter ændringen ind i TradeStation
-i trin 2-3? Hvor mange ændringer pr. måned må Pharos højst foretage?
+**Åbent, afgøres senere (Thomas 13-10-2026: "det må vurderes over tid"):**
+hvem der sætter ændringerne ind i TradeStation i trin 2-3, og hvor mange
+ændringer Pharos højst må foretage pr. måned. Intet fastlægges nu; Pharos
+starter på trin 1 (kun forslag), og svarene tages op, når der er erfaring.
 
 ## Hvad der ikke findes endnu
 
