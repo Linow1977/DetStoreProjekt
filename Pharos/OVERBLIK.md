@@ -160,7 +160,11 @@ vej til, at Pharos handler selv.
   ordrer", og Thomas' svar i spørgeskemaet siger "kun Thomas aktiverer
   strategier". Begge gælder, indtil Thomas selv siger andet.
 
-**Åbent:** Hvad skal "bedre" betyde? Hvem sætter ændringen ind i TradeStation
+**Thomas' svar på "hvad er bedre" (13-10-2026):** Det bliver en kombination af
+de enkelte strategier og porteføljen som helhed. Det gælder **nedtur, optur og
+kollision**. Hvad "kollision" præcist dækker, er ikke afklaret endnu (spurgt).
+
+**Åbent:** Hvad betyder "kollision"? Hvem sætter ændringen ind i TradeStation
 i trin 2-3? Hvor mange ændringer pr. måned må Pharos højst foretage?
 
 ## Hvad der ikke findes endnu
