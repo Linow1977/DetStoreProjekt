@@ -162,9 +162,13 @@ vej til, at Pharos handler selv.
 
 **Thomas' svar på "hvad er bedre" (13-10-2026):** Det bliver en kombination af
 de enkelte strategier og porteføljen som helhed. Det gælder **nedtur, optur og
-kollision**. Hvad "kollision" præcist dækker, er ikke afklaret endnu (spurgt).
+korrelation**. "Kollision" i Thomas' første svar var en tastefejl; han bekræftede
+bagefter, at det dækker **tabsperioder, der falder sammen** — flere strategier
+taber på samme tid, så porteføljens nedtur bliver større end summen af de
+enkeltes. Det hænger sammen med udkastets loft pr. klynge af ens strategier
+(20 %) og Titans korrelationsfilter (0,75).
 
-**Åbent:** Hvad betyder "kollision"? Hvem sætter ændringen ind i TradeStation
+**Åbent:** Hvem sætter ændringen ind i TradeStation
 i trin 2-3? Hvor mange ændringer pr. måned må Pharos højst foretage?
 
 ## Hvad der ikke findes endnu

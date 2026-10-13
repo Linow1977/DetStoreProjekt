@@ -269,3 +269,5 @@ spilleregler for "bedre" skrevet på forhånd, 3-5 års tidshorisont og trinvis
 selvstyre (først lukke, så starte). Det ændrer udkastets "Pharos afgiver aldrig
 ordrer" og spørgeskemaets "kun Thomas aktiverer", men først når Thomas siger
 ja. Se `Pharos/OVERBLIK.md`.
+**Tilføjelse 13-10:** "Bedre" måles på både enkelt-strategi og portefølje, ud
+fra nedtur, optur og korrelation (tabsperioder, der falder sammen).
