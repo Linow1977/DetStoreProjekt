@@ -258,3 +258,14 @@ midt i perioden (Intra-period stop, MaxDD suspension) — det, der står i
 artiklerne, er kun en lille del. Indstillingerne i videoen (9/2) afviger fra de
 offentlige (12–18/3–6). **Følge:** Thomas' egne kilder (video, kursusmateriale)
 kan give mere end webundersøgelser, som her var blokeret; spørg efter dem tidligt.
+
+### 2026-10-13 — Idé: Pharos' månedsliste mod Thomas' egen (FriSnak, åben tråd)
+Thomas vil have Pharos til hver måned at foreslå, hvilke live-strategier der
+skal ud (og ind) med en begrundelse pr. strategi, mens han selv laver sin egen
+liste. Begge gemmes og sammenlignes over tid; hvis Pharos er *meget* bedre,
+kan den på sigt få lov til selv at lukke og starte strategier. Claude foreslog:
+en tredje deltager der intet ændrer, Thomas' liste låst før han ser Pharos',
+spilleregler for "bedre" skrevet på forhånd, 3-5 års tidshorisont og trinvis
+selvstyre (først lukke, så starte). Det ændrer udkastets "Pharos afgiver aldrig
+ordrer" og spørgeskemaets "kun Thomas aktiverer", men først når Thomas siger
+ja. Se `Pharos/OVERBLIK.md`.

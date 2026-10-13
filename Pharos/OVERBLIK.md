@@ -118,6 +118,51 @@ filterfamilier, korrelationsfilter (0,75), stop midt i perioden og
 "filtreret mod ufiltreret"-test. Retter Titan-rapporten på to punkter (se
 rapportens tilføjelse sidst).
 
+## Idé fra Thomas: Pharos mod Thomas (13-10-2026, FriSnak)
+
+Ikke besluttet. Thomas' idé, med Claudes tilføjelser markeret.
+
+**Idéen:** Pharos laver hver måned en liste over de live-strategier i
+porteføljen, der bør gå fra aktiv til inaktiv. Thomas gennemgår selv og vælger,
+hvilke der skal ud og ind. Pharos laver sin *egen* liste, hvor den for hver
+strategi skriver, **hvorfor** den skal ud eller ind. Begge lister gemmes, og
+over tid ses det, om Pharos' valg er bedre end Thomas'. Hvis de er *meget*
+bedre, kan Pharos på sigt få lov til selv at lukke og starte strategier — med
+Thomas som opsyn.
+
+**Hvordan det passer med udkastet:** Udkastets månedsliste (OPTAG, BEHOLD,
+PAUSE, GENOPTAG, PENSIONER) og tabellen `forslag` er næsten det samme. Nyt er
+(1) Thomas' egen liste ved siden af, (2) pointtavlen mellem de to, og (3) en
+vej til, at Pharos handler selv.
+
+**Claudes tilføjelser (til drøftelse):**
+- **Tre deltagere, ikke to:** Thomas, Pharos og en tredje, der *intet ændrer*
+  ("alle strategier kører videre"). Er ingen af de to bedre end "intet", er
+  månedlige ind- og udskiftninger spild. Det er samme tanke som udkastets
+  R0 ("alle lige").
+- **Thomas skriver sin liste først.** Låses og tidsstemples, før han ser
+  Pharos' liste, ellers påvirker den hans valg og sammenligningen bliver
+  skæv. Gerne en kort begrundelse pr. strategi fra Thomas også — så kan det ses,
+  hvilke slags begrundelser der holder, og de kan blive til regler i Pharos.
+- **Spillereglerne for "bedre" skrives ned på forhånd:** hvad måles (samlet
+  resultat, største nedtur, antal strategier der ud fra bagklogskab blev
+  fejlsorteret), over hvor lang tid, og hvor stor forskellen skal være.
+- **Det tager år at se:** der er kun 12 månedslister om året, og en død
+  strategi opdages typisk først efter ca. 2 år (udkastet). En rimelig
+  forventning er 3-5 år, før det kan siges med sikkerhed — samme tidshorisont
+  som momentum-testen (2029-30). Hver strategi i hver måned er dog en
+  afgørelse, så der er flere målinger end 12.
+- **Trin på vejen mod selvstyre, ikke alt-eller-intet:** (1) kun forslag,
+  (2) Pharos må selv *lukke* strategier, Thomas må nedlægge veto, (3) Pharos må
+  også starte, med loft på antal ændringer pr. måned. At lukke er mindre
+  risikabelt end at starte, og nødbremsen står altid.
+- **Ændrer to tidligere udsagn:** udkastet siger "Pharos afgiver aldrig
+  ordrer", og Thomas' svar i spørgeskemaet siger "kun Thomas aktiverer
+  strategier". Begge gælder, indtil Thomas selv siger andet.
+
+**Åbent:** Hvad skal "bedre" betyde? Hvem sætter ændringen ind i TradeStation
+i trin 2-3? Hvor mange ændringer pr. måned må Pharos højst foretage?
+
 ## Hvad der ikke findes endnu
 
 - Ingen kode til Pharos ud over prototypen på opdigtede data.
