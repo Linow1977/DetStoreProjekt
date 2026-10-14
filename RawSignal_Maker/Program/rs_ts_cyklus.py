@@ -5,7 +5,7 @@
 #   3. Beregning             (fra CSV-filen oprettes til den er færdigskrevet)
 #   4. Luk workspace         (.C  og svar Nej til at gemme)
 #   5. Indlæs CSV i TradingDB (rawsignal.<strategi>, fx rawsignal.rawsignal002_test)
-# Hvert trin og hele cyklussen skrives i rawsignal.tidslog. Bagefter opdateres
+# Hvert trin og hele cyklussen skrives i rawsignal.time_log. Bagefter opdateres
 # rawsignal.rs_tf_runtime med gennemsnittet af alle hele cyklusser for samme
 # filter, instrument og timeframe.
 #
@@ -13,7 +13,7 @@
 #        fx  python rs_ts_cyklus.py RawSignal002 CL 1
 #            -> workspace "CL-5-5-10-2007-09 Test" (navneregel, se WORKSPACE_NAVN)
 #        fx  python rs_ts_cyklus.py RawSignal002-Test CL 13 "TestData CL-10-10-120-2007-09"
-# <symbol> skal stå i public.rs_instrumenter, <timeframe_id> i public.timeframes.
+# <symbol> skal stå i public.rs_instruments, <timeframe_id> i public.timeframes.
 #
 # TradeStation skal være startet og må ikke have et workspace åbent.
 # Fjernskrivebordet må ikke være minimeret.
@@ -27,8 +27,8 @@ import sys
 import time
 from datetime import datetime
 
-from faelles import CSV_MAPPE, forbind, log
-from indlaes_csv import KOLONNER
+from common import CSV_MAPPE, forbind, log
+from load_csv import KOLONNER
 
 u = ctypes.windll.user32
 k = ctypes.windll.kernel32
@@ -263,7 +263,7 @@ def svar_nej_til_gem(hoved, workspace, sek=20):
 
 def log_trin(db, strategi, workspace, trin, start, slut, note=None):
     with db.cursor() as c:
-        c.execute("""insert into rawsignal.tidslog (filter, chart, trin, start, slut, note)
+        c.execute("""insert into rawsignal.time_log (filter, chart, step, start, end_time, note)
                      values (%s, %s, %s, %s, %s, %s)""",
                   (strategi, workspace, trin, start, slut, note))
     db.commit()
@@ -279,16 +279,16 @@ def indlaes(db, sti, tabel, instrument_id, timeframe_id):
     with db.cursor() as c:
         c.execute(f"""create table if not exists {tabel} (
                           runid text not null, n1 numeric, n2 numeric,
-                          starttid timestamp not null, antalbars integer not null,
-                          afsluttet smallint not null,
+                          start_time timestamp not null, bar_count integer not null,
+                          closed smallint not null,
                           instrument_id integer not null, timeframe_id integer not null)""")
-        c.execute(f"create index if not exists {tabel.split('.')[1]}_inst_tf_n1_n2_starttid "
-                  f"on {tabel} (instrument_id, timeframe_id, n1, n2, starttid)")
+        c.execute(f"create index if not exists {tabel.split('.')[1]}_inst_tf_n1_n2_start_time "
+                  f"on {tabel} (instrument_id, timeframe_id, n1, n2, start_time)")
         c.execute(f"delete from {tabel} where instrument_id = %s and timeframe_id = %s",
                   (instrument_id, timeframe_id))
         c.execute("""create temp table ny (
-                         runid text, n1 numeric, n2 numeric, starttid timestamp,
-                         antalbars integer, afsluttet smallint) on commit drop""")
+                         runid text, n1 numeric, n2 numeric, start_time timestamp,
+                         bar_count integer, closed smallint) on commit drop""")
         # Kolonnerne læses fra overskriften: filtre med kun N1 har ingen N2-kolonne.
         with open(sti, encoding="utf-8-sig", newline="") as f:
             overskrift = next(csv.reader(f), None)
@@ -297,9 +297,9 @@ def indlaes(db, sti, tabel, instrument_id, timeframe_id):
         csv_kolonner = ", ".join(KOLONNER[k] for k in overskrift)
         with open(sti, encoding="utf-8-sig", newline="") as f:
             c.copy_expert(f"copy ny ({csv_kolonner}) from stdin with (format csv, header true)", f)
-        c.execute(f"""insert into {tabel} (runid, n1, n2, starttid, antalbars, afsluttet,
+        c.execute(f"""insert into {tabel} (runid, n1, n2, start_time, bar_count, closed,
                                            instrument_id, timeframe_id)
-                      select runid, n1, n2, starttid, antalbars, afsluttet, %s, %s from ny""",
+                      select runid, n1, n2, start_time, bar_count, closed, %s, %s from ny""",
                   (instrument_id, timeframe_id))
         antal = c.rowcount
     db.commit()
@@ -318,20 +318,20 @@ def opdater_runtime(db, strategi, workspace, instrument_id, timeframe_id, tabel)
         kombinationer = c.fetchone()[0]
         c.execute("""
             insert into rawsignal.rs_tf_runtime
-                (filter, instrument_id, timeframe_id, kombinationer, beregning, cyklus,
-                 beregning_pr_kombination, sidst_koert, note)
+                (filter, instrument_id, timeframe_id, combinations, calculation, cycle,
+                 calc_per_combination, last_run, note)
             select %(f)s, %(i)s, %(t)s, %(k)s,
-                   make_interval(secs => round(extract(epoch from avg(slut - start) filter (where trin = 'beregning')))),
-                   make_interval(secs => round(extract(epoch from avg(slut - start) filter (where trin = 'cyklus')))),
-                   coalesce(make_interval(secs => round(extract(epoch from avg(slut - start) filter (where trin = 'beregning')) / nullif(%(k)s, 0), 3)), interval '0'),
+                   make_interval(secs => round(extract(epoch from avg(end_time - start) filter (where step = 'beregning')))),
+                   make_interval(secs => round(extract(epoch from avg(end_time - start) filter (where step = 'cyklus')))),
+                   coalesce(make_interval(secs => round(extract(epoch from avg(end_time - start) filter (where step = 'beregning')) / nullif(%(k)s, 0), 3)), interval '0'),
                    date_trunc('second', now()::timestamp),
-                   'Gennemsnit af ' || count(*) filter (where trin = 'cyklus') || ' hele cyklusser i tidslog.'
-            from rawsignal.tidslog
-            where filter = %(f)s and chart = %(w)s and trin in ('beregning', 'cyklus')
+                   'Gennemsnit af ' || count(*) filter (where step = 'cyklus') || ' hele cyklusser i tidslog.'
+            from rawsignal.time_log
+            where filter = %(f)s and chart = %(w)s and step in ('beregning', 'cyklus')
             on conflict (filter, instrument_id, timeframe_id) do update set
-                kombinationer = excluded.kombinationer, beregning = excluded.beregning,
-                cyklus = excluded.cyklus, beregning_pr_kombination = excluded.beregning_pr_kombination,
-                sidst_koert = excluded.sidst_koert, note = excluded.note""",
+                combinations = excluded.combinations, calculation = excluded.calculation,
+                cycle = excluded.cycle, calc_per_combination = excluded.calc_per_combination,
+                last_run = excluded.last_run, note = excluded.note""",
                   {"f": strategi, "i": instrument_id, "t": timeframe_id, "k": kombinationer, "w": workspace})
     db.commit()
 
@@ -382,13 +382,13 @@ def koer_cyklus(strategi, symbol, timeframe_id, workspace=None):
 
     db = forbind()
     with db.cursor() as c:
-        c.execute("select instrument_id from public.rs_instrumenter where symbol = %s and aktiv", (symbol,))
+        c.execute("select instrument_id from public.rs_instruments where symbol = %s and active", (symbol,))
         r = c.fetchone()
         c.execute("select data1, data2, data3 from public.timeframes where timeframe_id = %s", (timeframe_id,))
         tf = c.fetchone()
     db.rollback()
     if not r:
-        log(f"STOP: {symbol} findes ikke som aktivt instrument i public.rs_instrumenter.")
+        log(f"STOP: {symbol} findes ikke som aktivt instrument i public.rs_instruments.")
         return 1
     if not tf or None in tf:
         log(f"STOP: timeframe {timeframe_id} findes ikke (helt udfyldt) i public.timeframes.")

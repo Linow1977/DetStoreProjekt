@@ -13,7 +13,7 @@
 import math
 import re
 
-from formel import ByggeFejl, tal_tekst, udskift
+from formula import ByggeFejl, tal_tekst, udskift
 
 # Max Bars Back som Thomas har sat den i TradeStation
 STANDARD = 1000

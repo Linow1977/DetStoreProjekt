@@ -10,7 +10,7 @@ import os
 import subprocess
 import time
 
-from faelles import PROGRAM_MAPPE, log
+from common import PROGRAM_MAPPE, log
 
 TSDEV = r"C:\Program Files (x86)\TradeStation 10.0\Program\TSDev.exe"
 VERIFY_SCRIPT = os.path.join(PROGRAM_MAPPE, "tde", "verify-one.ps1")

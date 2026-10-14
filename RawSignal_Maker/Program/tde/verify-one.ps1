@@ -5,7 +5,7 @@
 #   -> laes Output-panelet -> luk dokumentet
 #
 # Resultatet er Pass eller Fail (samme ord som i tabellerne rawsignal og
-# rawsignal_kontrol). Kan selve automationen ikke gennemfoeres, er
+# rawsignal_control). Kan selve automationen ikke gennemfoeres, er
 # resultatet Afbrudt - saa er filen IKKE verificeret, og der skal ikke
 # skrives noget i databasen.
 #

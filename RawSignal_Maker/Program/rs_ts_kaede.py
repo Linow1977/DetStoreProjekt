@@ -14,7 +14,7 @@ import sys
 import time
 
 import rs_ts_cyklus as cyklus
-from faelles import log
+from common import log
 
 VENT_EFTER_FLYTNING_SEK = 60
 

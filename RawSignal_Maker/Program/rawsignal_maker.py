@@ -1,13 +1,13 @@
-# RawSignal Creature - laver ét filter fra filter_case til en RawSignal.
+# RawSignal-Maker - laver ét filter fra filter_case til en RawSignal.
 #
-# Brug:  python rawsignal_creature.py [filter_case_id]
+# Brug:  python rawsignal_maker.py [filter_case_id]
 #        Uden nummer køres det næste filter, der ikke er færdigt.
 #
 # De fire trin (OPGAVEBESKRIVELSE_RawSignal.md):
 #   1. Filteret hentes i TradingDB (filter_case)
 #   2. Omskrives til strategi RawSignal<nr> og ShowMe RawSignal<nr>_Kontrol
 #   3. Begge verificeres i TDE (TradeStation Development Environment)
-#   4. Resultatet skrives i rawsignal og rawsignal_kontrol, og filteret
+#   4. Resultatet skrives i rawsignal og rawsignal_control, og filteret
 #      markeres som færdigt i filter_case
 #
 # Findes navnet allerede i en af tabellerne, springes filteret over. Det
@@ -20,11 +20,11 @@ import os
 import sys
 
 import database
-import generer
+import generate
 import tde_styring
-from faelles import (EL_MAPPE_KONTROL, EL_MAPPE_STRATEGI, TXT_MAPPE_KONTROL,
+from common import (EL_MAPPE_KONTROL, EL_MAPPE_STRATEGI, TXT_MAPPE_KONTROL,
                      TXT_MAPPE_STRATEGI, forbind, log)
-from formel import ByggeFejl
+from formula import ByggeFejl
 
 
 def gem_fil(sti, tekst):
@@ -73,13 +73,13 @@ def koer_filter(db, filter_case_id):
 
     # ---- 2. Byg begge filer (gemmes først, når alt er kontrolleret) ----
     try:
-        a, strategi, kontrol = generer.byg_filer(raekke)
+        a, strategi, kontrol = generate.byg_filer(raekke)
     except ByggeFejl as e:
         log(f"STOP: {e}")
         return 1
 
     if database.findes_allerede(db, a["navn"], a["kontrol_navn"]):
-        log(f"{a['navn']}: SPRUNGET OVER - navnet findes allerede i rawsignal eller rawsignal_kontrol.")
+        log(f"{a['navn']}: SPRUNGET OVER - navnet findes allerede i rawsignal eller rawsignal_control.")
         return 0
 
     sti_s = os.path.join(EL_MAPPE_STRATEGI, a["navn"] + ".el")
@@ -107,14 +107,14 @@ def koer_filter(db, filter_case_id):
     # Kun når begge filer er godkendt. Ellers ville filteret blive sprunget
     # over næste gang, før fejlen er løst.
     database.gem_resultat(db, filter_case_id, a, sti_s, sti_k, res_s, res_k)
-    log(f"{a['navn']}: skrevet i rawsignal ({res_s[0]}) og rawsignal_kontrol ({res_k[0]}), "
+    log(f"{a['navn']}: skrevet i rawsignal ({res_s[0]}) og rawsignal_control ({res_k[0]}), "
         "og markeret som færdig i filter_case.")
     return 0
 
 
 def main():
     if len(sys.argv) > 2 or (len(sys.argv) == 2 and not sys.argv[1].isdigit()):
-        print("Brug: python rawsignal_creature.py [filter_case_id]")
+        print("Brug: python rawsignal_maker.py [filter_case_id]")
         print("      Uden nummer køres det næste filter, der ikke er færdigt.")
         return 2
 
