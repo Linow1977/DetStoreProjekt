@@ -116,7 +116,7 @@ def analyser(raekke):
     return {
         "id": fid,
         "navn": signal_navn(fid),
-        "kontrol_navn": signal_navn(fid) + "_Kontrol",
+        "kontrol_navn": signal_navn(fid) + "_Control",
         "raa_formel": raa.strip(),
         "formel": formel,
         "parametre": parametre,

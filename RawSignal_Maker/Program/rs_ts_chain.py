@@ -1,4 +1,4 @@
-# Kører rs_ts_cyklus for én strategi på ét instrument og flere timeframes efter
+# Kører rs_ts_cycle for én strategi på ét instrument og flere timeframes efter
 # hinanden.
 #   - Fejler en cyklus, lukkes workspacet, og kæden springer videre til næste.
 #   - Går TradeStation ned, stopper kæden helt (resten kan ikke lykkes).
@@ -6,14 +6,14 @@
 #     (Forlad_server_uden_at_stoppe.bat) + 1 minut. Skærmskiftet midt i en
 #     beregning fik TradeStation til at gå ned 02-10-2026.
 #
-# Brug:  python rs_ts_kaede.py [--vent] <strategi> <symbol> <timeframe_id> [<timeframe_id> ...]
-#        fx  python rs_ts_kaede.py --vent RawSignal002-Test CL 1 2 3 4 5 6 7 8 9 10 11 12
+# Brug:  python rs_ts_chain.py [--vent] <strategi> <symbol> <timeframe_id> [<timeframe_id> ...]
+#        fx  python rs_ts_chain.py --vent RawSignal002-Test CL 1 2 3 4 5 6 7 8 9 10 11 12
 
 import ctypes
 import sys
 import time
 
-import rs_ts_cyklus as cyklus
+import rs_ts_cycle as cyklus
 from common import log
 
 VENT_EFTER_FLYTNING_SEK = 60
@@ -49,7 +49,7 @@ def main():
     vent = "--vent" in args
     args = [a for a in args if a != "--vent"]
     if len(args) < 3 or not all(a.isdigit() for a in args[2:]):
-        print("Brug: python rs_ts_kaede.py [--vent] <strategi> <symbol> <timeframe_id> [<timeframe_id> ...]")
+        print("Brug: python rs_ts_chain.py [--vent] <strategi> <symbol> <timeframe_id> [<timeframe_id> ...]")
         return 2
     strategi, symbol, timeframes = args[0], args[1], [int(a) for a in args[2:]]
 

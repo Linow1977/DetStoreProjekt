@@ -16,11 +16,11 @@ Beslutningerne bag står i repoet `DetStoreProjekt/RawSignal_Maker`
 python rawsignal_maker.py             # næste filter, der ikke er færdigt
 python rawsignal_maker.py 265         # et bestemt filter
 python load_csv.py 265                # læs CSV ind i TradingDB efter backtesten
-python rs_ts_cyklus.py RawSignal002 CL 1   # kør backtesten i TradeStation, se nedenfor
-python rs_ts_kaede.py --vent RawSignal002 CL 1 2 3   # flere timeframes efter hinanden
+python rs_ts_cycle.py RawSignal002 CL 1   # kør backtesten i TradeStation, se nedenfor
+python rs_ts_chain.py --vent RawSignal002 CL 1 2 3   # flere timeframes efter hinanden
 ```
 
-### Backtest i TradeStation: `rs_ts_cyklus.py`
+### Backtest i TradeStation: `rs_ts_cycle.py`
 
 Kører én hel cyklus for én strategi på ét instrument og én timeframe:
 åbn workspace → indsæt strategi → vent på beregningen → luk workspace (uden at
@@ -36,7 +36,7 @@ kræver et aktivt skrivebord: forlad serveren med
 `Forlad_server_uden_at_stoppe.bat` på skrivebordet, ikke ved at lukke eller
 minimere fjernskrivebordet.
 
-`rs_ts_kaede.py` kører flere timeframes efter hinanden. Fejler en cyklus,
+`rs_ts_chain.py` kører flere timeframes efter hinanden. Fejler en cyklus,
 lukkes workspacet, og kæden springer videre. Går TradeStation ned (både
 ORPlat og orchart kontrolleres, også mens der ventes på beregningen),
 stopper kæden helt, og en halv CSV-fil indlæses aldrig. Med `--vent` starter
@@ -48,7 +48,7 @@ For hvert filter laves to filer:
 | Fil | Type | Gør | Mappe |
 |---|---|---|---|
 | `RawSignal<nr>` | Strategi | Skriver én CSV-linje pr. signal | `FilterFolder\RawSignal.EL` (+ `.TXT`) |
-| `RawSignal<nr>_Kontrol` | ShowMe | Tegner, hvor filteret tænder | `FilterFolder\RawSignal_Kontrol.EL` (+ `.TXT`) |
+| `RawSignal<nr>_Control` | ShowMe | Tegner, hvor filteret tænder | `FilterFolder\RawSignal_Control.EL` (+ `.TXT`) |
 
 `<nr>` er `filter_case_id` med tre cifre. CSV-filen skrives af strategien til
 `FilterFolder\RawSignal.CSV` med kolonnerne
@@ -64,12 +64,12 @@ For hvert filter laves to filer:
 | `formula.py` | Læser formlen: parametre, decimaltal, DataFilter_B, seriefunktioner |
 | `max_bars_back.py` | Tjekker, at Max Bars Back (1000) er nok, og skriver det i filernes hoved |
 | `generate.py` | Bygger teksten til strategi og ShowMe |
-| `tde_styring.py` | Finder, åbner og genstarter TDE og kalder verify-scriptet |
+| `tde_control.py` | Finder, åbner og genstarter TDE og kalder verify-scriptet |
 | `tde\verify-one.ps1` | Opretter én fil i TDE, indsætter koden, kører Verify, lukker |
 | `tde\tsdev-lib.ps1` | Læser Output-panelet i TDE |
 | `load_csv.py` | Læser en CSV-fil ind i `rawsignal.rawsignal<nr>` |
-| `rs_ts_cyklus.py` | Kører backtesten i TradeStation og tager tid på hvert trin |
-| `rs_ts_kaede.py` | Kører rs_ts_cyklus på flere timeframes efter hinanden |
+| `rs_ts_cycle.py` | Kører backtesten i TradeStation og tager tid på hvert trin |
+| `rs_ts_chain.py` | Kører rs_ts_cycle på flere timeframes efter hinanden |
 | `log\rawsignal_maker.log` | Alt, programmet har gjort |
 
 ## Regler, koden bygger på
@@ -99,7 +99,7 @@ For hvert filter laves to filer:
   egen hukommelse - som ved en almindelig backtest. Løkken læser så kun
   resultatet. Bevist 05-10-2026: XAverage og MACD gav 100 % samme signaler som
   en uafhængig beregning fra prisdata (den gamle løkke: 0-16 %).
-- `rs_ts_cyklus.py` læser CSV-filens overskrift, så filtre med kun N1 (ingen
+- `rs_ts_cycle.py` læser CSV-filens overskrift, så filtre med kun N1 (ingen
   N2-kolonne) kan indlæses. Giver et filter 0 signaler, skrives tiden pr.
   kombination som 0.
 - Beregningen regnes for færdig, når CSV-filen har stået stille i
@@ -122,7 +122,7 @@ For hvert filter laves to filer:
 - TDE bliver langsommere for hvert filter (målt 06-10: 16 sek ved filter 1,
   42 sek ved filter 400) og gik ned ved filter 400. Genstart hjælper, så
   programmet genstarter TDE for hver 100 filtre (`GENSTART_EFTER` i
-  `tde_styring.py`, tælles i `log\tde_taeller.txt`).
+  `tde_control.py`, tælles i `log\tde_taeller.txt`).
   Står TradeStations nedbrudsrapport fremme, når TDE åbnes igen, lukkes den
   automatisk (svarer til "Don't Send").
 - Når programmet åbner TDE, lægges vinduet i nederste højre fjerdedel af

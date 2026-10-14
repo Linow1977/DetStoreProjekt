@@ -1,6 +1,6 @@
 # Bygger teksten til de to EasyLanguage-filer for ét filter:
 #   RawSignal<nr>           strategi, skriver én CSV-linje pr. signal
-#   RawSignal<nr>_Kontrol   ShowMe, tegner kun
+#   RawSignal<nr>_Control   ShowMe, tegner kun
 #
 # CSV-formatet (RawSignal_CSV-format.docx, 24-09-2026):
 #   RunID,N1,N2,StartTime,BarCount,Closed
@@ -358,7 +358,7 @@ def byg_strategi(a):
 # ---------------------------------------------------------------- ShowMe
 
 def byg_kontrol(a):
-    """ShowMe'en RawSignal<nr>_Kontrol. Returnerer (tekst, formlen som den står i koden)."""
+    """ShowMe'en RawSignal<nr>_Control. Returnerer (tekst, formlen som den står i koden)."""
     navn = a["kontrol_navn"]
     p = a["parametre"]
     formel_kode = udskift(a["formel"], {"Filter1_" + x["navn"]: "Vis_" + x["navn"] for x in p})

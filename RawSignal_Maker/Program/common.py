@@ -12,10 +12,10 @@ LOGFIL = os.path.join(PROGRAM_MAPPE, "log", "rawsignal_maker.log")
 
 FILTER_MAPPE = r"C:\TradingDB_Folder\FilterFolder"
 EL_MAPPE_STRATEGI = os.path.join(FILTER_MAPPE, "RawSignal.EL")
-EL_MAPPE_KONTROL = os.path.join(FILTER_MAPPE, "RawSignal_Kontrol.EL")
+EL_MAPPE_KONTROL = os.path.join(FILTER_MAPPE, "RawSignal_Control.EL")
 # Samme kode som .txt, så den kan læses uden TradeStation
 TXT_MAPPE_STRATEGI = os.path.join(FILTER_MAPPE, "RawSignal.TXT")
-TXT_MAPPE_KONTROL = os.path.join(FILTER_MAPPE, "RawSignal_Kontrol.TXT")
+TXT_MAPPE_KONTROL = os.path.join(FILTER_MAPPE, "RawSignal_Control.TXT")
 CSV_MAPPE = os.path.join(FILTER_MAPPE, "RawSignal.CSV")
 
 

@@ -5,7 +5,7 @@
 #
 # De fire trin (OPGAVEBESKRIVELSE_RawSignal.md):
 #   1. Filteret hentes i TradingDB (filter_case)
-#   2. Omskrives til strategi RawSignal<nr> og ShowMe RawSignal<nr>_Kontrol
+#   2. Omskrives til strategi RawSignal<nr> og ShowMe RawSignal<nr>_Control
 #   3. Begge verificeres i TDE (TradeStation Development Environment)
 #   4. Resultatet skrives i rawsignal og rawsignal_control, og filteret
 #      markeres som færdigt i filter_case
@@ -21,7 +21,7 @@ import sys
 
 import database
 import generate
-import tde_styring
+import tde_control
 from common import (EL_MAPPE_KONTROL, EL_MAPPE_STRATEGI, TXT_MAPPE_KONTROL,
                      TXT_MAPPE_STRATEGI, forbind, log)
 from formula import ByggeFejl
@@ -40,24 +40,24 @@ def verificer_begge(a, sti_s, sti_k):
     verificeres forfra. Det sker højst én gang. Returnerer to par
     (resultat, note), eller None, hvis TDE ikke kunne åbnes.
     """
-    forbindelse = tde_styring.find_eller_aabn()
+    forbindelse = tde_control.find_eller_aabn()
     if forbindelse is not None:
-        forbindelse = tde_styring.genstart_efter_mange(forbindelse)
+        forbindelse = tde_control.genstart_efter_mange(forbindelse)
     if forbindelse is None:
         return None
     for forsoeg in (1, 2):
-        strategi = tde_styring.verificer(forbindelse, sti_s, "Strategy")
+        strategi = tde_control.verificer(forbindelse, sti_s, "Strategy")
         log(f"{a['navn']}: {strategi[0]}  {strategi[1]}")
         if strategi[0] == "Afbrudt":
             kontrol = ("Afbrudt", "Ikke kørt, fordi strategien blev afbrudt.")
         else:
-            kontrol = tde_styring.verificer(forbindelse, sti_k, "ShowMe")
+            kontrol = tde_control.verificer(forbindelse, sti_k, "ShowMe")
             log(f"{a['kontrol_navn']}: {kontrol[0]}  {kontrol[1]}")
 
         afbrudt = "Afbrudt" in (strategi[0], kontrol[0])
         if not afbrudt or forsoeg == 2:
             return strategi, kontrol
-        forbindelse = tde_styring.genstart(forbindelse)
+        forbindelse = tde_control.genstart(forbindelse)
         if forbindelse is None:
             return None
         log(f"{a['navn']}: TDE er genstartet - verificerer forfra.")

@@ -9,10 +9,10 @@
 # rawsignal.rs_tf_runtime med gennemsnittet af alle hele cyklusser for samme
 # filter, instrument og timeframe.
 #
-# Brug:  python rs_ts_cyklus.py <strategi> <symbol> <timeframe_id> ["<workspace>"]
-#        fx  python rs_ts_cyklus.py RawSignal002 CL 1
+# Brug:  python rs_ts_cycle.py <strategi> <symbol> <timeframe_id> ["<workspace>"]
+#        fx  python rs_ts_cycle.py RawSignal002 CL 1
 #            -> workspace "CL-5-5-10-2007-09 Test" (navneregel, se WORKSPACE_NAVN)
-#        fx  python rs_ts_cyklus.py RawSignal002-Test CL 13 "TestData CL-10-10-120-2007-09"
+#        fx  python rs_ts_cycle.py RawSignal002-Test CL 13 "TestData CL-10-10-120-2007-09"
 # <symbol> skal stå i public.rs_instruments, <timeframe_id> i public.timeframes.
 #
 # TradeStation skal være startet og må ikke have et workspace åbent.
@@ -370,7 +370,7 @@ OK, FEJL, TS_NEDE = 0, 1, 3
 
 def main():
     if len(sys.argv) not in (4, 5) or not sys.argv[3].isdigit():
-        print('Brug: python rs_ts_cyklus.py <strategi> <symbol> <timeframe_id> ["<workspace>"]')
+        print('Brug: python rs_ts_cycle.py <strategi> <symbol> <timeframe_id> ["<workspace>"]')
         return 2
     return koer_cyklus(sys.argv[1], sys.argv[2], int(sys.argv[3]),
                        sys.argv[4] if len(sys.argv) == 5 else None)
