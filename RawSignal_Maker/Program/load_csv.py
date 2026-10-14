@@ -1,8 +1,8 @@
 # Læser en RawSignal-CSV-fil ind i TradingDB, i filterets egen tabel i
 # schemaet rawsignal, fx rawsignal.rawsignal001.
 #
-# Brug:  python indlaes_csv.py <filter_case_id>
-#        fx  python indlaes_csv.py 1   ->  RawSignal001.csv -> rawsignal.rawsignal001
+# Brug:  python load_csv.py <filter_case_id>
+#        fx  python load_csv.py 1   ->  RawSignal001.csv -> rawsignal.rawsignal001
 #
 # - Findes tabellen ikke, oprettes den (kolonner som CSV-filen).
 # - Tabellens gamle linjer slettes først, så intet bliver dobbelt, når et
@@ -18,20 +18,20 @@ import csv
 import os
 import sys
 
-from faelles import CSV_MAPPE, forbind, log, signal_navn
+from common import CSV_MAPPE, forbind, log, signal_navn
 
 SCHEMA = "rawsignal"
 
 # CSV-kolonne -> kolonne i den midlertidige tabel
 KOLONNER = {
-    "RunID": "runid", "N1": "n1", "N2": "n2", "Starttid": "starttid",
-    "AntalBars": "antalbars", "Afsluttet": "afsluttet",
+    "RunID": "runid", "N1": "n1", "N2": "n2", "StartTime": "start_time",
+    "BarCount": "bar_count", "Closed": "closed",
 }
 
 
 def main():
     if len(sys.argv) != 2 or not sys.argv[1].isdigit():
-        print("Brug: python indlaes_csv.py <filter_case_id>")
+        print("Brug: python load_csv.py <filter_case_id>")
         return 2
     navn = signal_navn(int(sys.argv[1]))
     tabel = f"{SCHEMA}.{navn.lower()}"
@@ -53,8 +53,8 @@ def main():
             # Først ind i en midlertidig tabel, så indholdet kan tjekkes,
             # før filterets tabel røres.
             c.execute("""create temp table ny (
-                             runid text, n1 numeric, n2 numeric, starttid timestamp,
-                             antalbars integer, afsluttet smallint) on commit drop""")
+                             runid text, n1 numeric, n2 numeric, start_time timestamp,
+                             bar_count integer, closed smallint) on commit drop""")
             with open(sti, encoding="utf-8-sig", newline="") as f:
                 c.copy_expert(f"copy ny ({csv_kolonner}) from stdin with (format csv, header true)", f)
             c.execute("select count(*), count(*) filter (where runid <> %s) from ny", (navn,))
@@ -66,14 +66,14 @@ def main():
 
             c.execute(f"""create table if not exists {tabel} (
                               runid text not null, n1 numeric, n2 numeric,
-                              starttid timestamp not null, antalbars integer not null,
-                              afsluttet smallint not null)""")
-            c.execute(f"create index if not exists {navn.lower()}_n1_n2_starttid on {tabel} (n1, n2, starttid)")
+                              start_time timestamp not null, bar_count integer not null,
+                              closed smallint not null)""")
+            c.execute(f"create index if not exists {navn.lower()}_n1_n2_start_time on {tabel} (n1, n2, start_time)")
             c.execute(f"delete from {tabel}")
             slettet = c.rowcount
-            c.execute(f"""insert into {tabel} (runid, n1, n2, starttid, antalbars, afsluttet)
-                          select runid, n1, n2, starttid, antalbars, afsluttet from ny""")
-            c.execute("select count(*) filter (where afsluttet = 0) from ny")
+            c.execute(f"""insert into {tabel} (runid, n1, n2, start_time, bar_count, closed)
+                          select runid, n1, n2, start_time, bar_count, closed from ny""")
+            c.execute("select count(*) filter (where closed = 0) from ny")
             aabne = c.fetchone()[0]
         db.commit()
         log(f"{navn}: {antal} signaler indlæst i {tabel} "

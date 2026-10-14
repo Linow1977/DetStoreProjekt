@@ -5,7 +5,7 @@
 #   -> laes Output-panelet -> luk dokumentet
 #
 # Resultatet er Pass eller Fail (samme ord som i tabellerne rawsignal og
-# rawsignal_kontrol). Kan selve automationen ikke gennemfoeres, er
+# rawsignal_control). Kan selve automationen ikke gennemfoeres, er
 # resultatet Afbrudt - saa er filen IKKE verificeret, og der skal ikke
 # skrives noget i databasen.
 #
@@ -229,7 +229,7 @@ if ($script:Overskrevet) {
 # ---- 3. Bekraeft at det rigtige dokument er aktivt ----
 # Titlen er fx "TradeStation Development Environment - RawSignal007 : Strategy",
 # med * til sidst, saa laenge dokumentet ikke er gemt. Navn og type tjekkes
-# begge, saa RawSignal007 ikke forveksles med RawSignal007_Kontrol.
+# begge, saa RawSignal007 ikke forveksles med RawSignal007_Control.
 Start-Sleep -Milliseconds 800
 $title = [Ui]::T($main)
 $forventet = " - " + [regex]::Escape($StratName) + " : " + $Type + "\*?$"

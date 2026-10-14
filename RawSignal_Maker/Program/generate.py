@@ -1,11 +1,11 @@
 # Bygger teksten til de to EasyLanguage-filer for ét filter:
 #   RawSignal<nr>           strategi, skriver én CSV-linje pr. signal
-#   RawSignal<nr>_Kontrol   ShowMe, tegner kun
+#   RawSignal<nr>_Control   ShowMe, tegner kun
 #
 # CSV-formatet (RawSignal_CSV-format.docx, 24-09-2026):
-#   RunID,N1,N2,Starttid,AntalBars,Afsluttet
+#   RunID,N1,N2,StartTime,BarCount,Closed
 #   Kun de parametre, formlen bruger, får en kolonne. Uden parametre skrives
-#   N1 = 1, så alle filer har samme form. Afsluttet = 0 betyder, at signalet
+#   N1 = 1, så alle filer har samme form. Closed = 0 betyder, at signalet
 #   stadig var tændt på chartets sidste bar.
 #
 # Filnavnet på CSV-filen står ordret fire steder i strategien (FileDelete,
@@ -17,8 +17,8 @@ from decimal import Decimal
 from itertools import product
 
 import max_bars_back
-from faelles import CSV_MAPPE
-from formel import ARRAY_STOERRELSE, ByggeFejl, analyser, tal_tekst, udskift
+from common import CSV_MAPPE
+from formula import ARRAY_STOERRELSE, ByggeFejl, analyser, tal_tekst, udskift
 
 # Målt status for hukommelsesproblemet. Filtre, der ikke står her, er
 # ikke målt. Teksten må kun oplyse status, aldrig forudsige et resultat.
@@ -27,7 +27,7 @@ from formel import ARRAY_STOERRELSE, ByggeFejl, analyser, tal_tekst, udskift
 # som står i parentes. Se BESLUTNINGSLOG_2026-10-05.md.
 # 06-10-2026: filter 67-72 (CoefTimeFrame) slettet, 73 og op rykket 6 ned.
 # Filtre med XAverage, RSI, MACD, DMI og ADX skrives ud pr. kombination
-# (formel.UDFOLD_FUNKTIONER) og får ikke denne advarsel.
+# (formula.UDFOLD_FUNKTIONER) og får ikke denne advarsel.
 # 07-10-2026: 24 filtre målt (CL 60-60-120 2007-09), ingen ramt. Numrene er
 # efter omnummereringen 07-10 (373 og op rykket 2 op). Se BESLUTNINGSLOG_2026-10-07.md.
 MAALT_07_10 = "Målt og virker (07-10-2026, CL 60-60-120): "
@@ -85,7 +85,7 @@ def hoved_faelles(a, linjer):
 def hoved_genereret(linjer):
     """Hvornår filen er lavet, og at den aldrig må rettes i hånden."""
     linjer.append("//")
-    linjer.append(f"// Genereret af RawSignal Creature {datetime.now():%Y-%m-%d %H:%M}.")
+    linjer.append(f"// Genereret af RawSignal-Maker {datetime.now():%Y-%m-%d %H:%M}.")
     linjer.append("// Ret ALDRIG i filen i hånden. Ret i filter_case, og lad programmet")
     linjer.append("// lave filen forfra.")
 
@@ -163,14 +163,14 @@ def byg_strategi(a):
 
     L += ["//", "//",
           "// CSV-KOLONNER",
-          "// Starttid  = baren hvor filteret tænder.",
-          "// AntalBars = antal Data2-bars filteret er tændt i træk.",
-          "// Afsluttet = 1, når filteret slukkede. 0, når det stadig var tændt på",
-          "//             chartets sidste bar - så er AntalBars ikke færdigt.",
+          "// StartTime = baren hvor filteret tænder.",
+          "// BarCount  = antal Data2-bars filteret er tændt i træk.",
+          "// Closed    = 1, når filteret slukkede. 0, når det stadig var tændt på",
+          "//             chartets sidste bar - så er BarCount ikke færdigt.",
           "//",
           "// VIGTIGT: Kør som almindelig backtest - IKKE via Optimize.",
           "// VIGTIGT: CSV-filen skal være lukket i Excel, mens der køres.",
-          "// VIGTIGT: Data1 skal have samme tidsramme som Data2. AntalBars tælles i",
+          "// VIGTIGT: Data1 skal have samme tidsramme som Data2. BarCount tælles i",
           "//          Data2-bars, så ellers stopper strategien med en fejl."]
     mbb = max_bars_back.tekst(a)
     L.append(f"// VIGTIGT: Max Bars Back: {mbb[0]}")
@@ -225,7 +225,7 @@ def byg_strategi(a):
 
     # Overskrift og CSV-værdier
     kolonner = (["RunID"] + ([x["navn"] for x in p] if p else ["N1"])
-                + ["Starttid", "AntalBars", "Afsluttet"])
+                + ["StartTime", "BarCount", "Closed"])
     overskrift = ",".join(kolonner)
 
     L += ["",
@@ -233,7 +233,7 @@ def byg_strategi(a):
           "",
           "\tOnce",
           "\t\tBegin",
-          "\t\t// AntalBars tælles i Data2-bars. Har Data1 en anden tidsramme, bliver",
+          "\t\t// BarCount tælles i Data2-bars. Har Data1 en anden tidsramme, bliver",
           "\t\t// tallene forkerte, så strategien stopper, før der skrives noget.",
           "\t\tIf BarType <> BarType of data(DataFilter_A)",
           "\t\t   or BarInterval <> BarInterval of data(DataFilter_A) Then",
@@ -288,14 +288,14 @@ def byg_strategi(a):
             f"If Filter1{idx} = 1 and Filter1_Forrige{idx} = 1 Then",
             f"\tSignalBars{idx} = SignalBars{idx} + 1;",
             "",
-            "// SLUKKER - linjen skrives her, Afsluttet = 1",
+            "// SLUKKER - linjen skrives her, Closed = 1",
             f"If Filter1{idx} = 0 and Filter1_Forrige{idx} = 1 Then",
             "\tBegin"]
     krop += csv_linje(1)
     krop += [f"\tSignalBars{idx} = 0;",
              "\tEnd;",
              "",
-             "// SIDSTE BAR - et signal, der stadig er tændt, skrives med Afsluttet = 0",
+             "// SIDSTE BAR - et signal, der stadig er tændt, skrives med Closed = 0",
              f"If LastBarOnChart and SlutSkrevet = 0 and Filter1{idx} = 1 Then",
              "\tBegin"]
     krop += csv_linje(0)
@@ -358,7 +358,7 @@ def byg_strategi(a):
 # ---------------------------------------------------------------- ShowMe
 
 def byg_kontrol(a):
-    """ShowMe'en RawSignal<nr>_Kontrol. Returnerer (tekst, formlen som den står i koden)."""
+    """ShowMe'en RawSignal<nr>_Control. Returnerer (tekst, formlen som den står i koden)."""
     navn = a["kontrol_navn"]
     p = a["parametre"]
     formel_kode = udskift(a["formel"], {"Filter1_" + x["navn"]: "Vis_" + x["navn"] for x in p})
@@ -367,9 +367,9 @@ def byg_kontrol(a):
          f"// Kontrol-ShowMe til strategien {a['navn']}. Tegner KUN - skriver ingen fil.",
          "//",
          "// Plot1 sætter en prik på den bar, hvor filteret tænder (skiftet fra falsk",
-         "// til sand). Det svarer til kolonnen Starttid i strategiens CSV-fil.",
+         "// til sand). Det svarer til kolonnen StartTime i strategiens CSV-fil.",
          "// Plot2 sætter en prik (anden farve) på hver af de følgende bars, hvor",
-         "// filteret stadig er tændt. Start + følgende prikker = AntalBars.",
+         "// filteret stadig er tændt. Start + følgende prikker = BarCount.",
          "//"]
     hoved_faelles(a, L)
     hoved_genereret(L)

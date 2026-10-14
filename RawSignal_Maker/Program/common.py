@@ -1,4 +1,4 @@
-# Fælles indstillinger og hjælpere for RawSignal Creature: mapper, log og
+# Fælles indstillinger og hjælpere for RawSignal-Maker: mapper, log og
 # forbindelsen til TradingDB.
 
 import os
@@ -8,14 +8,14 @@ import psycopg2
 
 # ---- Mapper ----
 PROGRAM_MAPPE = os.path.dirname(os.path.abspath(__file__))
-LOGFIL = os.path.join(PROGRAM_MAPPE, "log", "rawsignal_creature.log")
+LOGFIL = os.path.join(PROGRAM_MAPPE, "log", "rawsignal_maker.log")
 
 FILTER_MAPPE = r"C:\TradingDB_Folder\FilterFolder"
 EL_MAPPE_STRATEGI = os.path.join(FILTER_MAPPE, "RawSignal.EL")
-EL_MAPPE_KONTROL = os.path.join(FILTER_MAPPE, "RawSignal_Kontrol.EL")
+EL_MAPPE_KONTROL = os.path.join(FILTER_MAPPE, "RawSignal_Control.EL")
 # Samme kode som .txt, så den kan læses uden TradeStation
 TXT_MAPPE_STRATEGI = os.path.join(FILTER_MAPPE, "RawSignal.TXT")
-TXT_MAPPE_KONTROL = os.path.join(FILTER_MAPPE, "RawSignal_Kontrol.TXT")
+TXT_MAPPE_KONTROL = os.path.join(FILTER_MAPPE, "RawSignal_Control.TXT")
 CSV_MAPPE = os.path.join(FILTER_MAPPE, "RawSignal.CSV")
 
 

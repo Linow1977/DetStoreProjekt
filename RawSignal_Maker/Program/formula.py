@@ -10,7 +10,7 @@
 import re
 from decimal import Decimal
 
-from faelles import signal_navn
+from common import signal_navn
 
 # Største _end-værdi i hele filter_case er 25. Arrays har altid denne
 # størrelse, så Fra/Til/Step senere kan hæves uden at ramme grænsen.
@@ -63,7 +63,7 @@ def udskift(formel, navne):
 def analyser(raekke):
     """Læser formlen og returnerer det, der skal bruges til at bygge filerne."""
     fid = raekke["filter_case_id"]
-    raa = raekke["filtere"]
+    raa = raekke["filter_text"]
     if raa is None or raa.strip() == "":
         raise ByggeFejl(f"Filter {fid}: formlen er tom.")
     # { } ville afslutte kommentarblokken i filens hoved, hvor formlen står.
@@ -116,7 +116,7 @@ def analyser(raekke):
     return {
         "id": fid,
         "navn": signal_navn(fid),
-        "kontrol_navn": signal_navn(fid) + "_Kontrol",
+        "kontrol_navn": signal_navn(fid) + "_Control",
         "raa_formel": raa.strip(),
         "formel": formel,
         "parametre": parametre,
